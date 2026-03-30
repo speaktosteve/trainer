@@ -6,7 +6,8 @@ export default defineConfig({
 		environment: 'jsdom',
 		globals: true,
 		alias: {
-			$lib: new URL('./src/lib', import.meta.url).pathname
+			$lib: new URL('./src/lib', import.meta.url).pathname,
+			'$env/static/private': new URL('./tests/__mocks__/env.ts', import.meta.url).pathname
 		}
 	}
 });

@@ -4,11 +4,13 @@
 	let {
 		exercise,
 		completed = false,
-		onComplete
+		onComplete,
+		onUndo
 	}: {
 		exercise: ExerciseEntry;
 		completed?: boolean;
 		onComplete?: (actual: ExerciseEntry) => void;
+		onUndo?: () => void;
 	} = $props();
 
 	let editing = $state(false);
@@ -53,14 +55,25 @@
 			{/if}
 		</div>
 
-		{#if completed && exercise.actualReps}
-			<span class="rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
-				✓ {formatReps(exercise.actualReps)}
-				{#if exercise.actualWeight !== undefined}
-					@ {exercise.actualWeight} kg
+		{#if completed}
+			<div class="flex items-center gap-1.5">
+				<span class="rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
+					✓ {#if exercise.actualReps}{formatReps(exercise.actualReps)}{/if}
+					{#if exercise.actualWeight !== undefined}
+						@ {exercise.actualWeight} kg
+					{/if}
+				</span>
+				{#if onUndo}
+					<button
+						class="min-h-[32px] min-w-[32px] rounded-lg border border-gray-300 px-1.5 text-xs text-gray-500 active:bg-gray-100"
+						onclick={onUndo}
+						title="Undo"
+					>
+						↩
+					</button>
 				{/if}
-			</span>
-		{:else if !completed}
+			</div>
+		{:else}
 			<button
 				class="min-h-[44px] min-w-[44px] rounded-lg bg-blue-500 px-3 py-1.5 text-xs font-medium text-white active:bg-blue-600"
 				onclick={() => (editing = !editing)}

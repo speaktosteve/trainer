@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { logExercise, getExerciseHistory } from '$lib/services/exerciseService';
+import { logExercise, getExerciseHistory, deleteExerciseLog } from '$lib/services/exerciseService';
 import type { ExerciseLog } from '$lib/types';
 
 export const GET: RequestHandler = async ({ url }) => {
@@ -23,4 +23,23 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 	await logExercise(log);
 	return json(log, { status: 201 });
+};
+
+export const DELETE: RequestHandler = async ({ url }) => {
+	const weekStart = url.searchParams.get('weekStart');
+	const day = url.searchParams.get('day');
+	const name = url.searchParams.get('name');
+
+	if (!weekStart || !day || !name) {
+		return json(
+			{ error: 'weekStart, day, and name query params are required' },
+			{ status: 400 }
+		);
+	}
+
+	const deleted = await deleteExerciseLog(weekStart, day, name);
+	if (!deleted) {
+		return json({ error: 'Log not found' }, { status: 404 });
+	}
+	return json({ ok: true });
 };

@@ -36,6 +36,7 @@
   "dependencies": {
     "@azure/data-tables": "^13.3.2",
     "chart.js": "^4.5.1",
-    "date-fns": "^4.1.0"
+    "date-fns": "^4.1.0",
+    "openai": "^6.33.0"
   }
 }

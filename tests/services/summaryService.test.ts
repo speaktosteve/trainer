@@ -32,8 +32,10 @@ describe('MockSummaryProvider', () => {
 
 		const result = await provider.generateSummary('2026-03-30', [], [], weights);
 		expect(result.weekStart).toBe('2026-03-30');
-		expect(result.text).toContain('stable');
-		expect(result.text).toContain('77.7');
+		expect(result.headline).toBeTruthy();
+		const weightLine = result.lines.find((l) => l.label === 'Bodyweight');
+		expect(weightLine).toBeDefined();
+		expect(weightLine!.detail).toContain('77.7');
 	});
 
 	it('detects weight increase improvements', async () => {
@@ -54,8 +56,10 @@ describe('MockSummaryProvider', () => {
 		];
 
 		const result = await provider.generateSummary('2026-03-30', currentLogs, prevLogs, []);
-		expect(result.text).toContain('Bench Press');
-		expect(result.text).toContain('↑');
+		const progressLine = result.lines.find((l) => l.label === 'Progress');
+		expect(progressLine).toBeDefined();
+		expect(progressLine!.detail).toContain('Bench Press');
+		expect(progressLine!.detail).toContain('↑');
 	});
 
 	it('detects injury notes', async () => {
@@ -66,12 +70,14 @@ describe('MockSummaryProvider', () => {
 		];
 
 		const result = await provider.generateSummary('2026-03-30', logs, [], []);
-		expect(result.text).toContain('⚠️');
-		expect(result.text).toContain('injury');
+		const watchLine = result.lines.find((l) => l.label === 'Watch');
+		expect(watchLine).toBeDefined();
+		expect(watchLine!.detail).toContain('injury');
 	});
 
-	it('returns a fallback message when no data', async () => {
+	it('returns a headline when no data', async () => {
 		const result = await provider.generateSummary('2026-03-30', [], [], []);
-		expect(result.text).toContain('consistency');
+		expect(result.headline).toBe('Ready to start this week.');
+		expect(result.lines).toHaveLength(0);
 	});
 });

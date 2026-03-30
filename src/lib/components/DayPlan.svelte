@@ -6,12 +6,14 @@
 		session,
 		weekStart,
 		completedExercises = [],
-		onExerciseComplete
+		onExerciseComplete,
+		onExerciseUndo
 	}: {
 		session: PlannedSession;
 		weekStart: string;
 		completedExercises?: string[];
 		onExerciseComplete?: (log: ExerciseLog) => void;
+		onExerciseUndo?: (day: string, exerciseName: string) => void;
 	} = $props();
 
 	let expanded = $state(false);
@@ -78,6 +80,7 @@
 					{exercise}
 					completed={completedExercises.includes(exercise.name)}
 					onComplete={(actual) => handleExerciseComplete(exercise, actual)}
+					onUndo={onExerciseUndo ? () => onExerciseUndo(session.day, exercise.name) : undefined}
 				/>
 			{/each}
 		</div>

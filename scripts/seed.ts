@@ -28,7 +28,18 @@ function reverseTimestamp(date: Date): string {
 async function ensureTable(name: string): Promise<TableClient> {
 	const svc = TableServiceClient.fromConnectionString(connStr!);
 	await svc.createTable(name).catch(() => {});
-	return TableClient.fromConnectionString(connStr!, name);
+	const client = TableClient.fromConnectionString(connStr!, name);
+
+	// Clear all existing entities
+	const entities = client.listEntities({ queryOptions: { select: ['partitionKey', 'rowKey'] } });
+	let deleted = 0;
+	for await (const entity of entities) {
+		await client.deleteEntity(entity.partitionKey, entity.rowKey);
+		deleted++;
+	}
+	if (deleted > 0) console.log(`  🗑️  Cleared ${deleted} rows from ${name}`);
+
+	return client;
 }
 
 // ── Current week plan ────────────────────────────────────────────────

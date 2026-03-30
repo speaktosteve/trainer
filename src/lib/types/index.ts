@@ -50,9 +50,17 @@ export interface BodyweightEntry {
 }
 
 // ── AI summary ───────────────────────────────────────────────────────
+export interface SummaryLine {
+	icon: string;
+	label: string;
+	detail: string;
+}
+
 export interface WeeklySummary {
 	weekStart: string;
 	text: string;
+	headline: string;
+	lines: SummaryLine[];
 }
 
 // ── Table storage entity shapes ──────────────────────────────────────

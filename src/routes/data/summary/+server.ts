@@ -1,6 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { summaryProvider } from '$lib/services/summaryService';
+import { summaryProvider, llmSummaryProvider } from '$lib/services/summaryService';
+import { isLLMConfigured } from '$lib/services/openaiClient';
 import { getExerciseLogsForWeek } from '$lib/services/exerciseService';
 import { getWeightHistory } from '$lib/services/exerciseService';
 import { getWeekStart } from '$lib/utils/dates';
@@ -19,7 +20,8 @@ export const GET: RequestHandler = async ({ url }) => {
 
 	const weightHistory = await getWeightHistory();
 
-	const summary = await summaryProvider.generateSummary(
+	const provider = isLLMConfigured() ? llmSummaryProvider : summaryProvider;
+	const summary = await provider.generateSummary(
 		weekStart,
 		currentLogs,
 		previousLogs,

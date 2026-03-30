@@ -60,6 +60,36 @@ export async function getExerciseHistory(options?: {
 }
 
 /**
+ * Delete exercise log entries matching a specific day and exercise name for a week.
+ */
+export async function deleteExerciseLog(weekStart: string, day: string, exerciseName: string): Promise<boolean> {
+	const client = await getExerciseClient();
+	const entities = client.listEntities<ExerciseLogEntity>({
+		queryOptions: { filter: `PartitionKey eq '${DEFAULT_PK}'` }
+	});
+
+	for await (const entity of entities) {
+		const log = JSON.parse(entity.data) as ExerciseLog;
+		if (log.weekStart !== weekStart || log.day !== day) continue;
+
+		const match = log.exercises.some((ex) => ex.name === exerciseName);
+		if (!match) continue;
+
+		// Remove the exercise from the log
+		const remaining = log.exercises.filter((ex) => ex.name !== exerciseName);
+		if (remaining.length === 0) {
+			await client.deleteEntity(entity.partitionKey, entity.rowKey);
+		} else {
+			log.exercises = remaining;
+			entity.data = JSON.stringify(log);
+			await client.upsertEntity(entity, 'Replace');
+		}
+		return true;
+	}
+	return false;
+}
+
+/**
  * Get exercise logs for a specific week.
  */
 export async function getExerciseLogsForWeek(weekStart: string): Promise<ExerciseLog[]> {
