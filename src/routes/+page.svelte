@@ -118,6 +118,7 @@
 			nextPlan = null;
 			// Reload to show the new plan if we're now in its week
 			plan = edited;
+			summary = edited.summary ?? null;
 			completedExercises = {};
 		}
 		saving = false;
