@@ -1,4 +1,4 @@
-# Gym Tracker
+# Trainer
 
 A mobile-first web app for tracking and planning gym sessions. Built with SvelteKit, TypeScript, and Tailwind CSS, backed by Azure Table Storage.
 

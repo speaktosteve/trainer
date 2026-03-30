@@ -62,7 +62,7 @@
 </script>
 
 <svelte:head>
-	<title>This Week's Plan — Gym Tracker</title>
+	<title>This Week's Plan — Trainer</title>
 </svelte:head>
 
 <h1 class="mb-4 text-xl font-bold text-gray-900">This Week's Plan</h1>

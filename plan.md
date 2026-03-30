@@ -1,4 +1,4 @@
-# Plan: Gym Tracker SvelteKit Web App
+# Plan: Trainer SvelteKit Web App
 
 A mobile-first **SvelteKit + TypeScript + Tailwind** web app for planning weekly gym sessions and tracking exercise/weight history. Data stored in **Azure Table Storage**, deployed to **Azure Static Web Apps**. AI summary is **mocked for now** (easy to swap in Azure OpenAI later). Well-architected with service/utility layers and unit test coverage via **Vitest**.
 

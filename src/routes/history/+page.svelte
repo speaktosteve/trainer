@@ -70,7 +70,7 @@
 </script>
 
 <svelte:head>
-	<title>History — Gym Tracker</title>
+	<title>History — Trainer</title>
 </svelte:head>
 
 <h1 class="mb-4 text-xl font-bold text-gray-900">History</h1>
