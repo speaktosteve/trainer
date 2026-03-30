@@ -165,8 +165,8 @@ Return ONLY valid JSON matching this structure (no markdown fences):
   "summary": {
     "headline": "Short motivational headline, max 8 words",
     "lines": [
-      { "icon": "📈", "label": "Bench Press", "detail": "Up to 65kg — hit all reps last week" },
-      { "icon": "🔒", "label": "Shoulder Press", "detail": "Consolidating at 14kg, lock in the reps" },
+      { "icon": "📈", "label": "Bench Press", "detail": "Progressing to 65kg from 62.5kg" },
+      { "icon": "🔒", "label": "Shoulder Press", "detail": "Holding at 14kg, focus on hitting all reps" },
       { "icon": "🏋️", "label": "Sessions", "detail": "4 sessions across upper/lower split" }
     ]
   },
@@ -186,6 +186,8 @@ Summary rules:
 - "headline": a single punchy coaching sentence (max 8 words) capturing the week's theme.
 - "lines": 3-5 lines focused on KEY CHANGES to major compound lifts (bench, squat, deadlift, overhead press, rows). Use 📈 for progressions, 🔒 for consolidation, ⚠️ for caution. Include the specific weight or rep change. Add one line for session structure.
 - Do NOT list every exercise — only the headline changes and goals.
+- CRITICAL: Only reference data actually provided. If no sessions were completed, do NOT claim reps were hit. Base the summary only on the plan and actual performance data given.
+- If no completion data exists, the summary should reflect that the plan is carried forward unchanged or describe the planned structure.
 For bodyweight exercises, omit "targetWeight". Always include "name" and "targetReps".`
 					},
 					{ role: 'user', content: prompt }
@@ -244,7 +246,7 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
 				parts.push(`  ${log.day} (${log.label}): ${exercises}`);
 			}
 		} else {
-			parts.push('\nNo sessions completed this week.');
+			parts.push('\nNo sessions completed this week. No performance data is available — do not reference any results.');
 		}
 
 		if (previousLogs.length > 0) {

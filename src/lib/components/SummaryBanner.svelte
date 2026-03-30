@@ -27,7 +27,7 @@
 		{/if}
 	</button>
 {:else}
-	<div class="mb-4 rounded-xl bg-gray-200 p-4 text-gray-500 shadow-sm">
-		<p class="text-sm">Loading weekly summary...</p>
+	<div class="mb-4 rounded-xl bg-gray-100 p-3 text-gray-400 shadow-sm">
+		<p class="text-sm italic">No generated summary available</p>
 	</div>
 {/if}
