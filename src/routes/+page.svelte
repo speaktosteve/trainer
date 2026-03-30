@@ -178,7 +178,7 @@
 				</div>
 			{/if}
 			<button
-				class="cursor-pointer min-h-[44px] w-full rounded-lg bg-indigo-500 py-3 text-sm font-semibold text-white active:bg-indigo-600 disabled:opacity-50"
+				class="min-h-[44px] w-full rounded-lg bg-indigo-500 py-3 text-sm font-semibold text-white active:bg-indigo-600 disabled:opacity-50"
 				disabled={generating}
 				onclick={generateNextPlan}
 			>
