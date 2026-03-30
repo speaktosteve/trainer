@@ -75,7 +75,7 @@
 		Adjust weights, reps, and notes before saving.
 	</p>
 
-	<div class=\"space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0\">
+	<div class="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
 	{#each editPlan.sessions as session, sIdx}
 		<div class="rounded-xl border border-gray-200 bg-white shadow-sm">
 			<div class="border-b border-gray-100 p-3">
