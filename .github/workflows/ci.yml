@@ -37,6 +37,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+      - run: cp build/staticwebapp.config.json build/static/staticwebapp.config.json
       - name: Deploy
         uses: Azure/static-web-apps-deploy@v1
         with:
