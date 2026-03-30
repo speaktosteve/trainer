@@ -31,6 +31,8 @@ export interface WeeklyPlan {
 	/** ISO date of the Monday that starts this week, e.g. "2026-03-30" */
 	weekStart: string;
 	sessions: PlannedSession[];
+	/** Structured summary of the week's goals (LLM-generated). */
+	summary?: WeeklySummary;
 }
 
 // ── Exercise log (a completed session) ───────────────────────────────

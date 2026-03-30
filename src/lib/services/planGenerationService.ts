@@ -1,4 +1,4 @@
-import type { WeeklyPlan, PlannedSession, ExerciseEntry, ExerciseLog } from '$lib/types';
+import type { WeeklyPlan, PlannedSession, ExerciseEntry, ExerciseLog, WeeklySummary } from '$lib/types';
 import { getOpenAIClient, getDeploymentName } from './openaiClient';
 
 /**
@@ -162,6 +162,14 @@ Rules:
 
 Return ONLY valid JSON matching this structure (no markdown fences):
 {
+  "summary": {
+    "headline": "Short motivational headline, max 8 words",
+    "lines": [
+      { "icon": "📈", "label": "Bench Press", "detail": "Up to 65kg — hit all reps last week" },
+      { "icon": "🔒", "label": "Shoulder Press", "detail": "Consolidating at 14kg, lock in the reps" },
+      { "icon": "🏋️", "label": "Sessions", "detail": "4 sessions across upper/lower split" }
+    ]
+  },
   "weekStart": "YYYY-MM-DD",
   "sessions": [
     {
@@ -174,6 +182,10 @@ Return ONLY valid JSON matching this structure (no markdown fences):
   ]
 }
 
+Summary rules:
+- "headline": a single punchy coaching sentence (max 8 words) capturing the week's theme.
+- "lines": 3-5 lines focused on KEY CHANGES to major compound lifts (bench, squat, deadlift, overhead press, rows). Use 📈 for progressions, 🔒 for consolidation, ⚠️ for caution. Include the specific weight or rep change. Add one line for session structure.
+- Do NOT list every exercise — only the headline changes and goals.
 For bodyweight exercises, omit "targetWeight". Always include "name" and "targetReps".`
 					},
 					{ role: 'user', content: prompt }
@@ -188,6 +200,11 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
 			const parsed = JSON.parse(content) as WeeklyPlan;
 			// Ensure the weekStart is correct regardless of what the LLM returns
 			parsed.weekStart = nextWeekStart;
+			// Ensure summary has required text field
+			if (parsed.summary) {
+				parsed.summary.weekStart = nextWeekStart;
+				parsed.summary.text = parsed.summary.lines?.map((l) => `${l.icon} ${l.detail}`).join(' · ') ?? parsed.summary.headline;
+			}
 			return parsed;
 		} catch (err) {
 			const message = err instanceof Error ? err.message : 'Unknown LLM error';

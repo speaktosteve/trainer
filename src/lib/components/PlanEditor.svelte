@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { WeeklyPlan, PlannedSession, ExerciseEntry } from '$lib/types';
+	import SummaryBanner from '$lib/components/SummaryBanner.svelte';
 
 	let {
 		plan,
@@ -58,13 +59,6 @@
 			editPlan = { ...editPlan };
 		}
 	}
-	const sessionCount = $derived(editPlan.sessions.length);
-	const exerciseCount = $derived(editPlan.sessions.reduce((sum, s) => sum + s.exercises.length, 0));
-	const changesFromNotes = $derived(
-		editPlan.sessions.flatMap((s) =>
-			s.exercises.filter((ex) => ex.notes).map((ex) => ({ name: ex.name, note: ex.notes! }))
-		)
-	);
 </script>
 
 <div class="space-y-4">
@@ -75,19 +69,10 @@
 		</span>
 	</div>
 
-	<div class="rounded-lg bg-gray-50 border border-gray-200 p-3 text-sm text-gray-700">
-		<p class="font-medium">{sessionCount} sessions · {exerciseCount} exercises</p>
-		{#if changesFromNotes.length > 0}
-			<ul class="mt-1.5 space-y-0.5">
-				{#each changesFromNotes as change}
-					<li class="text-xs text-gray-500">• <span class="font-medium text-gray-700">{change.name}</span> — {change.note}</li>
-				{/each}
-			</ul>
-		{/if}
-	</div>
+	<SummaryBanner summary={editPlan.summary ?? null} />
 
 	<p class="text-sm text-gray-500">
-		Adjust weights, reps, and notes before saving. Changes are based on your performance this week.
+		Adjust weights, reps, and notes before saving.
 	</p>
 
 	{#each editPlan.sessions as session, sIdx}

@@ -18,16 +18,11 @@
 	let generateError = $state<string | null>(null);
 
 	onMount(async () => {
-		const [planRes, summaryRes] = await Promise.all([
-			fetch('/data/plans'),
-			fetch('/data/summary')
-		]);
+		const planRes = await fetch('/data/plans');
 
 		if (planRes.ok) {
 			plan = await planRes.json();
-		}
-		if (summaryRes.ok) {
-			summary = await summaryRes.json();
+			summary = plan?.summary ?? null;
 		}
 
 		// Load completed exercises for this week
@@ -140,7 +135,14 @@
 		onCancel={() => { showEditor = false; nextPlan = null; }}
 	/>
 {:else}
-	<h1 class="mb-4 text-xl font-bold text-gray-900">This Week's Plan</h1>
+	<div class="mb-4 flex items-center justify-between">
+		<h1 class="text-xl font-bold text-gray-900">This Week's Plan</h1>
+		{#if plan}
+			<span class="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
+				w/c {plan.weekStart}
+			</span>
+		{/if}
+	</div>
 
 	<SummaryBanner {summary} />
 
@@ -176,7 +178,7 @@
 				</div>
 			{/if}
 			<button
-				class="min-h-[44px] w-full rounded-lg bg-indigo-500 py-3 text-sm font-semibold text-white active:bg-indigo-600 disabled:opacity-50"
+				class="cursor-pointer min-h-[44px] w-full rounded-lg bg-indigo-500 py-3 text-sm font-semibold text-white active:bg-indigo-600 disabled:opacity-50"
 				disabled={generating}
 				onclick={generateNextPlan}
 			>
