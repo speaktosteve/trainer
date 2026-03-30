@@ -12,8 +12,11 @@
 	} = $props();
 
 	let editing = $state(false);
-	let actualWeight = $state(exercise.actualWeight ?? exercise.targetWeight ?? 0);
-	let actualReps = $state<number[]>(exercise.actualReps ?? [...exercise.targetReps]);
+	let weightOverride = $state<number | null>(null);
+	let repsOverride = $state<number[] | null>(null);
+
+	let actualWeight = $derived(weightOverride ?? exercise.actualWeight ?? exercise.targetWeight ?? 0);
+	let actualReps = $derived(repsOverride ?? exercise.actualReps ?? [...exercise.targetReps]);
 
 	function handleComplete() {
 		if (onComplete) {
@@ -75,7 +78,8 @@
 					<input
 						type="number"
 						step="0.5"
-						bind:value={actualWeight}
+						value={actualWeight}
+						oninput={(e) => (weightOverride = Number(e.currentTarget.value))}
 						class="mt-1 block w-full rounded-md border border-gray-300 px-2 py-1.5 text-sm"
 					/>
 				</label>
@@ -83,10 +87,15 @@
 			<div>
 				<span class="text-xs text-gray-600">Reps per set</span>
 				<div class="mt-1 flex gap-2">
-					{#each actualReps as _, i}
+					{#each actualReps as rep, i}
 						<input
 							type="number"
-							bind:value={actualReps[i]}
+							value={rep}
+							oninput={(e) => {
+								const newReps = [...actualReps];
+								newReps[i] = Number(e.currentTarget.value);
+								repsOverride = newReps;
+							}}
 							class="w-14 rounded-md border border-gray-300 px-2 py-1.5 text-center text-sm"
 						/>
 					{/each}
