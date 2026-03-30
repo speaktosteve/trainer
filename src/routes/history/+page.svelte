@@ -73,7 +73,7 @@
 	<title>History — Trainer</title>
 </svelte:head>
 
-<h1 class="mb-4 text-xl font-bold text-gray-900">History</h1>
+<h1 class="mb-4 text-xl font-bold text-gray-900 md:text-2xl">History</h1>
 
 <!-- Tab Toggle -->
 <div class="mb-4 flex rounded-lg bg-gray-200 p-1">
@@ -110,7 +110,7 @@
 			<p class="mt-1 text-sm">Complete exercises from the Plan screen to see them here</p>
 		</div>
 	{:else}
-		<div class="space-y-4">
+		<div class="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
 			{#each groupedLogs() as [date, logs]}
 				<div>
 					<h3 class="mb-2 text-sm font-semibold text-gray-600">{date}</h3>
@@ -138,12 +138,13 @@
 	{/if}
 {:else}
 	<!-- Weight Chart + Entry Form -->
+	<div class="md:grid md:grid-cols-2 md:gap-4">
 	<div class="rounded-xl border border-gray-200 bg-white p-4">
 		<h3 class="mb-3 text-sm font-semibold text-gray-700">Bodyweight Trend</h3>
 		<WeightChart entries={weightEntries} />
 	</div>
 
-	<div class="mt-4 rounded-xl border border-gray-200 bg-white p-4">
+	<div class="mt-4 md:mt-0 rounded-xl border border-gray-200 bg-white p-4">
 		<h3 class="mb-3 text-sm font-semibold text-gray-700">Log Bodyweight</h3>
 		<form class="flex gap-2" onsubmit={(e) => { e.preventDefault(); handleLogWeight(); }}>
 			<input
@@ -166,6 +167,7 @@
 				{saving ? '...' : 'Log'}
 			</button>
 		</form>
+	</div>
 	</div>
 
 	{#if weightEntries.length > 0}

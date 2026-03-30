@@ -207,11 +207,32 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
 				parsed.summary.weekStart = nextWeekStart;
 				parsed.summary.text = parsed.summary.lines?.map((l) => `${l.icon} ${l.detail}`).join(' · ') ?? parsed.summary.headline;
 			}
+			// Carry forward targetWeight from source plan if the LLM dropped it
+			this.backfillWeights(parsed, currentPlan);
 			return parsed;
 		} catch (err) {
 			const message = err instanceof Error ? err.message : 'Unknown LLM error';
 			console.error('LLM plan generation failed:', message);
 			throw new Error(`LLM plan generation failed: ${message}`);
+		}
+	}
+
+	/** If the LLM omitted targetWeight for an exercise that had one in the source plan, restore it. */
+	private backfillWeights(generated: WeeklyPlan, source: WeeklyPlan): void {
+		const weightMap = new Map<string, number>();
+		for (const session of source.sessions) {
+			for (const ex of session.exercises) {
+				if (ex.targetWeight !== undefined) {
+					weightMap.set(ex.name, ex.targetWeight);
+				}
+			}
+		}
+		for (const session of generated.sessions) {
+			for (const ex of session.exercises) {
+				if (ex.targetWeight === undefined && weightMap.has(ex.name)) {
+					ex.targetWeight = weightMap.get(ex.name)!;
+				}
+			}
 		}
 	}
 

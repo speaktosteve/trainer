@@ -136,7 +136,7 @@
 	/>
 {:else}
 	<div class="mb-4 flex items-center justify-between">
-		<h1 class="text-xl font-bold text-gray-900">This Week's Plan</h1>
+		<h1 class="text-xl font-bold text-gray-900 md:text-2xl">This Week's Plan</h1>
 		{#if plan}
 			<span class="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
 				w/c {plan.weekStart}
@@ -153,7 +153,7 @@
 			{/each}
 		</div>
 	{:else if plan}
-		<div class="space-y-3">
+		<div class="space-y-3 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
 			{#each plan.sessions as session}
 				<DayPlan
 					{session}
