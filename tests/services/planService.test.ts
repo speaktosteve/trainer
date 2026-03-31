@@ -41,12 +41,21 @@ function createMockTableClient(entities: PlanEntity[] = []) {
       return found;
     }),
     upsertEntity: vi.fn(),
-    listEntities: vi.fn(() => ({
+    listEntities: vi.fn((_options?: { queryOptions?: { filter?: string; select?: string[] } }) => ({
       [Symbol.asyncIterator]: async function* () {
         for (const e of entities) yield e;
       },
     })),
   };
+}
+
+function getFirstListEntitiesFilter(mockClient: ReturnType<typeof createMockTableClient>): string {
+  const firstCall = mockClient.listEntities.mock.calls.at(0);
+  const callArgs = firstCall?.[0];
+  if (!callArgs) throw new Error("Expected listEntities to be called with query options");
+  const filter = callArgs.queryOptions?.filter;
+  if (!filter) throw new Error("Expected listEntities queryOptions.filter");
+  return filter;
 }
 
 describe("planService", () => {
@@ -170,12 +179,9 @@ describe("planService", () => {
 
       await getPlansForRange("2026-03-01", "2026-03-31");
 
-      const firstCall = mockClient.listEntities.mock.calls.at(0);
-      expect(firstCall).toBeDefined();
-      const callArgs = firstCall?.[0];
-      expect(callArgs).toBeDefined();
-      expect(callArgs.queryOptions.filter).toContain("RowKey ge '2026-03-01'");
-      expect(callArgs.queryOptions.filter).toContain("RowKey le '2026-03-31'");
+      const filter = getFirstListEntitiesFilter(mockClient);
+      expect(filter).toContain("RowKey ge '2026-03-01'");
+      expect(filter).toContain("RowKey le '2026-03-31'");
     });
   });
 });
