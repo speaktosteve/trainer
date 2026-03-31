@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { ExerciseEntry } from '$lib/types';
+	import type { ExerciseEntry } from "$lib/types";
 
 	let {
 		exercise,
 		completed = false,
 		onComplete,
-		onUndo
+		onUndo,
 	}: {
 		exercise: ExerciseEntry;
 		completed?: boolean;
@@ -17,7 +17,9 @@
 	let weightOverride = $state<number | null>(null);
 	let repsOverride = $state<number[] | null>(null);
 
-	let actualWeight = $derived(weightOverride ?? exercise.actualWeight ?? exercise.targetWeight ?? 0);
+	let actualWeight = $derived(
+		weightOverride ?? exercise.actualWeight ?? exercise.targetWeight ?? 0
+	);
 	let actualReps = $derived(repsOverride ?? exercise.actualReps ?? [...exercise.targetReps]);
 
 	function handleComplete() {
@@ -25,20 +27,18 @@
 			onComplete({
 				...exercise,
 				actualWeight: exercise.targetWeight !== undefined ? actualWeight : undefined,
-				actualReps: [...actualReps]
+				actualReps: [...actualReps],
 			});
 		}
 		editing = false;
 	}
 
 	function formatReps(reps: number[]): string {
-		return reps.join(', ');
+		return reps.join(", ");
 	}
 </script>
 
-<div
-	class="card card-border bg-base-100 p-3 {completed ? 'border-success/40 bg-success/10' : ''}"
->
+<div class="card card-border bg-base-100 p-3 {completed ? 'border-success/40 bg-success/10' : ''}">
 	<div class="flex items-start justify-between">
 		<div class="flex-1">
 			<h4 class="text-sm font-semibold text-base-content">{exercise.name}</h4>
@@ -66,21 +66,12 @@
 			<div class="flex items-center gap-1.5">
 				<span class="badge badge-success badge-sm">✓</span>
 				{#if onUndo}
-					<button
-						class="btn btn-ghost btn-xs"
-						onclick={onUndo}
-						title="Undo"
-					>
-						↩
-					</button>
+					<button class="btn btn-ghost btn-xs" onclick={onUndo} title="Undo"> ↩ </button>
 				{/if}
 			</div>
 		{:else}
-			<button
-				class="btn btn-primary btn-sm"
-				onclick={() => (editing = !editing)}
-			>
-				{editing ? 'Cancel' : 'Log'}
+			<button class="btn btn-primary btn-sm" onclick={() => (editing = !editing)}>
+				{editing ? "Cancel" : "Log"}
 			</button>
 		{/if}
 	</div>
@@ -102,7 +93,7 @@
 			<div>
 				<span class="text-xs text-base-content/60">Reps per set</span>
 				<div class="mt-1 flex gap-2">
-					{#each actualReps as rep, i}
+					{#each actualReps as rep, i (i)}
 						<input
 							type="number"
 							value={rep}
@@ -116,12 +107,7 @@
 					{/each}
 				</div>
 			</div>
-			<button
-				class="btn btn-success btn-block"
-				onclick={handleComplete}
-			>
-				Mark Complete ✓
-			</button>
+			<button class="btn btn-success btn-block" onclick={handleComplete}> Mark Complete ✓ </button>
 		</div>
 	{/if}
 </div>

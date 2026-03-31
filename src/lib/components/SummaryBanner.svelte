@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { WeeklySummary } from '$lib/types';
+	import type { WeeklySummary } from "$lib/types";
 
 	let { summary }: { summary: WeeklySummary | null } = $props();
 	let open = $state(false);
@@ -17,10 +17,13 @@
 		</div>
 		{#if open && summary.lines.length > 0}
 			<div class="mt-2 space-y-1">
-				{#each summary.lines as line}
+				{#each summary.lines as line, i (i)}
 					<div class="flex items-start gap-2 text-xs leading-snug text-primary-content/80">
 						<span class="shrink-0">{line.icon}</span>
-						<span><span class="font-medium text-primary-content">{line.label}</span> {line.detail}</span>
+						<span
+							><span class="font-medium text-primary-content">{line.label}</span>
+							{line.detail}</span
+						>
 					</div>
 				{/each}
 			</div>

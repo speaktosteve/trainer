@@ -1,13 +1,13 @@
 <script lang="ts">
-	import type { PlannedSession, ExerciseEntry, ExerciseLog } from '$lib/types';
-	import ExerciseCard from './ExerciseCard.svelte';
+	import type { PlannedSession, ExerciseEntry, ExerciseLog } from "$lib/types";
+	import ExerciseCard from "./ExerciseCard.svelte";
 
 	let {
 		session,
 		weekStart,
 		completedExercises = {},
 		onExerciseComplete,
-		onExerciseUndo
+		onExerciseUndo,
 	}: {
 		session: PlannedSession;
 		weekStart: string;
@@ -19,10 +19,10 @@
 	let expanded = $state(false);
 
 	const dayLabels: Record<string, string> = {
-		monday: 'Monday',
-		tuesday: 'Tuesday',
-		wednesday: 'Wednesday',
-		friday: 'Friday'
+		monday: "Monday",
+		tuesday: "Tuesday",
+		wednesday: "Wednesday",
+		friday: "Friday",
 	};
 
 	const completedCount = $derived(
@@ -38,7 +38,7 @@
 				completedDate: new Date().toISOString().slice(0, 10),
 				weekStart,
 				exercises: [actual],
-				sessionNotes: session.sessionNotes
+				sessionNotes: session.sessionNotes,
 			});
 		}
 	}
@@ -65,18 +65,23 @@
 			{#if allDone}
 				<span class="badge badge-success badge-sm">✓</span>
 			{/if}
-			<span class="text-base-content/40 transition-transform {expanded ? 'rotate-180' : ''}"
-				>▾</span
+			<span class="text-base-content/40 transition-transform {expanded ? 'rotate-180' : ''}">▾</span
 			>
 		</div>
 	</button>
 
 	{#if expanded}
 		<div class="space-y-2 border-t border-base-300 p-4 pt-3">
-			{#each session.exercises as exercise}
+			{#each session.exercises as exercise (exercise.name)}
 				{@const actualData = completedExercises[exercise.name]}
 				<ExerciseCard
-					exercise={actualData ? { ...exercise, actualWeight: actualData.actualWeight, actualReps: actualData.actualReps } : exercise}
+					exercise={actualData
+						? {
+								...exercise,
+								actualWeight: actualData.actualWeight,
+								actualReps: actualData.actualReps,
+							}
+						: exercise}
 					completed={exercise.name in completedExercises}
 					onComplete={(actual) => handleExerciseComplete(exercise, actual)}
 					onUndo={onExerciseUndo ? () => onExerciseUndo(session.day, exercise.name) : undefined}

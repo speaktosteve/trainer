@@ -1,10 +1,10 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: dark;
+	themes: dark;
 }
 
 @layer base {
-  button {
-    cursor: pointer;
-  }
+	button {
+		cursor: pointer;
+	}
 }

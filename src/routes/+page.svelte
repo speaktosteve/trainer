@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import type { WeeklyPlan, WeeklySummary, ExerciseLog, ExerciseEntry } from '$lib/types';
-	import SummaryBanner from '$lib/components/SummaryBanner.svelte';
-	import DayPlan from '$lib/components/DayPlan.svelte';
-	import PlanEditor from '$lib/components/PlanEditor.svelte';
+	import { onMount } from "svelte";
+	import type { WeeklyPlan, WeeklySummary, ExerciseLog, ExerciseEntry } from "$lib/types";
+	import SummaryBanner from "$lib/components/SummaryBanner.svelte";
+	import DayPlan from "$lib/components/DayPlan.svelte";
+	import PlanEditor from "$lib/components/PlanEditor.svelte";
 
 	let plan = $state<WeeklyPlan | null>(null);
 	let summary = $state<WeeklySummary | null>(null);
@@ -14,11 +14,10 @@
 	let nextPlan = $state<WeeklyPlan | null>(null);
 	let showEditor = $state(false);
 	let generating = $state(false);
-	let saving = $state(false);
 	let generateError = $state<string | null>(null);
 
 	onMount(async () => {
-		const planRes = await fetch('/data/plans');
+		const planRes = await fetch("/data/plans");
 
 		if (planRes.ok) {
 			plan = await planRes.json();
@@ -44,10 +43,10 @@
 	});
 
 	async function handleExerciseComplete(log: ExerciseLog) {
-		const res = await fetch('/data/exercises', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(log)
+		const res = await fetch("/data/exercises", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(log),
 		});
 
 		if (res.ok) {
@@ -62,7 +61,7 @@
 	async function handleExerciseUndo(day: string, exerciseName: string) {
 		if (!plan) return;
 		const params = new URLSearchParams({ weekStart: plan.weekStart, day, name: exerciseName });
-		const res = await fetch(`/data/exercises?${params}`, { method: 'DELETE' });
+		const res = await fetch(`/data/exercises?${params}`, { method: "DELETE" });
 
 		if (res.ok) {
 			if (completedExercises[day]) {
@@ -82,10 +81,10 @@
 		if (!plan) return;
 		generating = true;
 		generateError = null;
-		const res = await fetch('/data/plans/next', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ sourceWeek: plan.weekStart })
+		const res = await fetch("/data/plans/next", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ sourceWeek: plan.weekStart }),
 		});
 
 		if (res.ok) {
@@ -97,18 +96,17 @@
 				nextPlan = data.plan;
 				showEditor = true;
 			} else {
-				generateError = data.error ?? 'Failed to generate next plan';
+				generateError = data.error ?? "Failed to generate next plan";
 			}
 		}
 		generating = false;
 	}
 
 	async function saveNextPlan(edited: WeeklyPlan) {
-		saving = true;
-		const res = await fetch('/data/plans', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(edited)
+		const res = await fetch("/data/plans", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(edited),
 		});
 
 		if (res.ok) {
@@ -119,7 +117,6 @@
 			summary = edited.summary ?? null;
 			completedExercises = {};
 		}
-		saving = false;
 	}
 </script>
 
@@ -131,7 +128,10 @@
 	<PlanEditor
 		plan={nextPlan}
 		onSave={saveNextPlan}
-		onCancel={() => { showEditor = false; nextPlan = null; }}
+		onCancel={() => {
+			showEditor = false;
+			nextPlan = null;
+		}}
 	/>
 {:else}
 	<div class="mb-4 flex items-center justify-between">
@@ -147,13 +147,13 @@
 
 	{#if loading}
 		<div class="space-y-3">
-			{#each Array(4) as _}
+			{#each Array(4) as _, i (i)}
 				<div class="h-20 animate-pulse rounded-xl bg-base-300"></div>
 			{/each}
 		</div>
 	{:else if plan}
 		<div class="space-y-3 md:grid md:gap-4 md:space-y-0">
-			{#each plan.sessions as session}
+			{#each plan.sessions as session (session.day)}
 				<DayPlan
 					{session}
 					weekStart={plan.weekStart}
@@ -173,16 +173,12 @@
 						<p class="mt-1 text-xs">{generateError}</p>
 						<button
 							class="mt-2 text-xs font-medium underline"
-							onclick={() => (generateError = null)}
-						>Dismiss</button>
+							onclick={() => (generateError = null)}>Dismiss</button
+						>
 					</div>
 				</div>
 			{/if}
-			<button
-				class="btn btn-primary btn-block"
-				disabled={generating}
-				onclick={generateNextPlan}
-			>
+			<button class="btn btn-primary btn-block" disabled={generating} onclick={generateNextPlan}>
 				{#if generating}
 					<span class="loading loading-spinner loading-sm"></span>
 					Generating…

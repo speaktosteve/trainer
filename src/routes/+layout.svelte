@@ -1,6 +1,6 @@
 <script lang="ts">
-	import '../app.css';
-	import BottomNav from '$lib/components/BottomNav.svelte';
+	import "../app.css";
+	import BottomNav from "$lib/components/BottomNav.svelte";
 
 	let { children } = $props();
 </script>

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import type { BodyweightEntry } from '$lib/types';
-	import { Chart, registerables } from 'chart.js';
+	import { onMount } from "svelte";
+	import type { BodyweightEntry } from "$lib/types";
+	import { Chart, registerables } from "chart.js";
 
 	let { entries }: { entries: BodyweightEntry[] } = $props();
 
@@ -15,21 +15,21 @@
 		if (!canvas || entries.length === 0) return;
 
 		chart = new Chart(canvas, {
-			type: 'line',
+			type: "line",
 			data: {
 				labels: entries.map((e) => e.date),
 				datasets: [
 					{
-						label: 'Weight (kg)',
+						label: "Weight (kg)",
 						data: entries.map((e) => e.weight),
-						borderColor: '#3b82f6',
-						backgroundColor: 'rgba(59, 130, 246, 0.1)',
+						borderColor: "#3b82f6",
+						backgroundColor: "rgba(59, 130, 246, 0.1)",
 						fill: true,
 						tension: 0.3,
 						pointRadius: 4,
-						pointBackgroundColor: '#3b82f6'
-					}
-				]
+						pointBackgroundColor: "#3b82f6",
+					},
+				],
 			},
 			options: {
 				responsive: true,
@@ -38,19 +38,19 @@
 					y: {
 						suggestedMin: Math.min(...entries.map((e) => e.weight)) - 1,
 						suggestedMax: Math.max(...entries.map((e) => e.weight)) + 1,
-						ticks: { callback: (v) => `${v} kg` }
+						ticks: { callback: (v) => `${v} kg` },
 					},
 					x: {
 						ticks: {
 							maxRotation: 45,
-							font: { size: 10 }
-						}
-					}
+							font: { size: 10 },
+						},
+					},
 				},
 				plugins: {
-					legend: { display: false }
-				}
-			}
+					legend: { display: false },
+				},
+			},
 		});
 	}
 
