@@ -1,6 +1,6 @@
 # Trainer
 
-![CI](https://github.com/speaktosteve/training/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/speaktosteve/trainer/actions/workflows/ci.yml/badge.svg)
 ![SvelteKit](https://img.shields.io/badge/SvelteKit-2-FF3E00?logo=svelte&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
