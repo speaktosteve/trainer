@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { WeeklyPlan, PlannedSession, ExerciseEntry } from '$lib/types';
+	import type { WeeklyPlan } from '$lib/types';
 	import SummaryBanner from '$lib/components/SummaryBanner.svelte';
 
 	let {
@@ -18,10 +18,6 @@
 
 	// Deep-clone the plan so edits don't mutate the original
 	let editPlan = $state<WeeklyPlan>(clonePlan());
-
-	function resetFromPlan() {
-		editPlan = clonePlan();
-	}
 
 	const dayLabels: Record<string, string> = {
 		monday: 'Monday',
@@ -76,7 +72,7 @@
 	</p>
 
 	<div class="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
-	{#each editPlan.sessions as session, sIdx}
+	{#each editPlan.sessions as session, sIdx (session.day)}
 		<div class="card card-border bg-base-100 shadow-sm">
 			<div class="border-b border-base-300 p-3">
 				<h3 class="text-sm font-bold text-base-content">
@@ -85,7 +81,7 @@
 			</div>
 
 			<div class="space-y-3 p-3">
-				{#each session.exercises as exercise, eIdx}
+				{#each session.exercises as exercise, eIdx (exercise.name)}
 					<div class="rounded-lg border border-base-300 bg-base-200 p-3">
 						<h4 class="text-sm font-semibold text-base-content">{exercise.name}</h4>
 
@@ -106,7 +102,7 @@
 							<div>
 								<span class="text-xs text-base-content/60">Reps per set</span>
 								<div class="mt-1 flex items-center gap-1">
-									{#each exercise.targetReps as rep, rIdx}
+									{#each exercise.targetReps as rep, rIdx (rIdx)}
 										<input
 											type="number"
 											value={rep}

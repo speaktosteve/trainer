@@ -9,7 +9,7 @@
 
 <nav class="fixed bottom-0 left-0 right-0 z-50 border-t border-base-300 bg-base-100">
 	<div class="mx-auto flex max-w-md md:max-w-2xl lg:max-w-4xl">
-		{#each tabs as tab}
+		{#each tabs as tab (tab.href)}
 			<a
 				href={tab.href}
 				class="flex flex-1 flex-col items-center justify-center py-3 text-xs transition-colors {page.url

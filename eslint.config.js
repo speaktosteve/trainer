@@ -7,13 +7,7 @@ import globals from "globals";
 
 export default [
   {
-    ignores: [
-      "build/**",
-      ".svelte-kit/**",
-      "node_modules/**",
-      "static/**",
-      ".azurite/**",
-    ],
+    ignores: ["build/**", ".svelte-kit/**", "node_modules/**", "static/**", ".azurite/**"],
   },
   {
     files: ["**/*.{js,mjs,cjs,ts}", "**/*.svelte"],
@@ -60,7 +54,10 @@ export default [
     },
     rules: {
       "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
-      "@typescript-eslint/consistent-type-imports": ["error", { prefer: "type-imports" }],
+      "@typescript-eslint/consistent-type-imports": [
+        "error",
+        { prefer: "type-imports", disallowTypeAnnotations: false },
+      ],
     },
   },
   {
