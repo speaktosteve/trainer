@@ -31,7 +31,7 @@ A mobile-first **SvelteKit + TypeScript + Tailwind** web app for planning weekly
 7. `src/lib/services/planService.ts` — CRUD for weekly plans (`getCurrentWeekPlan`, `savePlan`, `getPlansForRange`)
 8. `src/lib/services/exerciseService.ts` — CRUD for exercise logs + bodyweight entries
 9. `src/lib/services/summaryService.ts` — mock AI summary with template string; designed with an interface for future provider swap
-10. `src/lib/utils/dates.ts` — week boundary helpers, formatters *(parallel with 6–9)*
+10. `src/lib/utils/dates.ts` — week boundary helpers, formatters _(parallel with 6–9)_
 11. Unit tests for all services (mocking table storage client) and date utilities
 
 ## Phase 3 — API Routes (Server-Side)
@@ -289,25 +289,25 @@ Weight Log
 
 ### Training Progress Log: Weeks 1–6
 
-| Exercise (Day) | Week 1 | Week 2 | Week 3 | Week 4 | Week 5 | Week 6 (Latest) |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Bench Press (Mon)** | 50 (6,6,6,4) | 50 (6,6,6,6) | 55 (6,6,6,6) | 57.5 (6,6,6,6) | 60 (6,6,6) | **60 (6,6,6,6)** |
-| **Bench Press (Fri)** | 52.5 (4x5) | 55 (5x5) | 57.5 (5x5) | 60 (5x5) | 65 (5x5) + 70x2 | **67.5 (5,5,5,5,2)** |
-| **Incline DB Press (Mon)** | 14 (8,8,8) | 14 (9,9,9) | 16 (9,9,9) | 16 (12,12,10) | 16 (10,10,10+) | **16 (10,10,10,10)** |
-| **Shoulder Press DB (M/F)**| 14 (6,4,4) | 12–14 mixed | 12 (8,8,8) | 14 (10,9,7) | 14–16 prog. | **14 (10,8,8) / 16 (10,10,8)** |
-| **Lateral Raises (M/F)** | 6 (10,10,8) | 6–9 prog. | 9 (12,12,10) | 9 (12,12,12) | 9–13.6 mixed | **9 (12,12,12)** |
-| **Tricep Pushdown** | 45 (8,8,8) | 45 (9,9,9) | 45–40 prog. | 45–50 prog. | 50 (10,10,10) | **52 (10s) / 54.4 (10s)** |
-| **Seated Row (M/W/F)** | 102 (6s) | 102–109 | 109 (8s) | 109 (10s) | 109 (10s stable) | **109 (10s) / 109 (8s slow)** |
-| **Chin-ups (Wed)** | 3,4,3 | 4,4,4 | 6,6,5 | 10,7,4 | 10,10,6 | **10,10,8** |
-| **Leg Press (Tue/Fri)** | ~88 | ~115 | ~133 | 140 | 152 | **Injury (Skipped Fri)** |
-| **Squat (Tue)** | 50 (6,6,6) | 52.5 (6,6,10) | 60–70 prog. | 70 (6,6,8) | 75 (6,6) | **75 (Pending)** |
-| **RDL (Tue)** | 40 | 45 | 50 | 55 | 60 | **62.5 (Pending)** |
-| **Leg Curl (Tue)** | ~40 | ~47 | ~47–54 | ~54 | ~61 | **63 (Pending)** |
-| **Leg Extension (Tue)** | ~54 | ~60 | ~61 | ~61–65 | ~68–75 | **75 (Pending)** |
-| **DB Curl (Wed)** | 12 (6s) | 10 (8s) | 10 (9–10s) | 12 (10s) | 12 (10s) | **12 (10,10,10)** |
-| **Hammer Curl (Wed)** | — | — | — | 14 (6,5,5) | 14 (8,8,8) | **14 (8,8,8)** |
-| **Cable Curl (W/F)** | 22 | 25 | 31 | 36–40 | 45+ | **45.4 (12s) / 49.9 (10s)** |
-| **Smith Press (Fri)** | 30 (8,6,6) | 32.5 (8s) | 32.5 (8s) | 35 (9,8,8) | 40 (10,10,8) | **40 (10,10,10)** |
+| Exercise (Day)              | Week 1       | Week 2        | Week 3       | Week 4         | Week 5           | Week 6 (Latest)                |
+| :-------------------------- | :----------- | :------------ | :----------- | :------------- | :--------------- | :----------------------------- |
+| **Bench Press (Mon)**       | 50 (6,6,6,4) | 50 (6,6,6,6)  | 55 (6,6,6,6) | 57.5 (6,6,6,6) | 60 (6,6,6)       | **60 (6,6,6,6)**               |
+| **Bench Press (Fri)**       | 52.5 (4x5)   | 55 (5x5)      | 57.5 (5x5)   | 60 (5x5)       | 65 (5x5) + 70x2  | **67.5 (5,5,5,5,2)**           |
+| **Incline DB Press (Mon)**  | 14 (8,8,8)   | 14 (9,9,9)    | 16 (9,9,9)   | 16 (12,12,10)  | 16 (10,10,10+)   | **16 (10,10,10,10)**           |
+| **Shoulder Press DB (M/F)** | 14 (6,4,4)   | 12–14 mixed   | 12 (8,8,8)   | 14 (10,9,7)    | 14–16 prog.      | **14 (10,8,8) / 16 (10,10,8)** |
+| **Lateral Raises (M/F)**    | 6 (10,10,8)  | 6–9 prog.     | 9 (12,12,10) | 9 (12,12,12)   | 9–13.6 mixed     | **9 (12,12,12)**               |
+| **Tricep Pushdown**         | 45 (8,8,8)   | 45 (9,9,9)    | 45–40 prog.  | 45–50 prog.    | 50 (10,10,10)    | **52 (10s) / 54.4 (10s)**      |
+| **Seated Row (M/W/F)**      | 102 (6s)     | 102–109       | 109 (8s)     | 109 (10s)      | 109 (10s stable) | **109 (10s) / 109 (8s slow)**  |
+| **Chin-ups (Wed)**          | 3,4,3        | 4,4,4         | 6,6,5        | 10,7,4         | 10,10,6          | **10,10,8**                    |
+| **Leg Press (Tue/Fri)**     | ~88          | ~115          | ~133         | 140            | 152              | **Injury (Skipped Fri)**       |
+| **Squat (Tue)**             | 50 (6,6,6)   | 52.5 (6,6,10) | 60–70 prog.  | 70 (6,6,8)     | 75 (6,6)         | **75 (Pending)**               |
+| **RDL (Tue)**               | 40           | 45            | 50           | 55             | 60               | **62.5 (Pending)**             |
+| **Leg Curl (Tue)**          | ~40          | ~47           | ~47–54       | ~54            | ~61              | **63 (Pending)**               |
+| **Leg Extension (Tue)**     | ~54          | ~60           | ~61          | ~61–65         | ~68–75           | **75 (Pending)**               |
+| **DB Curl (Wed)**           | 12 (6s)      | 10 (8s)       | 10 (9–10s)   | 12 (10s)       | 12 (10s)         | **12 (10,10,10)**              |
+| **Hammer Curl (Wed)**       | —            | —             | —            | 14 (6,5,5)     | 14 (8,8,8)       | **14 (8,8,8)**                 |
+| **Cable Curl (W/F)**        | 22           | 25            | 31           | 36–40          | 45+              | **45.4 (12s) / 49.9 (10s)**    |
+| **Smith Press (Fri)**       | 30 (8,6,6)   | 32.5 (8s)     | 32.5 (8s)    | 35 (9,8,8)     | 40 (10,10,8)     | **40 (10,10,10)**              |
 
 ---
 
@@ -331,6 +331,7 @@ Based on the progress data, the mock summary generator will produce text like:
 > **Week 7 Focus**: Upper body pressing continues to climb — bench hit 60 kg for clean 4×6 last week, targeting 62.5 kg this Monday. Chin-ups progressing well at 10,10,8 — push for that last rep. Lower body returning cautiously after the injury scare — keep leg press conservative. Bodyweight stable at ~77.7 kg. Key goal this week: nail the 67.5 kg 5×5 bench on Friday.
 
 The mock implementation will scan recent logs for:
+
 - Exercises with weight increases vs previous week
 - Rep PRs (hitting full target reps for the first time)
 - Any session notes mentioning injury

@@ -10,24 +10,25 @@ A mobile-first web app for tracking and planning gym sessions. Built with Svelte
 
 ## Tech Stack
 
-- SvelteKit 2 (Svelte 5) + Vite
+- SvelteKit 2 (Svelte 5) + Vite+
 - TypeScript
-- Tailwind CSS 4
+- Tailwind CSS 4 + daisyUI 5
 - Azure Table Storage
+- Azure OpenAI (gpt-4o-mini)
 - Chart.js (weight trend chart)
 - Vitest (unit tests)
 - Azure Static Web Apps (deployment)
 
 ## Prerequisites
 
-- Node.js 20+
+- [Vite+](https://viteplus.dev/) (`curl -fsSL https://vite.plus | bash`)
 - [Azurite](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite) for local Table Storage emulation
 
 ## Getting Started
 
 ```bash
 # Install dependencies
-npm install
+vp pm install
 
 # Copy env template and configure
 cp .env.example .env
@@ -36,25 +37,25 @@ cp .env.example .env
 azurite --silent --location .azurite --debug .azurite/debug.log
 
 # Seed the database with sample data
-npm run seed
+vp run seed
 
 # Start dev server
-npm run dev
+vp dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173) on your phone or in a mobile-width browser.
 
 ## Scripts
 
-| Command | Description |
-|---|---|
-| `npm run dev` | Start dev server |
-| `npm run build` | Production build |
-| `npm run preview` | Preview production build |
-| `npm run test` | Run unit tests |
-| `npm run test:watch` | Run tests in watch mode |
-| `npm run check` | Type-check with svelte-check |
-| `npm run seed` | Seed Azure Table Storage with sample data |
+| Command          | Description                               |
+| ---------------- | ----------------------------------------- |
+| `vp dev`         | Start dev server                          |
+| `vp build`       | Production build                          |
+| `vp preview`     | Preview production build                  |
+| `vp test --run`  | Run unit tests                            |
+| `vp test`        | Run tests in watch mode                   |
+| `vp run check`   | Type-check with svelte-check              |
+| `vp run seed`    | Seed Azure Table Storage with sample data |
 
 ## Project Structure
 
@@ -67,6 +68,7 @@ src/
 │   └── components/     # Svelte components
 ├── routes/
 │   ├── api/            # API routes (plans, exercises, weight, summary)
+│   ├── data/           # Data API routes
 │   ├── history/        # History page
 │   └── +page.svelte    # Plan page (home)
 ├── app.html

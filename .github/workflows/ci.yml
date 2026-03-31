@@ -15,14 +15,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-      - run: npm ci
-      - run: npm run check
-      - run: npm run test
-      - run: npm run build
+      - uses: voidzero-dev/setup-vp@v1
+      - run: vp pm install
+      - run: vp run check
+      - run: vp test --run
+      - run: vp build
 
   deploy:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
@@ -31,12 +28,9 @@ jobs:
     name: Deploy to Azure Static Web Apps
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-      - run: npm ci
-      - run: npm run build
+      - uses: voidzero-dev/setup-vp@v1
+      - run: vp pm install
+      - run: vp build
       - run: cp build/staticwebapp.config.json build/static/staticwebapp.config.json
       - name: Deploy
         uses: Azure/static-web-apps-deploy@v1
