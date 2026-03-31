@@ -152,7 +152,7 @@
 			{/each}
 		</div>
 	{:else if plan}
-		<div class="space-y-3 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
+		<div class="space-y-3 md:grid md:gap-4 md:space-y-0">
 			{#each plan.sessions as session}
 				<DayPlan
 					{session}
