@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import type { ExerciseLog, BodyweightEntry, ExerciseEntry } from '$lib/types';
 	import WeightChart from '$lib/components/WeightChart.svelte';
+	import ExerciseProgressChart from '$lib/components/ExerciseProgressChart.svelte';
 
 	type Tab = 'exercises' | 'weight';
 	let activeTab = $state<Tab>('exercises');
@@ -13,6 +14,7 @@
 	let newWeightDate = $state(new Date().toISOString().slice(0, 10));
 	let newWeight = $state<number | undefined>(undefined);
 	let saving = $state(false);
+	let expandedExercise = $state<string | null>(null);
 
 	onMount(async () => {
 		const [exRes, wtRes] = await Promise.all([
@@ -160,8 +162,12 @@
 				</thead>
 				<tbody>
 					{#each exerciseNames() as name, i}
-						<tr class="hover">
+						<tr
+							class="hover cursor-pointer"
+							onclick={() => expandedExercise = expandedExercise === name ? null : name}
+						>
 							<td class="sticky left-0 z-10 whitespace-nowrap font-medium bg-base-100">
+								<span class="mr-1 inline-block transition-transform {expandedExercise === name ? 'rotate-90' : ''}">▶</span>
 								{name}
 							</td>
 							{#each weeks() as week}
@@ -171,6 +177,20 @@
 								</td>
 							{/each}
 						</tr>
+						{#if expandedExercise === name}
+							<tr>
+								<td colspan={weeks().length + 1} class="bg-base-200 px-4 py-3">
+									<ExerciseProgressChart points={weeks().map(w => {
+										const cell = cellMap().get(`${name}|${w}`);
+										return {
+											label: formatWeekLabel(w),
+											weight: cell?.weight,
+											reps: cell?.reps ?? []
+										};
+									}).filter(p => p.reps.length > 0)} />
+								</td>
+							</tr>
+						{/if}
 					{/each}
 				</tbody>
 			</table>
