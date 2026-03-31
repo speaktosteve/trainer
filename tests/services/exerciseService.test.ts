@@ -164,7 +164,10 @@ describe("exerciseService", () => {
 
       await getExerciseHistory({ fromDate: "2026-03-01" });
 
-      const callArgs = mockClient.listEntities.mock.calls[0][0];
+      const firstCall = mockClient.listEntities.mock.calls.at(0);
+      expect(firstCall).toBeDefined();
+      const callArgs = firstCall?.[0];
+      expect(callArgs).toBeDefined();
       expect(callArgs.queryOptions.filter).toContain("RowKey le");
     });
 
@@ -174,7 +177,10 @@ describe("exerciseService", () => {
 
       await getExerciseHistory({ toDate: "2026-03-31" });
 
-      const callArgs = mockClient.listEntities.mock.calls[0][0];
+      const firstCall = mockClient.listEntities.mock.calls.at(0);
+      expect(firstCall).toBeDefined();
+      const callArgs = firstCall?.[0];
+      expect(callArgs).toBeDefined();
       expect(callArgs.queryOptions.filter).toContain("RowKey ge");
     });
 
@@ -330,7 +336,10 @@ describe("exerciseService", () => {
 
       await getWeightHistory({ fromDate: "2026-03-01" });
 
-      const callArgs = mockClient.listEntities.mock.calls[0][0];
+      const firstCall = mockClient.listEntities.mock.calls.at(0);
+      expect(firstCall).toBeDefined();
+      const callArgs = firstCall?.[0];
+      expect(callArgs).toBeDefined();
       expect(callArgs.queryOptions.filter).toContain("RowKey ge '2026-03-01'");
     });
 
@@ -340,7 +349,10 @@ describe("exerciseService", () => {
 
       await getWeightHistory({ toDate: "2026-03-31" });
 
-      const callArgs = mockClient.listEntities.mock.calls[0][0];
+      const firstCall = mockClient.listEntities.mock.calls.at(0);
+      expect(firstCall).toBeDefined();
+      const callArgs = firstCall?.[0];
+      expect(callArgs).toBeDefined();
       expect(callArgs.queryOptions.filter).toContain("RowKey le '2026-03-31'");
     });
 
