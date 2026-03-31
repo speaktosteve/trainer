@@ -111,13 +111,79 @@
 		const month = d.toLocaleDateString('en-GB', { month: 'short' });
 		return `${day} ${month}`;
 	}
+
+	function exportMarkdown() {
+		const lines: string[] = [];
+		lines.push('# Training History');
+		lines.push('');
+		lines.push(`Exported: ${new Date().toISOString().slice(0, 10)}`);
+		lines.push('');
+
+		// Exercise history
+		if (exerciseLogs.length > 0) {
+			lines.push('## Exercise History');
+			lines.push('');
+
+			// Group by week
+			const byWeek = new Map<string, typeof exerciseLogs>();
+			for (const log of exerciseLogs) {
+				const arr = byWeek.get(log.weekStart) ?? [];
+				arr.push(log);
+				byWeek.set(log.weekStart, arr);
+			}
+
+			for (const [week, logs] of [...byWeek.entries()].sort((a, b) => a[0].localeCompare(b[0]))) {
+				lines.push(`### Week of ${week}`);
+				lines.push('');
+				for (const log of logs) {
+					lines.push(`**${log.day} — ${log.label}** (${log.completedDate})`);
+					lines.push('');
+					lines.push('| Exercise | Weight (kg) | Reps |');
+					lines.push('|----------|-------------|------|');
+					for (const ex of log.exercises) {
+						const w = ex.actualWeight ?? ex.targetWeight;
+						const r = (ex.actualReps ?? ex.targetReps).join(', ');
+						lines.push(`| ${ex.name} | ${w ?? 'bodyweight'} | ${r} |`);
+					}
+					lines.push('');
+				}
+			}
+		}
+
+		// Bodyweight
+		if (weightEntries.length > 0) {
+			lines.push('## Bodyweight Log');
+			lines.push('');
+			lines.push('| Date | Weight (kg) |');
+			lines.push('|------|-------------|');
+			for (const e of weightEntries) {
+				lines.push(`| ${e.date} | ${e.weight} |`);
+			}
+			lines.push('');
+		}
+
+		const blob = new Blob([lines.join('\n')], { type: 'text/markdown' });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = `training-history-${new Date().toISOString().slice(0, 10)}.md`;
+		a.click();
+		URL.revokeObjectURL(url);
+	}
 </script>
 
 <svelte:head>
 	<title>History — Trainer</title>
 </svelte:head>
 
-<h1 class="mb-4 text-xl font-bold text-base-content md:text-2xl">History</h1>
+<div class="mb-4 flex items-center justify-between">
+	<h1 class="text-xl font-bold text-base-content md:text-2xl">History</h1>
+	{#if !loading && (exerciseLogs.length > 0 || weightEntries.length > 0)}
+		<button class="btn btn-ghost btn-sm" onclick={exportMarkdown} title="Export as Markdown">
+			⬇ Export
+		</button>
+	{/if}
+</div>
 
 <!-- Tab Toggle -->
 <div role="tablist" class="tabs tabs-box mb-4">
