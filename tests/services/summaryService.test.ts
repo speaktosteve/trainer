@@ -122,12 +122,28 @@ describe("MockSummaryProvider", () => {
     const exercises = ["Bench Press", "Overhead Press", "Row"];
     const prevLogs = exercises.map((name) =>
       makeLog({
-        exercises: [{ name, targetWeight: 50, targetReps: [6, 6, 6], actualWeight: 50, actualReps: [6, 6, 6] }],
+        exercises: [
+          {
+            name,
+            targetWeight: 50,
+            targetReps: [6, 6, 6],
+            actualWeight: 50,
+            actualReps: [6, 6, 6],
+          },
+        ],
       }),
     );
     const currentLogs = exercises.map((name) =>
       makeLog({
-        exercises: [{ name, targetWeight: 52.5, targetReps: [6, 6, 6], actualWeight: 52.5, actualReps: [6, 6, 6] }],
+        exercises: [
+          {
+            name,
+            targetWeight: 52.5,
+            targetReps: [6, 6, 6],
+            actualWeight: 52.5,
+            actualReps: [6, 6, 6],
+          },
+        ],
       }),
     );
     const result = await provider.generateSummary("2026-03-30", currentLogs, prevLogs, []);
@@ -138,14 +154,26 @@ describe("MockSummaryProvider", () => {
     const prevLogs = [
       makeLog({
         exercises: [
-          { name: "Bench Press", targetWeight: 62.5, targetReps: [5, 5, 5], actualWeight: 62.5, actualReps: [5, 5, 5] },
+          {
+            name: "Bench Press",
+            targetWeight: 62.5,
+            targetReps: [5, 5, 5],
+            actualWeight: 62.5,
+            actualReps: [5, 5, 5],
+          },
         ],
       }),
     ];
     const currentLogs = [
       makeLog({
         exercises: [
-          { name: "Bench Press", targetWeight: 62.5, targetReps: [6, 6, 6], actualWeight: 62.5, actualReps: [6, 6, 6] },
+          {
+            name: "Bench Press",
+            targetWeight: 62.5,
+            targetReps: [6, 6, 6],
+            actualWeight: 62.5,
+            actualReps: [6, 6, 6],
+          },
         ],
       }),
     ];
@@ -158,7 +186,7 @@ describe("MockSummaryProvider", () => {
 
   it("shows weight trend arrow ↑ for meaningful weight gain", async () => {
     const weights: BodyweightEntry[] = [
-      { date: "2026-03-20", weight: 75.0 },
+      { date: "2026-03-20", weight: 75 },
       { date: "2026-03-27", weight: 75.5 },
     ];
     const result = await provider.generateSummary("2026-03-30", [], [], weights);
@@ -168,7 +196,7 @@ describe("MockSummaryProvider", () => {
 
   it("shows weight trend arrow ↓ for meaningful weight loss", async () => {
     const weights: BodyweightEntry[] = [
-      { date: "2026-03-20", weight: 78.0 },
+      { date: "2026-03-20", weight: 78 },
       { date: "2026-03-27", weight: 77.5 },
     ];
     const result = await provider.generateSummary("2026-03-30", [], [], weights);
@@ -179,7 +207,7 @@ describe("MockSummaryProvider", () => {
   it("shows weight trend arrow → for negligible weight change", async () => {
     const weights: BodyweightEntry[] = [
       { date: "2026-03-20", weight: 77.9 },
-      { date: "2026-03-27", weight: 78.0 },
+      { date: "2026-03-27", weight: 78 },
     ];
     const result = await provider.generateSummary("2026-03-30", [], [], weights);
     const weightLine = result.lines.find((l) => l.label === "Bodyweight");
@@ -228,7 +256,7 @@ describe("MockSummaryProvider", () => {
 
   it("populates the text field from lines", async () => {
     const weights: BodyweightEntry[] = [
-      { date: "2026-03-20", weight: 77.0 },
+      { date: "2026-03-20", weight: 77 },
       { date: "2026-03-27", weight: 77.5 },
     ];
     const result = await provider.generateSummary("2026-03-30", [], [], weights);

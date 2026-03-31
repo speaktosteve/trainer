@@ -1,6 +1,6 @@
 import { json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
-import { getCurrentWeekPlan, getPlan, savePlan } from "$lib/services/planService";
+import { getPlan, savePlan } from "$lib/services/planService";
 import { getExerciseLogsForWeek } from "$lib/services/exerciseService";
 import { planGenerator, llmPlanGenerator } from "$lib/services/planGenerationService";
 import { isLLMConfigured } from "$lib/services/openaiClient";
