@@ -67,7 +67,7 @@
 
 <div class="h-48 w-full">
 	{#if entries.length === 0}
-		<div class="flex h-full items-center justify-center text-sm text-gray-400">
+		<div class="flex h-full items-center justify-center text-sm text-base-content/40">
 			No weight entries yet
 		</div>
 	{:else}

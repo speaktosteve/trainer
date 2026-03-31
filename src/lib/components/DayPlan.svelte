@@ -44,37 +44,35 @@
 	}
 </script>
 
-<div class="rounded-xl border border-gray-200 bg-white shadow-sm">
+<div class="card card-border bg-base-100 shadow-sm">
 	<button
 		class="flex w-full items-center justify-between p-4 text-left"
 		style="min-height: 44px;"
 		onclick={() => (expanded = !expanded)}
 	>
 		<div>
-			<h3 class="text-sm font-bold text-gray-900">
+			<h3 class="text-sm font-bold text-base-content">
 				{dayLabels[session.day]} — {session.label}
 			</h3>
-			<p class="mt-0.5 text-xs text-gray-500">
+			<p class="mt-0.5 text-xs text-base-content/60">
 				{session.exercises.length} exercises · {completedCount}/{session.exercises.length} done
 			</p>
 			{#if session.sessionNotes}
-				<p class="mt-1 text-xs italic text-amber-600">⚠️ {session.sessionNotes}</p>
+				<p class="mt-1 text-xs italic text-warning">⚠️ {session.sessionNotes}</p>
 			{/if}
 		</div>
 		<div class="flex items-center gap-2">
 			{#if allDone}
-				<span class="rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700"
-					>✓</span
-				>
+				<span class="badge badge-success badge-sm">✓</span>
 			{/if}
-			<span class="text-gray-400 transition-transform {expanded ? 'rotate-180' : ''}"
+			<span class="text-base-content/40 transition-transform {expanded ? 'rotate-180' : ''}"
 				>▾</span
 			>
 		</div>
 	</button>
 
 	{#if expanded}
-		<div class="space-y-2 border-t border-gray-100 p-4 pt-3">
+		<div class="space-y-2 border-t border-base-300 p-4 pt-3">
 			{#each session.exercises as exercise}
 				<ExerciseCard
 					{exercise}

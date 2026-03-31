@@ -37,35 +37,37 @@
 </script>
 
 <div
-	class="rounded-lg border p-3 {completed
-		? 'border-green-200 bg-green-50'
-		: 'border-gray-200 bg-white'}"
+	class="card card-border bg-base-100 p-3 {completed ? 'border-success/40 bg-success/10' : ''}"
 >
 	<div class="flex items-start justify-between">
 		<div class="flex-1">
-			<h4 class="text-sm font-semibold text-gray-900">{exercise.name}</h4>
-			<p class="mt-0.5 text-xs text-gray-500">
-				Target: {formatReps(exercise.targetReps)}
-				{#if exercise.targetWeight !== undefined}
-					@ {exercise.targetWeight} kg
-				{/if}
-			</p>
+			<h4 class="text-sm font-semibold text-base-content">{exercise.name}</h4>
+			{#if completed && exercise.actualReps}
+				<p class="mt-0.5 text-xs text-success">
+					Actual: {formatReps(exercise.actualReps)}
+					{#if exercise.actualWeight !== undefined}
+						@ {exercise.actualWeight} kg
+					{/if}
+				</p>
+			{:else}
+				<p class="mt-0.5 text-xs text-base-content/60">
+					Target: {formatReps(exercise.targetReps)}
+					{#if exercise.targetWeight !== undefined}
+						@ {exercise.targetWeight} kg
+					{/if}
+				</p>
+			{/if}
 			{#if exercise.notes}
-				<p class="mt-0.5 text-xs italic text-blue-600">{exercise.notes}</p>
+				<p class="mt-0.5 text-xs italic text-info">{exercise.notes}</p>
 			{/if}
 		</div>
 
 		{#if completed}
 			<div class="flex items-center gap-1.5">
-				<span class="rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
-					✓ {#if exercise.actualReps}{formatReps(exercise.actualReps)}{/if}
-					{#if exercise.actualWeight !== undefined}
-						@ {exercise.actualWeight} kg
-					{/if}
-				</span>
+				<span class="badge badge-success badge-sm">✓</span>
 				{#if onUndo}
 					<button
-						class="min-h-[32px] min-w-[32px] rounded-lg border border-gray-300 px-1.5 text-xs text-gray-500 active:bg-gray-100"
+						class="btn btn-ghost btn-xs"
 						onclick={onUndo}
 						title="Undo"
 					>
@@ -75,7 +77,7 @@
 			</div>
 		{:else}
 			<button
-				class="min-h-[44px] min-w-[44px] rounded-lg bg-blue-500 px-3 py-1.5 text-xs font-medium text-white active:bg-blue-600"
+				class="btn btn-primary btn-sm"
 				onclick={() => (editing = !editing)}
 			>
 				{editing ? 'Cancel' : 'Log'}
@@ -84,21 +86,21 @@
 	</div>
 
 	{#if editing}
-		<div class="mt-3 space-y-2 border-t border-gray-100 pt-3">
+		<div class="mt-3 space-y-2 border-t border-base-300 pt-3">
 			{#if exercise.targetWeight !== undefined}
 				<label class="block">
-					<span class="text-xs text-gray-600">Weight (kg)</span>
+					<span class="text-xs text-base-content/60">Weight (kg)</span>
 					<input
 						type="number"
 						step="0.5"
 						value={actualWeight}
 						oninput={(e) => (weightOverride = Number(e.currentTarget.value))}
-						class="mt-1 block w-full rounded-md border border-gray-300 px-2 py-1.5 text-sm"
+						class="input input-bordered input-sm mt-1 w-full"
 					/>
 				</label>
 			{/if}
 			<div>
-				<span class="text-xs text-gray-600">Reps per set</span>
+				<span class="text-xs text-base-content/60">Reps per set</span>
 				<div class="mt-1 flex gap-2">
 					{#each actualReps as rep, i}
 						<input
@@ -109,13 +111,13 @@
 								newReps[i] = Number(e.currentTarget.value);
 								repsOverride = newReps;
 							}}
-							class="w-14 rounded-md border border-gray-300 px-2 py-1.5 text-center text-sm"
+							class="input input-bordered input-sm w-14 text-center"
 						/>
 					{/each}
 				</div>
 			</div>
 			<button
-				class="min-h-[44px] w-full rounded-lg bg-green-500 py-2 text-sm font-medium text-white active:bg-green-600"
+				class="btn btn-success btn-block"
 				onclick={handleComplete}
 			>
 				Mark Complete ✓

@@ -21,6 +21,20 @@ if (!connStr) {
 
 const DEFAULT_PK = 'default';
 
+// ── Confirmation prompt ──────────────────────────────────────────────
+if (!process.argv.includes('--force')) {
+	const readline = await import('readline');
+	const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+	const answer = await new Promise<string>((resolve) =>
+		rl.question('⚠️  This will DELETE all existing data and re-seed. Continue? (y/N) ', resolve)
+	);
+	rl.close();
+	if (answer.trim().toLowerCase() !== 'y') {
+		console.log('Aborted.');
+		process.exit(0);
+	}
+}
+
 function reverseTimestamp(date: Date): string {
 	return String(9999999999999 - date.getTime()).padStart(13, '0');
 }
@@ -55,7 +69,7 @@ const currentPlan: WeeklyPlan = {
 				{ name: 'Seated Shoulder Press', targetWeight: 14, targetReps: [10, 10, 10], notes: 'Clean up the reps from last week' },
 				{ name: 'Lateral Raises', targetWeight: 9, targetReps: [12, 12, 12] },
 				{ name: 'Tricep Pushdown', targetWeight: 54.4, targetReps: [10, 10, 10], notes: 'Matching your Friday win' },
-				{ name: 'Row (slow form)', targetWeight: 109, targetReps: [8, 8, 8] },
+				{ name: 'Seated Row', targetWeight: 109, targetReps: [8, 8, 8] },
 				{ name: 'Seated Chest Press', targetWeight: 109, targetReps: [10, 10, 10], notes: 'Adding 1 rep per set' }
 			]
 		},
@@ -124,7 +138,8 @@ const historyLogs: ExerciseLog[] = [
 			{ name: 'Seated Shoulder Press', targetWeight: 14, targetReps: [6, 6, 6], actualWeight: 14, actualReps: [6, 4, 4] },
 			{ name: 'Lateral Raises', targetWeight: 6, targetReps: [10, 10, 10], actualWeight: 6, actualReps: [10, 10, 8] },
 			{ name: 'Tricep Pushdown', targetWeight: 45, targetReps: [8, 8, 8], actualWeight: 45, actualReps: [8, 8, 8] },
-			{ name: 'Seated Row', targetWeight: 102, targetReps: [6, 6, 6], actualWeight: 102, actualReps: [6, 6, 6] }
+			{ name: 'Seated Row', targetWeight: 102, targetReps: [6, 6, 6], actualWeight: 102, actualReps: [6, 6, 6] },
+			{ name: 'Seated Chest Press', targetWeight: 84, targetReps: [8, 8, 8], actualWeight: 84, actualReps: [8, 8, 7] }
 		]
 	},
 	{
@@ -161,7 +176,8 @@ const historyLogs: ExerciseLog[] = [
 			{ name: 'Bench Press', targetWeight: 50, targetReps: [6, 6, 6, 6], actualWeight: 50, actualReps: [6, 6, 6, 6] },
 			{ name: 'Incline DB Press', targetWeight: 14, targetReps: [9, 9, 9], actualWeight: 14, actualReps: [9, 9, 9] },
 			{ name: 'Tricep Pushdown', targetWeight: 45, targetReps: [9, 9, 9], actualWeight: 45, actualReps: [9, 9, 9] },
-			{ name: 'Seated Row', targetWeight: 109, targetReps: [8, 8, 8], actualWeight: 109, actualReps: [8, 8, 8] }
+			{ name: 'Seated Row', targetWeight: 109, targetReps: [8, 8, 8], actualWeight: 109, actualReps: [8, 8, 8] },
+			{ name: 'Seated Chest Press', targetWeight: 88, targetReps: [8, 8, 8], actualWeight: 88, actualReps: [8, 8, 8] }
 		]
 	},
 	{
@@ -198,7 +214,8 @@ const historyLogs: ExerciseLog[] = [
 			{ name: 'Incline DB Press', targetWeight: 16, targetReps: [9, 9, 9], actualWeight: 16, actualReps: [9, 9, 9] },
 			{ name: 'Seated Shoulder Press', targetWeight: 12, targetReps: [8, 8, 8], actualWeight: 12, actualReps: [8, 8, 8] },
 			{ name: 'Lateral Raises', targetWeight: 9, targetReps: [12, 12, 12], actualWeight: 9, actualReps: [12, 12, 10] },
-			{ name: 'Seated Row', targetWeight: 109, targetReps: [8, 8, 8], actualWeight: 109, actualReps: [8, 8, 8] }
+			{ name: 'Seated Row', targetWeight: 109, targetReps: [8, 8, 8], actualWeight: 109, actualReps: [8, 8, 8] },
+			{ name: 'Seated Chest Press', targetWeight: 93, targetReps: [9, 9, 9], actualWeight: 93, actualReps: [9, 9, 8] }
 		]
 	},
 	{
@@ -235,7 +252,8 @@ const historyLogs: ExerciseLog[] = [
 			{ name: 'Incline DB Press', targetWeight: 16, targetReps: [12, 12, 12], actualWeight: 16, actualReps: [12, 12, 10] },
 			{ name: 'Seated Shoulder Press', targetWeight: 14, targetReps: [10, 10, 10], actualWeight: 14, actualReps: [10, 9, 7] },
 			{ name: 'Lateral Raises', targetWeight: 9, targetReps: [12, 12, 12], actualWeight: 9, actualReps: [12, 12, 12] },
-			{ name: 'Seated Row', targetWeight: 109, targetReps: [10, 10, 10], actualWeight: 109, actualReps: [10, 10, 10] }
+			{ name: 'Seated Row', targetWeight: 109, targetReps: [10, 10, 10], actualWeight: 109, actualReps: [10, 10, 10] },
+			{ name: 'Seated Chest Press', targetWeight: 97, targetReps: [9, 9, 9], actualWeight: 97, actualReps: [9, 9, 9] }
 		]
 	},
 	{
@@ -273,7 +291,8 @@ const historyLogs: ExerciseLog[] = [
 			{ name: 'Bench Press', targetWeight: 60, targetReps: [6, 6, 6, 6], actualWeight: 60, actualReps: [6, 6, 6] },
 			{ name: 'Incline DB Press', targetWeight: 16, targetReps: [10, 10, 10], actualWeight: 16, actualReps: [10, 10, 10] },
 			{ name: 'Tricep Pushdown', targetWeight: 50, targetReps: [10, 10, 10], actualWeight: 50, actualReps: [10, 10, 10] },
-			{ name: 'Seated Row', targetWeight: 109, targetReps: [10, 10, 10], actualWeight: 109, actualReps: [10, 10, 10] }
+			{ name: 'Seated Row', targetWeight: 109, targetReps: [10, 10, 10], actualWeight: 109, actualReps: [10, 10, 10] },
+			{ name: 'Seated Chest Press', targetWeight: 102, targetReps: [9, 9, 9], actualWeight: 102, actualReps: [9, 9, 9] }
 		]
 	},
 	{
@@ -314,7 +333,8 @@ const historyLogs: ExerciseLog[] = [
 			{ name: 'Seated Shoulder Press', targetWeight: 14, targetReps: [10, 10, 10], actualWeight: 14, actualReps: [10, 8, 8] },
 			{ name: 'Lateral Raises', targetWeight: 9, targetReps: [12, 12, 12], actualWeight: 9, actualReps: [12, 12, 12] },
 			{ name: 'Tricep Pushdown', targetWeight: 52, targetReps: [10, 10, 10], actualWeight: 52, actualReps: [10, 10, 10] },
-			{ name: 'Row (slow form)', targetWeight: 109, targetReps: [8, 8, 8], actualWeight: 109, actualReps: [8, 8, 8] }
+			{ name: 'Seated Row', targetWeight: 109, targetReps: [8, 8, 8], actualWeight: 109, actualReps: [8, 8, 8] },
+			{ name: 'Seated Chest Press', targetWeight: 106, targetReps: [9, 9, 9], actualWeight: 106, actualReps: [9, 9, 9] }
 		]
 	},
 	{

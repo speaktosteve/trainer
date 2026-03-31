@@ -8,7 +8,7 @@
 {#if summary}
 	<button
 		type="button"
-		class="mb-4 w-full rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 p-4 text-left text-white shadow-md transition-all"
+		class="mb-4 w-full rounded-xl bg-primary p-4 text-left text-primary-content shadow-md transition-all"
 		onclick={() => (open = !open)}
 	>
 		<div class="flex items-center justify-between">
@@ -18,16 +18,16 @@
 		{#if open && summary.lines.length > 0}
 			<div class="mt-2 space-y-1">
 				{#each summary.lines as line}
-					<div class="flex items-start gap-2 text-xs leading-snug text-white/90">
+					<div class="flex items-start gap-2 text-xs leading-snug text-primary-content/80">
 						<span class="shrink-0">{line.icon}</span>
-						<span><span class="font-medium text-white">{line.label}</span> {line.detail}</span>
+						<span><span class="font-medium text-primary-content">{line.label}</span> {line.detail}</span>
 					</div>
 				{/each}
 			</div>
 		{/if}
 	</button>
 {:else}
-	<div class="mb-4 rounded-xl bg-gray-100 p-3 text-gray-400 shadow-sm">
+	<div class="mb-4 rounded-xl bg-base-300 p-3 text-base-content/50 shadow-sm">
 		<p class="text-sm italic">No generated summary available</p>
 	</div>
 {/if}

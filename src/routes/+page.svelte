@@ -137,9 +137,9 @@
 	/>
 {:else}
 	<div class="mb-4 flex items-center justify-between">
-		<h1 class="text-xl font-bold text-gray-900 md:text-2xl">This Week's Plan</h1>
+		<h1 class="text-xl font-bold text-base-content md:text-2xl">This Week's Plan</h1>
 		{#if plan}
-			<span class="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
+			<span class="badge badge-primary">
 				w/c {plan.weekStart}
 			</span>
 		{/if}
@@ -150,7 +150,7 @@
 	{#if loading}
 		<div class="space-y-3">
 			{#each Array(4) as _}
-				<div class="h-20 animate-pulse rounded-xl bg-gray-200"></div>
+				<div class="h-20 animate-pulse rounded-xl bg-base-300"></div>
 			{/each}
 		</div>
 	{:else if plan}
@@ -169,32 +169,35 @@
 		<!-- Next week plan button -->
 		<div class="mt-6">
 			{#if generateError}
-				<div class="mb-3 rounded-lg bg-red-50 border border-red-200 p-3 text-sm text-red-700">
-					<p class="font-medium">Plan generation failed</p>
-					<p class="mt-1 text-xs text-red-600">{generateError}</p>
-					<button
-						class="mt-2 text-xs font-medium text-red-500 underline"
-						onclick={() => (generateError = null)}
-					>Dismiss</button>
+				<div class="alert alert-error mb-3">
+					<div>
+						<p class="font-medium">Plan generation failed</p>
+						<p class="mt-1 text-xs">{generateError}</p>
+						<button
+							class="mt-2 text-xs font-medium underline"
+							onclick={() => (generateError = null)}
+						>Dismiss</button>
+					</div>
 				</div>
 			{/if}
 			<button
-				class="min-h-[44px] w-full rounded-lg bg-indigo-500 py-3 text-sm font-semibold text-white active:bg-indigo-600 disabled:opacity-50"
+				class="btn btn-primary btn-block"
 				disabled={generating}
 				onclick={generateNextPlan}
 			>
 				{#if generating}
+					<span class="loading loading-spinner loading-sm"></span>
 					Generating…
 				{:else}
 					Plan Next Week ({totalCompleted}/{totalExercises} done)
 				{/if}
 			</button>
-			<p class="mt-1 text-center text-xs text-gray-400">
+			<p class="mt-1 text-center text-xs text-base-content/40">
 				Copies this week's plan with smart weight progression
 			</p>
 		</div>
 	{:else}
-		<div class="rounded-xl bg-white p-8 text-center text-gray-500 shadow-sm">
+		<div class="card bg-base-100 p-8 text-center text-base-content/60 shadow-sm">
 			<p class="text-lg">No plan for this week</p>
 			<p class="mt-1 text-sm">Plans can be created via the API</p>
 		</div>
