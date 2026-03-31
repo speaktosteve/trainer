@@ -73,15 +73,15 @@ Open [http://localhost:5173](http://localhost:5173) on your phone or in a mobile
 
 ## Scripts
 
-| Command          | Description                               |
-| ---------------- | ----------------------------------------- |
-| `vp dev`         | Start dev server                          |
-| `vp build`       | Production build                          |
-| `vp preview`     | Preview production build                  |
-| `vp test --run`  | Run unit tests                            |
-| `vp test`        | Run tests in watch mode                   |
-| `vp run check`   | Type-check with svelte-check              |
-| `vp run seed`    | Seed Azure Table Storage with sample data |
+| Command         | Description                               |
+| --------------- | ----------------------------------------- |
+| `vp dev`        | Start dev server                          |
+| `vp build`      | Production build                          |
+| `vp preview`    | Preview production build                  |
+| `vp test --run` | Run unit tests                            |
+| `vp test`       | Run tests in watch mode                   |
+| `vp run check`  | Type-check with svelte-check              |
+| `vp run seed`   | Seed Azure Table Storage with sample data |
 
 ## Project Structure
 
@@ -113,37 +113,37 @@ tests/
 
 All server routes live under `/data/` (not `/api/`, which is reserved by Azure Static Web Apps):
 
-| Route | Methods | Purpose |
-|-------|---------|---------|
-| `/data/plans` | GET, POST, PUT | Fetch current week plan, create, or update a plan |
-| `/data/plans/[weekId]` | GET | Fetch a specific week's plan by date (e.g. `2026-03-30`) |
-| `/data/plans/next` | POST | Generate next week's plan via AI or rule-based provider |
-| `/data/exercises` | GET, POST, DELETE | Query exercise logs (with `?from`, `?to`, `?limit`), log a session, remove an entry |
-| `/data/weight` | GET, POST | Query bodyweight history, log a new entry |
-| `/data/summary` | GET | Fetch weekly AI-generated summary |
+| Route                  | Methods           | Purpose                                                                             |
+| ---------------------- | ----------------- | ----------------------------------------------------------------------------------- |
+| `/data/plans`          | GET, POST, PUT    | Fetch current week plan, create, or update a plan                                   |
+| `/data/plans/[weekId]` | GET               | Fetch a specific week's plan by date (e.g. `2026-03-30`)                            |
+| `/data/plans/next`     | POST              | Generate next week's plan via AI or rule-based provider                             |
+| `/data/exercises`      | GET, POST, DELETE | Query exercise logs (with `?from`, `?to`, `?limit`), log a session, remove an entry |
+| `/data/weight`         | GET, POST         | Query bodyweight history, log a new entry                                           |
+| `/data/summary`        | GET               | Fetch weekly AI-generated summary                                                   |
 
 ### Service Layer
 
 All data operations go through typed service modules in `src/lib/services/`, making it easy to swap storage backends or AI providers.
 
-| Service | Responsibility |
-|---------|---------------|
-| `tableStorage.ts` | Thin wrapper around `@azure/data-tables`. Manages three tables (`Plans`, `ExerciseLogs`, `BodyWeight`), creates them on first access. Exports `DEFAULT_PK = "default"` for single-user partitioning. |
-| `planService.ts` | CRUD operations for weekly training plans — fetch current week, fetch by date, upsert, range queries. |
-| `exerciseService.ts` | Exercise log persistence with **merge logic** (same exercise on same date+day overwrites rather than duplicates). Also handles bodyweight logging and history. |
-| `summaryService.ts` | Weekly progress summaries via a `SummaryProvider` interface. Ships with `MockSummaryProvider` (heuristic-based: session counts, bodyweight trends, PR detection, injury notes). |
-| `openaiClient.ts` | Azure OpenAI client wrapper. Checks if LLM is configured and caches the client instance. |
+| Service                    | Responsibility                                                                                                                                                                                                                                  |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `tableStorage.ts`          | Thin wrapper around `@azure/data-tables`. Manages three tables (`Plans`, `ExerciseLogs`, `BodyWeight`), creates them on first access. Exports `DEFAULT_PK = "default"` for single-user partitioning.                                            |
+| `planService.ts`           | CRUD operations for weekly training plans — fetch current week, fetch by date, upsert, range queries.                                                                                                                                           |
+| `exerciseService.ts`       | Exercise log persistence with **merge logic** (same exercise on same date+day overwrites rather than duplicates). Also handles bodyweight logging and history.                                                                                  |
+| `summaryService.ts`        | Weekly progress summaries via a `SummaryProvider` interface. Ships with `MockSummaryProvider` (heuristic-based: session counts, bodyweight trends, PR detection, injury notes).                                                                 |
+| `openaiClient.ts`          | Azure OpenAI client wrapper. Checks if LLM is configured and caches the client instance.                                                                                                                                                        |
 | `planGenerationService.ts` | Next-week plan generation via a `PlanGenerationProvider` interface. Two implementations: `SmartCopyProvider` (rule-based progressive overload) and `LLMPlanProvider` (Azure OpenAI with coaching prompt). Falls back to SmartCopy on LLM error. |
 
 ### Azure Table Storage Schema
 
 Single-user design — all data lives under partition key `"default"`. Extend to multi-user by varying the partition key.
 
-| Table | Partition Key | Row Key | Data |
-|-------|--------------|---------|------|
-| **Plans** | `"default"` | ISO week-start date (`"2026-03-30"`) | JSON-serialised `WeeklyPlan` |
-| **ExerciseLogs** | `"default"` | `reverseTimestamp(date)_day` | JSON-serialised `ExerciseLog` with actual weight/reps |
-| **BodyWeight** | `"default"` | ISO date (`"2026-03-30"`) | `weight` (number, kg) |
+| Table            | Partition Key | Row Key                              | Data                                                  |
+| ---------------- | ------------- | ------------------------------------ | ----------------------------------------------------- |
+| **Plans**        | `"default"`   | ISO week-start date (`"2026-03-30"`) | JSON-serialised `WeeklyPlan`                          |
+| **ExerciseLogs** | `"default"`   | `reverseTimestamp(date)_day`         | JSON-serialised `ExerciseLog` with actual weight/reps |
+| **BodyWeight**   | `"default"`   | ISO date (`"2026-03-30"`)            | `weight` (number, kg)                                 |
 
 **Reverse timestamp** (`9999999999999 - date.getTime()`) ensures newest entries sort first in Azure Table Storage's lexicographic ordering.
 
@@ -151,15 +151,15 @@ Single-user design — all data lives under partition key `"default"`. Extend to
 
 All components use Svelte 5 runes (`$state`, `$derived`, `$props`).
 
-| Component | Purpose |
-|-----------|---------|
-| `BottomNav` | Fixed bottom tab bar (Plan / History) with active-state tracking |
-| `SummaryBanner` | Collapsible weekly summary card (headline + expandable detail lines) |
-| `DayPlan` | Expandable session card listing exercises for a day; shows completion count |
-| `ExerciseCard` | Individual exercise with target/actual display, inline edit mode, complete/undo |
-| `PlanEditor` | Modal for reviewing and saving generated plans |
-| `WeightChart` | Chart.js line chart of bodyweight over time |
-| `ExerciseProgressChart` | Chart.js line chart tracking one exercise's weight or total reps across weeks |
+| Component               | Purpose                                                                         |
+| ----------------------- | ------------------------------------------------------------------------------- |
+| `BottomNav`             | Fixed bottom tab bar (Plan / History) with active-state tracking                |
+| `SummaryBanner`         | Collapsible weekly summary card (headline + expandable detail lines)            |
+| `DayPlan`               | Expandable session card listing exercises for a day; shows completion count     |
+| `ExerciseCard`          | Individual exercise with target/actual display, inline edit mode, complete/undo |
+| `PlanEditor`            | Modal for reviewing and saving generated plans                                  |
+| `WeightChart`           | Chart.js line chart of bodyweight over time                                     |
+| `ExerciseProgressChart` | Chart.js line chart tracking one exercise's weight or total reps across weeks   |
 
 ### Plan Generation Flow
 
