@@ -1,5 +1,15 @@
 # Trainer
 
+![CI](https://github.com/speaktosteve/training/actions/workflows/ci.yml/badge.svg)
+![SvelteKit](https://img.shields.io/badge/SvelteKit-2-FF3E00?logo=svelte&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
+![daisyUI](https://img.shields.io/badge/daisyUI-5-5A0EF8?logo=daisyui&logoColor=white)
+![Vite+](https://img.shields.io/badge/Vite+-646CFF?logo=vite&logoColor=white)
+![Vitest](https://img.shields.io/badge/Vitest-6E9F18?logo=vitest&logoColor=white)
+![Azure Static Web Apps](https://img.shields.io/badge/Azure_Static_Web_Apps-0078D4?logo=microsoft-azure&logoColor=white)
+![Azure Table Storage](https://img.shields.io/badge/Azure_Table_Storage-0078D4?logo=microsoft-azure&logoColor=white)
+
 A mobile-first web app for tracking and planning gym sessions. Built with SvelteKit, TypeScript, and Tailwind CSS, backed by Azure Table Storage.
 
 ## Features
