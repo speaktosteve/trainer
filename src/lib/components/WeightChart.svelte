@@ -5,7 +5,7 @@
 
 	let { entries }: { entries: BodyweightEntry[] } = $props();
 
-	let canvas: HTMLCanvasElement;
+	let canvas = $state<HTMLCanvasElement | undefined>(undefined);
 	let chart: Chart | null = null;
 
 	Chart.register(...registerables);

@@ -39,17 +39,8 @@ export class MockSummaryProvider implements SummaryProvider {
 		}
 
 		// Weight trend
-		if (weightHistory.length >= 2) {
-			const latest = weightHistory[weightHistory.length - 1];
-			const prev = weightHistory[weightHistory.length - 2];
-			const diff = latest.weight - prev.weight;
-			const arrow = diff > 0.2 ? "↑" : diff < -0.2 ? "↓" : "→";
-			lines.push({
-				icon: "⚖️",
-				label: "Bodyweight",
-				detail: `${latest.weight} kg ${arrow} ${diff > 0 ? "+" : ""}${diff.toFixed(1)} kg`,
-			});
-		}
+		const weightLine = buildWeightTrendLine(weightHistory);
+		if (weightLine) lines.push(weightLine);
 
 		// Compare exercises between weeks
 		const improvements = findImprovements(currentLogs, previousLogs);
@@ -64,22 +55,38 @@ export class MockSummaryProvider implements SummaryProvider {
 		}
 
 		// Headline
-		let headline: string;
-		if (improvements.length >= 3) {
-			headline = "Great week — multiple PRs!";
-		} else if (sessionCount >= 4) {
-			headline = "Solid consistency this week.";
-		} else if (sessionCount > 0) {
-			headline = "Keep building momentum.";
-		} else {
-			headline = "Ready to start this week.";
-		}
+		const headline = buildHeadline(improvements.length, sessionCount);
 
 		// Fallback text for backwards compat
 		const text = lines.map((l) => `${l.icon} ${l.detail}`).join(" · ") || headline;
 
 		return { weekStart, text, headline, lines };
 	}
+}
+
+function buildHeadline(improvementCount: number, sessionCount: number): string {
+	if (improvementCount >= 3) return "Great week — multiple PRs!";
+	if (sessionCount >= 4) return "Solid consistency this week.";
+	if (sessionCount > 0) return "Keep building momentum.";
+	return "Ready to start this week.";
+}
+
+function buildWeightTrendLine(weightHistory: BodyweightEntry[]): SummaryLine | null {
+	if (weightHistory.length < 2) return null;
+	const latest = weightHistory.at(-1);
+	const prev = weightHistory.at(-2);
+	if (!latest || !prev) return null;
+
+	const diff = latest.weight - prev.weight;
+	let arrow = "→";
+	if (diff > 0.2) arrow = "↑";
+	else if (diff < -0.2) arrow = "↓";
+
+	return {
+		icon: "⚖️",
+		label: "Bodyweight",
+		detail: `${latest.weight} kg ${arrow} ${diff > 0 ? "+" : ""}${diff.toFixed(1)} kg`,
+	};
 }
 
 function findImprovements(current: ExerciseLog[], previous: ExerciseLog[]): string[] {
@@ -136,7 +143,7 @@ export const summaryProvider: SummaryProvider = new MockSummaryProvider();
  * LLM-backed summary provider using Azure OpenAI.
  */
 export class LLMSummaryProvider implements SummaryProvider {
-	private fallback = new MockSummaryProvider();
+	private readonly fallback = new MockSummaryProvider();
 
 	async generateSummary(
 		weekStart: string,
@@ -191,7 +198,8 @@ Return ONLY valid JSON, no markdown fences.`,
 
 		if (weightHistory.length > 0) {
 			const recent = weightHistory.slice(-4);
-			parts.push(`Bodyweight: ${recent.map((w) => `${w.date}: ${w.weight}kg`).join(", ")}`);
+			const weightSeries = recent.map((w) => w.date + ": " + w.weight + "kg").join(", ");
+			parts.push(`Bodyweight: ${weightSeries}`);
 		}
 
 		if (currentLogs.length > 0) {
@@ -201,7 +209,8 @@ Return ONLY valid JSON, no markdown fences.`,
 					.map((ex) => {
 						const reps = (ex.actualReps ?? ex.targetReps).join(",");
 						const w = ex.actualWeight ?? ex.targetWeight;
-						return `${ex.name}: ${reps} reps${w ? ` @ ${w}kg` : ""}`;
+						const weightText = w ? ` @ ${w}kg` : "";
+						return `${ex.name}: ${reps} reps${weightText}`;
 					})
 					.join("; ");
 				parts.push(`  ${log.day} (${log.label}): ${exSummary}`);
@@ -217,7 +226,8 @@ Return ONLY valid JSON, no markdown fences.`,
 					.map((ex) => {
 						const reps = (ex.actualReps ?? ex.targetReps).join(",");
 						const w = ex.actualWeight ?? ex.targetWeight;
-						return `${ex.name}: ${reps} reps${w ? ` @ ${w}kg` : ""}`;
+						const weightText = w ? ` @ ${w}kg` : "";
+						return `${ex.name}: ${reps} reps${weightText}`;
 					})
 					.join("; ");
 				parts.push(`  ${log.day} (${log.label}): ${exSummary}`);

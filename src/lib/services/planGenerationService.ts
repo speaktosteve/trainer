@@ -262,7 +262,9 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
 					.map((ex) => {
 						const reps = (ex.actualReps ?? ex.targetReps).join(",");
 						const w = ex.actualWeight ?? ex.targetWeight;
-						return `${ex.name}: ${reps} reps${w ? ` @ ${w}kg` : ""}${ex.notes ? ` (${ex.notes})` : ""}`;
+						const weightText = w ? ` @ ${w}kg` : "";
+						const notesText = ex.notes ? ` (${ex.notes})` : "";
+						return `${ex.name}: ${reps} reps${weightText}${notesText}`;
 					})
 					.join("; ");
 				parts.push(`  ${log.day} (${log.label}): ${exercises}`);
@@ -280,7 +282,8 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
 					.map((ex) => {
 						const reps = (ex.actualReps ?? ex.targetReps).join(",");
 						const w = ex.actualWeight ?? ex.targetWeight;
-						return `${ex.name}: ${reps} reps${w ? ` @ ${w}kg` : ""}`;
+						const weightText = w ? ` @ ${w}kg` : "";
+						return `${ex.name}: ${reps} reps${weightText}`;
 					})
 					.join("; ");
 				parts.push(`  ${log.day} (${log.label}): ${exercises}`);

@@ -41,12 +41,21 @@ function createMockTableClient(entities: PlanEntity[] = []) {
 			return found;
 		}),
 		upsertEntity: vi.fn(),
-		listEntities: vi.fn(() => ({
+		listEntities: vi.fn((_options?: { queryOptions?: { filter?: string; select?: string[] } }) => ({
 			[Symbol.asyncIterator]: async function* () {
 				for (const e of entities) yield e;
 			},
 		})),
 	};
+}
+
+function getFirstListEntitiesFilter(mockClient: ReturnType<typeof createMockTableClient>): string {
+	const firstCall = mockClient.listEntities.mock.calls.at(0);
+	const callArgs = firstCall?.[0];
+	if (!callArgs) throw new Error("Expected listEntities to be called with query options");
+	const filter = callArgs.queryOptions?.filter;
+	if (!filter) throw new Error("Expected listEntities queryOptions.filter");
+	return filter;
 }
 
 describe("planService", () => {
@@ -91,6 +100,24 @@ describe("planService", () => {
 			const result = await getPlan("2026-03-23");
 			expect(result).toEqual({ ...mockPlan, weekStart: "2026-03-23" });
 		});
+
+		it("returns null for a 404 error", async () => {
+			const mockClient = createMockTableClient([]);
+			vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+
+			const result = await getPlan("2099-01-01");
+			expect(result).toBeNull();
+		});
+
+		it("re-throws non-404 errors", async () => {
+			const mockClient = createMockTableClient([]);
+			const serverError = new Error("Internal Server Error") as Error & { statusCode: number };
+			serverError.statusCode = 500;
+			mockClient.getEntity.mockRejectedValue(serverError);
+			vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+
+			await expect(getPlan("2026-03-30")).rejects.toThrow("Internal Server Error");
+		});
 	});
 
 	describe("savePlan", () => {
@@ -107,6 +134,17 @@ describe("planService", () => {
 				},
 				"Replace"
 			);
+		});
+
+		it("uses the plan's weekStart as the row key", async () => {
+			const mockClient = createMockTableClient();
+			vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+
+			const otherPlan = { ...mockPlan, weekStart: "2026-04-06" };
+			await savePlan(otherPlan);
+
+			const entity = mockClient.upsertEntity.mock.calls[0][0];
+			expect(entity.rowKey).toBe("2026-04-06");
 		});
 	});
 
@@ -125,6 +163,25 @@ describe("planService", () => {
 			expect(result).toHaveLength(2);
 			expect(result[0].weekStart).toBe("2026-03-16");
 			expect(result[1].weekStart).toBe("2026-03-23");
+		});
+
+		it("returns empty array when no plans are in range", async () => {
+			const mockClient = createMockTableClient([]);
+			vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+
+			const result = await getPlansForRange("2026-01-01", "2026-01-31");
+			expect(result).toEqual([]);
+		});
+
+		it("passes correct date range filter to listEntities", async () => {
+			const mockClient = createMockTableClient([]);
+			vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+
+			await getPlansForRange("2026-03-01", "2026-03-31");
+
+			const filter = getFirstListEntitiesFilter(mockClient);
+			expect(filter).toContain("RowKey ge '2026-03-01'");
+			expect(filter).toContain("RowKey le '2026-03-31'");
 		});
 	});
 });

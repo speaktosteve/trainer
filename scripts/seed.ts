@@ -18,12 +18,13 @@ if (!connStr) {
 	console.error("❌ Set AZURE_STORAGE_CONNECTION_STRING in .env");
 	process.exit(1);
 }
+const connectionString = connStr;
 
 const DEFAULT_PK = "default";
 
 // ── Confirmation prompt ──────────────────────────────────────────────
 if (!process.argv.includes("--force")) {
-	const readline = await import("readline");
+	const readline = await import("node:readline");
 	const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 	const answer = await new Promise<string>((resolve) =>
 		rl.question("⚠️  This will DELETE all existing data and re-seed. Continue? (y/N) ", resolve)
@@ -40,14 +41,15 @@ function reverseTimestamp(date: Date): string {
 }
 
 async function ensureTable(name: string): Promise<TableClient> {
-	const svc = TableServiceClient.fromConnectionString(connStr!);
+	const svc = TableServiceClient.fromConnectionString(connectionString);
 	await svc.createTable(name).catch(() => {});
-	const client = TableClient.fromConnectionString(connStr!, name);
+	const client = TableClient.fromConnectionString(connectionString, name);
 
 	// Clear all existing entities
 	const entities = client.listEntities({ queryOptions: { select: ["partitionKey", "rowKey"] } });
 	let deleted = 0;
 	for await (const entity of entities) {
+		if (!entity.partitionKey || !entity.rowKey) continue;
 		await client.deleteEntity(entity.partitionKey, entity.rowKey);
 		deleted++;
 	}
@@ -1094,7 +1096,9 @@ async function seed() {
 		if (!weekPlans.has(log.weekStart)) {
 			weekPlans.set(log.weekStart, { weekStart: log.weekStart, sessions: [] });
 		}
-		weekPlans.get(log.weekStart)!.sessions.push({
+		const weekPlan = weekPlans.get(log.weekStart);
+		if (!weekPlan) continue;
+		weekPlan.sessions.push({
 			day: log.day,
 			label: log.label,
 			exercises: log.exercises.map((ex) => ({
@@ -1152,7 +1156,9 @@ async function seed() {
 	console.log("\n🎉 Seed complete!");
 }
 
-seed().catch((err) => {
+try {
+	await seed();
+} catch (err) {
 	console.error("❌ Seed failed:", err);
 	process.exit(1);
-});
+}
