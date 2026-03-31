@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { WeeklyPlan, WeeklySummary, ExerciseLog } from '$lib/types';
+	import type { WeeklyPlan, WeeklySummary, ExerciseLog, ExerciseEntry } from '$lib/types';
 	import SummaryBanner from '$lib/components/SummaryBanner.svelte';
 	import DayPlan from '$lib/components/DayPlan.svelte';
 	import PlanEditor from '$lib/components/PlanEditor.svelte';
 
 	let plan = $state<WeeklyPlan | null>(null);
 	let summary = $state<WeeklySummary | null>(null);
-	let completedExercises = $state<Record<string, string[]>>({});
+	let completedExercises = $state<Record<string, Record<string, ExerciseEntry>>>({});
 	let loading = $state(true);
 
 	// Next-plan flow
@@ -32,11 +32,9 @@
 				const logs: ExerciseLog[] = await logsRes.json();
 				for (const log of logs) {
 					const key = log.day;
-					if (!completedExercises[key]) completedExercises[key] = [];
+					if (!completedExercises[key]) completedExercises[key] = {};
 					for (const ex of log.exercises) {
-						if (!completedExercises[key].includes(ex.name)) {
-							completedExercises[key].push(ex.name);
-						}
+						completedExercises[key][ex.name] = ex;
 					}
 				}
 			}
@@ -54,11 +52,9 @@
 
 		if (res.ok) {
 			const key = log.day;
-			if (!completedExercises[key]) completedExercises[key] = [];
+			if (!completedExercises[key]) completedExercises[key] = {};
 			for (const ex of log.exercises) {
-				if (!completedExercises[key].includes(ex.name)) {
-					completedExercises[key].push(ex.name);
-				}
+				completedExercises[key][ex.name] = ex;
 			}
 		}
 	}
@@ -69,7 +65,9 @@
 		const res = await fetch(`/data/exercises?${params}`, { method: 'DELETE' });
 
 		if (res.ok) {
-			completedExercises[day] = (completedExercises[day] ?? []).filter((n) => n !== exerciseName);
+			if (completedExercises[day]) {
+				delete completedExercises[day][exerciseName];
+			}
 		}
 	}
 
@@ -77,7 +75,7 @@
 		plan ? plan.sessions.reduce((sum, s) => sum + s.exercises.length, 0) : 0
 	);
 	const totalCompleted = $derived(
-		Object.values(completedExercises).reduce((sum, names) => sum + names.length, 0)
+		Object.values(completedExercises).reduce((sum, map) => sum + Object.keys(map).length, 0)
 	);
 
 	async function generateNextPlan() {
@@ -159,7 +157,7 @@
 				<DayPlan
 					{session}
 					weekStart={plan.weekStart}
-					completedExercises={completedExercises[session.day] ?? []}
+					completedExercises={completedExercises[session.day] ?? {}}
 					onExerciseComplete={handleExerciseComplete}
 					onExerciseUndo={handleExerciseUndo}
 				/>

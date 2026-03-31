@@ -5,13 +5,13 @@
 	let {
 		session,
 		weekStart,
-		completedExercises = [],
+		completedExercises = {},
 		onExerciseComplete,
 		onExerciseUndo
 	}: {
 		session: PlannedSession;
 		weekStart: string;
-		completedExercises?: string[];
+		completedExercises?: Record<string, ExerciseEntry>;
 		onExerciseComplete?: (log: ExerciseLog) => void;
 		onExerciseUndo?: (day: string, exerciseName: string) => void;
 	} = $props();
@@ -26,7 +26,7 @@
 	};
 
 	const completedCount = $derived(
-		session.exercises.filter((ex) => completedExercises.includes(ex.name)).length
+		session.exercises.filter((ex) => ex.name in completedExercises).length
 	);
 	const allDone = $derived(completedCount === session.exercises.length);
 
@@ -74,9 +74,10 @@
 	{#if expanded}
 		<div class="space-y-2 border-t border-base-300 p-4 pt-3">
 			{#each session.exercises as exercise}
+				{@const actualData = completedExercises[exercise.name]}
 				<ExerciseCard
-					{exercise}
-					completed={completedExercises.includes(exercise.name)}
+					exercise={actualData ? { ...exercise, actualWeight: actualData.actualWeight, actualReps: actualData.actualReps } : exercise}
+					completed={exercise.name in completedExercises}
 					onComplete={(actual) => handleExerciseComplete(exercise, actual)}
 					onUndo={onExerciseUndo ? () => onExerciseUndo(session.day, exercise.name) : undefined}
 				/>

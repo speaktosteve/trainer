@@ -11,13 +11,31 @@ async function getExerciseClient(): Promise<TableClient> {
 
 /**
  * Log a completed exercise session.
+ * Merges exercises into any existing log for the same date + day.
  */
 export async function logExercise(log: ExerciseLog): Promise<void> {
 	const client = await getExerciseClient();
+	const rowKey = `${reverseTimestamp(new Date(log.completedDate))}_${log.day}`;
+
+	// Try to merge into existing entity for this session
+	let merged = log;
+	try {
+		const existing = await client.getEntity<ExerciseLogEntity>(DEFAULT_PK, rowKey);
+		const existingLog = JSON.parse(existing.data) as ExerciseLog;
+		for (const newEx of log.exercises) {
+			const idx = existingLog.exercises.findIndex((e) => e.name === newEx.name);
+			if (idx >= 0) existingLog.exercises[idx] = newEx;
+			else existingLog.exercises.push(newEx);
+		}
+		merged = existingLog;
+	} catch {
+		// No existing entity — first exercise for this session
+	}
+
 	const entity: ExerciseLogEntity = {
 		partitionKey: DEFAULT_PK,
-		rowKey: reverseTimestamp(new Date(log.completedDate)),
-		data: JSON.stringify(log)
+		rowKey,
+		data: JSON.stringify(merged)
 	};
 	await client.upsertEntity(entity, 'Replace');
 }
