@@ -20,19 +20,37 @@ async function parseResponse(response: Response) {
   return (await response.json()) as Record<string, unknown>;
 }
 
+async function readBodyText(response: Response): Promise<string> {
+  return (await response.text()) ?? "";
+}
+
 describe("/data/mcp route", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
   it("GET returns MCP server capabilities and tools", async () => {
-    const response = await GET({} as any);
+    const request = new Request("http://localhost/data/mcp");
+    const response = await GET({ request, url: new URL(request.url) } as any);
     const payload = await parseResponse(response);
 
     expect(response.status).toBe(200);
     expect(payload.jsonrpc).toBe("2.0");
     expect(payload.result).toBeDefined();
     expect(listMcpTools).toHaveBeenCalledTimes(1);
+  });
+
+  it("GET supports SSE transport", async () => {
+    const request = new Request("http://localhost/data/mcp?transport=sse", {
+      headers: { accept: "text/event-stream" },
+    });
+
+    const response = await GET({ request, url: new URL(request.url) } as any);
+    const body = await readBodyText(response);
+
+    expect(response.headers.get("content-type")).toContain("text/event-stream");
+    expect(body).toContain("event: ready");
+    expect(body).toContain("event: tools");
   });
 
   it("POST returns parse error for invalid JSON", async () => {
@@ -42,7 +60,7 @@ describe("/data/mcp route", () => {
       headers: { "content-type": "application/json" },
     });
 
-    const response = await POST({ request } as any);
+    const response = await POST({ request, url: new URL(request.url) } as any);
     const payload = await parseResponse(response);
 
     expect(response.status).toBe(400);
@@ -56,7 +74,7 @@ describe("/data/mcp route", () => {
       body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "tools/list" }),
     });
 
-    const response = await POST({ request } as any);
+    const response = await POST({ request, url: new URL(request.url) } as any);
     const payload = await parseResponse(response);
 
     expect(response.status).toBe(200);
@@ -71,7 +89,7 @@ describe("/data/mcp route", () => {
       body: JSON.stringify({ jsonrpc: "2.0", id: 2, method: "tools/call", params: {} }),
     });
 
-    const response = await POST({ request } as any);
+    const response = await POST({ request, url: new URL(request.url) } as any);
     const payload = await parseResponse(response);
 
     expect(response.status).toBe(400);
@@ -97,13 +115,35 @@ describe("/data/mcp route", () => {
       }),
     });
 
-    const response = await POST({ request } as any);
+    const response = await POST({ request, url: new URL(request.url) } as any);
     const payload = await parseResponse(response);
 
     expect(response.status).toBe(200);
     expect(payload.id).toBe(3);
     expect((payload.result as { isError: boolean }).isError).toBe(false);
     expect(executeMcpTool).toHaveBeenCalledWith("get_plan", { weekStart: "2026-03-30" });
+  });
+
+  it("POST supports SSE response for tools/call", async () => {
+    vi.mocked(executeMcpTool).mockResolvedValue({ data: { weekStart: "2026-03-30", sessions: [] } });
+
+    const request = new Request("http://localhost/data/mcp?transport=sse", {
+      method: "POST",
+      headers: { "content-type": "application/json", accept: "text/event-stream" },
+      body: JSON.stringify({
+        jsonrpc: "2.0",
+        id: 30,
+        method: "tools/call",
+        params: { name: "get_plan", arguments: { weekStart: "2026-03-30" } },
+      }),
+    });
+
+    const response = await POST({ request, url: new URL(request.url) } as any);
+    const body = await readBodyText(response);
+
+    expect(response.headers.get("content-type")).toContain("text/event-stream");
+    expect(body).toContain("event: result");
+    expect(body).toContain('"id":30');
   });
 
   it("POST tools/call maps McpInputError to INVALID_PARAMS", async () => {
@@ -120,7 +160,7 @@ describe("/data/mcp route", () => {
       }),
     });
 
-    const response = await POST({ request } as any);
+    const response = await POST({ request, url: new URL(request.url) } as any);
     const payload = await parseResponse(response);
 
     expect(response.status).toBe(400);
@@ -141,7 +181,7 @@ describe("/data/mcp route", () => {
       }),
     });
 
-    const response = await POST({ request } as any);
+    const response = await POST({ request, url: new URL(request.url) } as any);
     const payload = await parseResponse(response);
 
     expect(response.status).toBe(500);
@@ -155,7 +195,7 @@ describe("/data/mcp route", () => {
       body: JSON.stringify({ jsonrpc: "2.0", id: 6, method: "ping" }),
     });
 
-    const response = await POST({ request } as any);
+    const response = await POST({ request, url: new URL(request.url) } as any);
     const payload = await parseResponse(response);
 
     expect(response.status).toBe(404);

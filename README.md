@@ -123,7 +123,7 @@ All server routes live under `/data/` (not `/api/`, which is reserved by Azure S
 | `/data/exercises`      | GET, POST, DELETE | Query exercise logs (with `?from`, `?to`, `?limit`), log a session, remove an entry |
 | `/data/weight`         | GET, POST         | Query bodyweight history, log a new entry                                           |
 | `/data/summary`        | GET               | Fetch weekly AI-generated summary                                                   |
-| `/data/mcp`            | GET, POST         | MCP discovery and JSON-RPC tool execution for LLM clients                           |
+| `/data/mcp`            | GET, POST         | MCP discovery and tool execution for LLM clients (JSON-RPC or SSE transport)        |
 
 ### MCP Endpoint
 
@@ -142,6 +142,9 @@ Quick checks:
 # Discover capabilities and tool definitions
 curl -s http://localhost:5173/data/mcp | jq
 
+# Discover capabilities and tool definitions over SSE
+curl -N -H "accept: text/event-stream" "http://localhost:5173/data/mcp?transport=sse"
+
 # List tools via JSON-RPC
 curl -s http://localhost:5173/data/mcp \
   -H "content-type: application/json" \
@@ -151,6 +154,12 @@ curl -s http://localhost:5173/data/mcp \
 curl -s http://localhost:5173/data/mcp \
   -H "content-type: application/json" \
   -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"get_exercise_history","arguments":{"startDate":"2026-03-01","endDate":"2026-03-31","limit":25}}}' | jq
+
+# Call a tool over SSE
+curl -N http://localhost:5173/data/mcp?transport=sse \
+  -H "content-type: application/json" \
+  -H "accept: text/event-stream" \
+  -d '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"get_plan","arguments":{"weekStart":"2026-03-30"}}}'
 ```
 
 Response shape for `tools/call` follows MCP-style JSON-RPC with `structuredContent` plus text fallback.
