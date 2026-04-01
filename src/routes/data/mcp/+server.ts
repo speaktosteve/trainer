@@ -13,6 +13,18 @@ interface RpcRequest {
   };
 }
 
+type RpcSuccess = {
+  jsonrpc: "2.0";
+  id: string | number | null;
+  result: unknown;
+};
+
+type RpcError = {
+  jsonrpc: "2.0";
+  id: string | number | null;
+  error: { code: number; message: string };
+};
+
 function makeRpcError(id: RpcRequest["id"], code: number, message: string, status = 400) {
   return json(
     {
@@ -24,50 +36,79 @@ function makeRpcError(id: RpcRequest["id"], code: number, message: string, statu
   );
 }
 
-export const GET: RequestHandler = async () =>
-  json({
+function makeRpcErrorPayload(id: RpcRequest["id"], code: number, message: string): RpcError {
+  return {
     jsonrpc: "2.0",
-    result: {
-      server: "trainer-mcp",
-      version: "1.0.0",
-      capabilities: { tools: true },
-      tools: listMcpTools(),
+    id: id ?? null,
+    error: { code, message },
+  };
+}
+
+function sseMessage(event: string, payload: unknown): string {
+  return `event: ${event}\ndata: ${JSON.stringify(payload)}\n\n`;
+}
+
+function isSseRequested(request: Request, url: URL): boolean {
+  const accept = request.headers.get("accept") ?? "";
+  return accept.includes("text/event-stream") || url.searchParams.get("transport") === "sse";
+}
+
+function sseResponse(events: string[]): Response {
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    start(controller) {
+      for (const event of events) {
+        controller.enqueue(encoder.encode(event));
+      }
+      controller.close();
     },
   });
 
-export const POST: RequestHandler = async ({ request }) => {
-  let body: RpcRequest;
+  return new Response(stream, {
+    headers: {
+      "content-type": "text/event-stream; charset=utf-8",
+      "cache-control": "no-cache",
+      connection: "keep-alive",
+    },
+  });
+}
+
+function responseSuccess(payload: RpcSuccess, useSse: boolean): Response {
+  if (useSse) {
+    return sseResponse([sseMessage("result", payload)]);
+  }
+  return json(payload);
+}
+
+function responseError(
+  id: RpcRequest["id"],
+  code: number,
+  message: string,
+  status: number,
+  useSse: boolean,
+): Response {
+  if (useSse) {
+    return sseResponse([sseMessage("error", makeRpcErrorPayload(id, code, message))]);
+  }
+  return makeRpcError(id, code, message, status);
+}
+
+async function handleToolsCall(
+  id: RpcRequest["id"],
+  params: RpcRequest["params"] | undefined,
+  useSse: boolean,
+): Promise<Response> {
+  const name = params?.name;
+  if (!name || typeof name !== "string") {
+    return responseError(id, -32602, "Invalid params: tool name is required", 400, useSse);
+  }
+
   try {
-    body = (await request.json()) as RpcRequest;
-  } catch {
-    return makeRpcError(null, -32700, "Invalid JSON", 400);
-  }
-
-  const { id = null, method, params } = body;
-
-  if (!method) {
-    return makeRpcError(id, -32600, "Invalid Request: method is required", 400);
-  }
-
-  if (method === "tools/list") {
-    return json({
-      jsonrpc: "2.0",
-      id,
-      result: { tools: listMcpTools() },
-    });
-  }
-
-  if (method === "tools/call") {
-    const name = params?.name;
-    if (!name || typeof name !== "string") {
-      return makeRpcError(id, -32602, "Invalid params: tool name is required", 400);
-    }
-
-    try {
-      const result = await executeMcpTool(name, params?.arguments ?? {});
-      return json({
+    const result = await executeMcpTool(name, params?.arguments ?? {});
+    return responseSuccess(
+      {
         jsonrpc: "2.0",
-        id,
+        id: id ?? null,
         result: {
           structuredContent: result.data,
           content: [
@@ -78,15 +119,68 @@ export const POST: RequestHandler = async ({ request }) => {
           ],
           isError: false,
         },
-      });
-    } catch (err) {
-      if (err instanceof McpInputError) {
-        return makeRpcError(id, -32602, err.message, 400);
-      }
-      const message = err instanceof Error ? err.message : "Internal error";
-      return makeRpcError(id, -32000, message, 500);
+      },
+      useSse,
+    );
+  } catch (err) {
+    if (err instanceof McpInputError) {
+      return responseError(id, -32602, err.message, 400, useSse);
     }
+
+    const message = err instanceof Error ? err.message : "Internal error";
+    return responseError(id, -32000, message, 500, useSse);
+  }
+}
+
+export const GET: RequestHandler = async ({ request, url }) => {
+  const payload: RpcSuccess = {
+    jsonrpc: "2.0",
+    id: null,
+    result: {
+      server: "trainer-mcp",
+      version: "1.0.0",
+      capabilities: { tools: true },
+      tools: listMcpTools(),
+    },
+  };
+
+  if (isSseRequested(request, url)) {
+    return sseResponse([
+      sseMessage("ready", {
+        server: "trainer-mcp",
+        version: "1.0.0",
+        capabilities: { tools: true },
+      }),
+      sseMessage("tools", { tools: listMcpTools() }),
+    ]);
   }
 
-  return makeRpcError(id, -32601, `Method not found: ${method}`, 404);
+  return json(payload);
+};
+
+export const POST: RequestHandler = async ({ request, url }) => {
+  const useSse = isSseRequested(request, url);
+
+  let body: RpcRequest;
+  try {
+    body = (await request.json()) as RpcRequest;
+  } catch {
+    return responseError(null, -32700, "Invalid JSON", 400, useSse);
+  }
+
+  const { id = null, method, params } = body;
+
+  if (!method) {
+    return responseError(id, -32600, "Invalid Request: method is required", 400, useSse);
+  }
+
+  if (method === "tools/list") {
+    return responseSuccess({ jsonrpc: "2.0", id, result: { tools: listMcpTools() } }, useSse);
+  }
+
+  if (method === "tools/call") {
+    return handleToolsCall(id, params, useSse);
+  }
+
+  return responseError(id, -32601, `Method not found: ${method}`, 404, useSse);
 };
