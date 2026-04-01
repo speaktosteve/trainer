@@ -1,8 +1,7 @@
 import { TableClient, TableServiceClient } from "@azure/data-tables";
 import { env } from "$env/dynamic/private";
 
-const TABLES = ["Plans", "ExerciseLogs", "BodyWeight"] as const;
-export type TableName = (typeof TABLES)[number];
+export type TableName = "Plans" | "ExerciseLogs" | "BodyWeight";
 
 let serviceClient: TableServiceClient | null = null;
 const tableClients = new Map<TableName, TableClient>();

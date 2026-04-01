@@ -73,7 +73,7 @@
 
 	{#if expanded}
 		<div class="space-y-2 border-t border-base-300 p-4 pt-3">
-			{#each session.exercises as exercise}
+			{#each session.exercises as exercise (exercise.name)}
 				{@const actualData = completedExercises[exercise.name]}
 				<ExerciseCard
 					exercise={actualData ? { ...exercise, actualWeight: actualData.actualWeight, actualReps: actualData.actualReps } : exercise}

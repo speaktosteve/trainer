@@ -102,7 +102,7 @@
 			<div>
 				<span class="text-xs text-base-content/60">Reps per set</span>
 				<div class="mt-1 flex gap-2">
-					{#each actualReps as rep, i}
+					{#each actualReps as rep, i (i)}
 						<input
 							type="number"
 							value={rep}

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { ExerciseLog, BodyweightEntry, ExerciseEntry } from '$lib/types';
+	import type { ExerciseLog, BodyweightEntry } from '$lib/types';
 	import WeightChart from '$lib/components/WeightChart.svelte';
 	import ExerciseProgressChart from '$lib/components/ExerciseProgressChart.svelte';
 
@@ -205,7 +205,7 @@
 
 {#if loading}
 	<div class="space-y-3">
-		{#each Array(3) as _}
+		{#each Array(3) as _, i (i)}
 			<div class="h-24 animate-pulse rounded-xl bg-base-300"></div>
 		{/each}
 	</div>
@@ -221,13 +221,13 @@
 				<thead>
 					<tr>
 						<th class="sticky left-0 z-10 bg-base-200">Exercise</th>
-						{#each weeks() as week}
+						{#each weeks() as week (week)}
 							<th class="whitespace-nowrap text-center">{formatWeekLabel(week)}</th>
 						{/each}
 					</tr>
 				</thead>
 				<tbody>
-					{#each exerciseNames() as name, i}
+					{#each exerciseNames() as name (name)}
 						<tr
 							class="hover cursor-pointer"
 							onclick={() => expandedExercise = expandedExercise === name ? null : name}
@@ -236,7 +236,7 @@
 								<span class="mr-1 inline-block transition-transform {expandedExercise === name ? 'rotate-90' : ''}">▶</span>
 								{name}
 							</td>
-							{#each weeks() as week}
+							{#each weeks() as week (week)}
 								{@const cell = cellMap().get(`${name}|${week}`)}
 								<td class="whitespace-nowrap text-center {cell ? '' : 'text-base-content/30'}">
 									{formatCell(cell)}
@@ -300,7 +300,7 @@
 		<div class="mt-4 card card-border bg-base-100 p-4">
 			<h3 class="mb-2 text-sm font-semibold text-base-content">All Entries</h3>
 			<div class="space-y-1">
-				{#each [...weightEntries].reverse() as entry}
+				{#each [...weightEntries].reverse() as entry (entry.date)}
 					<div class="flex justify-between text-sm text-base-content/70">
 						<span>{entry.date}</span>
 						<span class="font-medium">{entry.weight} kg</span>

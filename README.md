@@ -91,9 +91,10 @@ src/
 │   ├── types/          # TypeScript interfaces (WeeklyPlan, ExerciseEntry, etc.)
 │   ├── utils/          # Date helpers (week boundaries, reverse timestamps)
 │   ├── services/       # Table storage, plan, exercise, summary, OpenAI services
+│   ├── mcp/            # MCP tool definitions, validation, and handlers
 │   └── components/     # Svelte 5 components (runes, $state/$derived/$props)
 ├── routes/
-│   ├── data/           # Server-side API routes (plans, exercises, weight, summary)
+│   ├── data/           # Server-side API routes (plans, exercises, weight, summary, mcp)
 │   ├── history/        # History page
 │   └── +page.svelte    # Plan page (home)
 ├── app.html
@@ -103,6 +104,7 @@ scripts/
 └── seed.ts             # Database seed script (6 weeks of sample data)
 tests/
 ├── __mocks__/          # Env mocks for test isolation
+├── mcp/                # MCP handler and route tests
 ├── utils/              # Date utility tests
 └── services/           # Service-layer unit tests
 ```
@@ -121,6 +123,37 @@ All server routes live under `/data/` (not `/api/`, which is reserved by Azure S
 | `/data/exercises`      | GET, POST, DELETE | Query exercise logs (with `?from`, `?to`, `?limit`), log a session, remove an entry |
 | `/data/weight`         | GET, POST         | Query bodyweight history, log a new entry                                           |
 | `/data/summary`        | GET               | Fetch weekly AI-generated summary                                                   |
+| `/data/mcp`            | GET, POST         | MCP discovery and JSON-RPC tool execution for LLM clients                           |
+
+### MCP Endpoint
+
+The app exposes a read-only MCP-compatible endpoint at `/data/mcp` to share training context with LLM clients.
+
+Implemented tools:
+
+- `get_exercise_history` — optional `startDate`, `endDate`, `limit`
+- `get_bodyweight_history` — optional `startDate`, `endDate`
+- `get_plan` — optional `weekStart` (defaults to current week)
+- `get_week_summary` — optional `weekStart` (defaults to current week)
+
+Quick checks:
+
+```bash
+# Discover capabilities and tool definitions
+curl -s http://localhost:5173/data/mcp | jq
+
+# List tools via JSON-RPC
+curl -s http://localhost:5173/data/mcp \
+  -H "content-type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' | jq
+
+# Call a tool
+curl -s http://localhost:5173/data/mcp \
+  -H "content-type: application/json" \
+  -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"get_exercise_history","arguments":{"startDate":"2026-03-01","endDate":"2026-03-31","limit":25}}}' | jq
+```
+
+Response shape for `tools/call` follows MCP-style JSON-RPC with `structuredContent` plus text fallback.
 
 ### Service Layer
 

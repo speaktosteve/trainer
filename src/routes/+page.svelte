@@ -14,7 +14,6 @@
 	let nextPlan = $state<WeeklyPlan | null>(null);
 	let showEditor = $state(false);
 	let generating = $state(false);
-	let saving = $state(false);
 	let generateError = $state<string | null>(null);
 
 	onMount(async () => {
@@ -104,7 +103,6 @@
 	}
 
 	async function saveNextPlan(edited: WeeklyPlan) {
-		saving = true;
 		const res = await fetch('/data/plans', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -119,7 +117,6 @@
 			summary = edited.summary ?? null;
 			completedExercises = {};
 		}
-		saving = false;
 	}
 </script>
 
@@ -147,13 +144,13 @@
 
 	{#if loading}
 		<div class="space-y-3">
-			{#each Array(4) as _}
+			{#each Array(4) as _, i (i)}
 				<div class="h-20 animate-pulse rounded-xl bg-base-300"></div>
 			{/each}
 		</div>
 	{:else if plan}
 		<div class="space-y-3 md:grid md:gap-4 md:space-y-0">
-			{#each plan.sessions as session}
+			{#each plan.sessions as session (session.day)}
 				<DayPlan
 					{session}
 					weekStart={plan.weekStart}

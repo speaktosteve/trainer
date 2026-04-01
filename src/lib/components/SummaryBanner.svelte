@@ -17,7 +17,7 @@
 		</div>
 		{#if open && summary.lines.length > 0}
 			<div class="mt-2 space-y-1">
-				{#each summary.lines as line}
+				{#each summary.lines as line (`${line.label}-${line.detail}`)}
 					<div class="flex items-start gap-2 text-xs leading-snug text-primary-content/80">
 						<span class="shrink-0">{line.icon}</span>
 						<span><span class="font-medium text-primary-content">{line.label}</span> {line.detail}</span>
