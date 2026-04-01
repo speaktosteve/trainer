@@ -315,4 +315,38 @@ describe("LLMSummaryProvider", () => {
     expect(result.lines).toHaveLength(1);
     expect(result.lines[0].label).toBe("Bench");
   });
+
+  it("includes machine max flags in the LLM summary prompt", async () => {
+    const mockCreate = vi.fn().mockResolvedValue({
+      choices: [{ message: { content: JSON.stringify({ headline: "Strong week!", lines: [] }) } }],
+    });
+    vi.mocked(getOpenAIClient).mockReturnValue({
+      chat: { completions: { create: mockCreate } },
+    } as any);
+
+    const llmProvider = new LLMSummaryProvider();
+    await llmProvider.generateSummary(
+      "2026-03-30",
+      [
+        makeLog({
+          exercises: [
+            {
+              name: "Machine Seated Row",
+              targetWeight: 109,
+              machineWeightMaxedOut: true,
+              targetReps: [10, 10, 10],
+              actualWeight: 109,
+              actualReps: [10, 10, 10],
+            },
+          ],
+        }),
+      ],
+      [],
+      [],
+    );
+
+    expect(mockCreate).toHaveBeenCalledTimes(1);
+    const userPrompt = mockCreate.mock.calls[0][0].messages[1].content as string;
+    expect(userPrompt).toContain("[MAX MACHINE WEIGHT]");
+  });
 });

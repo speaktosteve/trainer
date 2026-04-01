@@ -3,6 +3,8 @@ export interface ExerciseEntry {
   name: string;
   /** Target weight in kg. Omit for bodyweight exercises (e.g. chin-ups). */
   targetWeight?: number;
+  /** Whether the selected machine is currently at its max available weight. */
+  machineWeightMaxedOut?: boolean;
   /** Target reps per set, e.g. [6,6,6,6]. Length = number of sets. */
   targetReps: number[];
   /** Actual weight used (filled in on completion). */

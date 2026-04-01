@@ -188,7 +188,7 @@
 				{/if}
 			</button>
 			<p class="mt-1 text-center text-xs text-base-content/40">
-				Copies this week's plan with smart weight progression
+				Builds next week's plan from this week's results
 			</p>
 		</div>
 	{:else}

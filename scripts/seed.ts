@@ -84,16 +84,16 @@ const currentPlan: WeeklyPlan = {
           targetReps: [10, 10, 10],
           notes: "Clean up the reps from last week",
         },
-        { name: "Lateral Raises", targetWeight: 9, targetReps: [12, 12, 12] },
+        { name: "Cable Lateral Raises", targetWeight: 9, targetReps: [12, 12, 12] },
         {
-          name: "Tricep Pushdown",
+          name: "Cable Tricep Pushdown",
           targetWeight: 54.4,
           targetReps: [10, 10, 10],
           notes: "Matching your Friday win",
         },
-        { name: "Seated Row", targetWeight: 109, targetReps: [8, 8, 8] },
+        { name: "Machine Seated Row", targetWeight: 109, targetReps: [8, 8, 8] },
         {
-          name: "Seated Chest Press",
+          name: "Machine Seated Chest Press",
           targetWeight: 109,
           targetReps: [10, 10, 10],
           notes: "Adding 1 rep per set",
@@ -123,7 +123,7 @@ const currentPlan: WeeklyPlan = {
           notes: "Pushing for one more rep on the last set",
         },
         {
-          name: "Seated Row",
+          name: "Machine Seated Row",
           targetWeight: 111,
           targetReps: [10, 10, 10, 10],
           notes: "Small 2 kg bump",
@@ -136,7 +136,7 @@ const currentPlan: WeeklyPlan = {
           notes: "Moving away from the 12s",
         },
         { name: "Hammer Curl", targetWeight: 14, targetReps: [8, 8, 8] },
-        { name: "Cable Curl", targetWeight: 47.5, targetReps: [12, 12, 12] },
+        { name: "Cable Bicep Curl", targetWeight: 47.5, targetReps: [12, 12, 12] },
       ],
     },
     {
@@ -150,11 +150,11 @@ const currentPlan: WeeklyPlan = {
           notes: "Goal: get 5 reps on that final set",
         },
         { name: "Leg Press", targetWeight: 152.1, targetReps: [8, 8, 8] },
-        { name: "Seated Row", targetWeight: 109, targetReps: [10, 10, 10] },
+        { name: "Machine Seated Row", targetWeight: 109, targetReps: [10, 10, 10] },
         { name: "Seated Shoulder Press", targetWeight: 16, targetReps: [10, 10, 10] },
-        { name: "Cable Curl", targetWeight: 52, targetReps: [10, 10, 10] },
+        { name: "Cable Bicep Curl", targetWeight: 52, targetReps: [10, 10, 10] },
         {
-          name: "Tricep Pushdown",
+          name: "Cable Tricep Pushdown",
           targetWeight: 56.5,
           targetReps: [10, 10, 10],
           notes: "Small bump since you're moving 54.4 kg well",
@@ -214,28 +214,28 @@ const historyLogs: ExerciseLog[] = [
         actualReps: [6, 4, 4],
       },
       {
-        name: "Lateral Raises",
+        name: "Cable Lateral Raises",
         targetWeight: 6,
         targetReps: [10, 10, 10],
         actualWeight: 6,
         actualReps: [10, 10, 8],
       },
       {
-        name: "Tricep Pushdown",
+        name: "Cable Tricep Pushdown",
         targetWeight: 45,
         targetReps: [8, 8, 8],
         actualWeight: 45,
         actualReps: [8, 8, 8],
       },
       {
-        name: "Seated Row",
+        name: "Machine Seated Row",
         targetWeight: 102,
         targetReps: [6, 6, 6],
         actualWeight: 102,
         actualReps: [6, 6, 6],
       },
       {
-        name: "Seated Chest Press",
+        name: "Machine Seated Chest Press",
         targetWeight: 84,
         targetReps: [8, 8, 8],
         actualWeight: 84,
@@ -294,7 +294,7 @@ const historyLogs: ExerciseLog[] = [
     exercises: [
       { name: "Chin-ups", targetReps: [5, 5, 5], actualReps: [3, 4, 3] },
       {
-        name: "Seated Row",
+        name: "Machine Seated Row",
         targetWeight: 102,
         targetReps: [8, 8, 8],
         actualWeight: 102,
@@ -308,7 +308,7 @@ const historyLogs: ExerciseLog[] = [
         actualReps: [6, 6, 6],
       },
       {
-        name: "Cable Curl",
+        name: "Cable Bicep Curl",
         targetWeight: 22,
         targetReps: [12, 12, 12],
         actualWeight: 22,
@@ -361,21 +361,21 @@ const historyLogs: ExerciseLog[] = [
         actualReps: [9, 9, 9],
       },
       {
-        name: "Tricep Pushdown",
+        name: "Cable Tricep Pushdown",
         targetWeight: 45,
         targetReps: [9, 9, 9],
         actualWeight: 45,
         actualReps: [9, 9, 9],
       },
       {
-        name: "Seated Row",
+        name: "Machine Seated Row",
         targetWeight: 109,
         targetReps: [8, 8, 8],
         actualWeight: 109,
         actualReps: [8, 8, 8],
       },
       {
-        name: "Seated Chest Press",
+        name: "Machine Seated Chest Press",
         targetWeight: 88,
         targetReps: [8, 8, 8],
         actualWeight: 88,
@@ -441,7 +441,7 @@ const historyLogs: ExerciseLog[] = [
         actualReps: [8, 8, 8],
       },
       {
-        name: "Cable Curl",
+        name: "Cable Bicep Curl",
         targetWeight: 25,
         targetReps: [12, 12, 12],
         actualWeight: 25,
@@ -501,21 +501,21 @@ const historyLogs: ExerciseLog[] = [
         actualReps: [8, 8, 8],
       },
       {
-        name: "Lateral Raises",
+        name: "Cable Lateral Raises",
         targetWeight: 9,
         targetReps: [12, 12, 12],
         actualWeight: 9,
         actualReps: [12, 12, 10],
       },
       {
-        name: "Seated Row",
+        name: "Machine Seated Row",
         targetWeight: 109,
         targetReps: [8, 8, 8],
         actualWeight: 109,
         actualReps: [8, 8, 8],
       },
       {
-        name: "Seated Chest Press",
+        name: "Machine Seated Chest Press",
         targetWeight: 93,
         targetReps: [9, 9, 9],
         actualWeight: 93,
@@ -581,7 +581,7 @@ const historyLogs: ExerciseLog[] = [
         actualReps: [10, 9, 10],
       },
       {
-        name: "Cable Curl",
+        name: "Cable Bicep Curl",
         targetWeight: 31,
         targetReps: [12, 12, 12],
         actualWeight: 31,
@@ -641,21 +641,21 @@ const historyLogs: ExerciseLog[] = [
         actualReps: [10, 9, 7],
       },
       {
-        name: "Lateral Raises",
+        name: "Cable Lateral Raises",
         targetWeight: 9,
         targetReps: [12, 12, 12],
         actualWeight: 9,
         actualReps: [12, 12, 12],
       },
       {
-        name: "Seated Row",
+        name: "Machine Seated Row",
         targetWeight: 109,
         targetReps: [10, 10, 10],
         actualWeight: 109,
         actualReps: [10, 10, 10],
       },
       {
-        name: "Seated Chest Press",
+        name: "Machine Seated Chest Press",
         targetWeight: 97,
         targetReps: [9, 9, 9],
         actualWeight: 97,
@@ -728,7 +728,7 @@ const historyLogs: ExerciseLog[] = [
         actualReps: [6, 5, 5],
       },
       {
-        name: "Cable Curl",
+        name: "Cable Bicep Curl",
         targetWeight: 38,
         targetReps: [12, 12, 12],
         actualWeight: 38,
@@ -757,7 +757,7 @@ const historyLogs: ExerciseLog[] = [
         actualReps: [9, 8, 8],
       },
       {
-        name: "Tricep Pushdown",
+        name: "Cable Tricep Pushdown",
         targetWeight: 48,
         targetReps: [10, 10, 10],
         actualWeight: 48,
@@ -788,21 +788,21 @@ const historyLogs: ExerciseLog[] = [
         actualReps: [10, 10, 10],
       },
       {
-        name: "Tricep Pushdown",
+        name: "Cable Tricep Pushdown",
         targetWeight: 50,
         targetReps: [10, 10, 10],
         actualWeight: 50,
         actualReps: [10, 10, 10],
       },
       {
-        name: "Seated Row",
+        name: "Machine Seated Row",
         targetWeight: 109,
         targetReps: [10, 10, 10],
         actualWeight: 109,
         actualReps: [10, 10, 10],
       },
       {
-        name: "Seated Chest Press",
+        name: "Machine Seated Chest Press",
         targetWeight: 102,
         targetReps: [9, 9, 9],
         actualWeight: 102,
@@ -875,7 +875,7 @@ const historyLogs: ExerciseLog[] = [
         actualReps: [8, 8, 8],
       },
       {
-        name: "Cable Curl",
+        name: "Cable Bicep Curl",
         targetWeight: 45,
         targetReps: [12, 12, 12],
         actualWeight: 45,
@@ -905,14 +905,14 @@ const historyLogs: ExerciseLog[] = [
         actualReps: [10, 10, 8],
       },
       {
-        name: "Cable Curl",
+        name: "Cable Bicep Curl",
         targetWeight: 49.9,
         targetReps: [10, 10, 10],
         actualWeight: 49.9,
         actualReps: [10, 10, 10],
       },
       {
-        name: "Tricep Pushdown",
+        name: "Cable Tricep Pushdown",
         targetWeight: 54.4,
         targetReps: [10, 10, 10],
         actualWeight: 54.4,
@@ -950,28 +950,28 @@ const historyLogs: ExerciseLog[] = [
         actualReps: [10, 8, 8],
       },
       {
-        name: "Lateral Raises",
+        name: "Cable Lateral Raises",
         targetWeight: 9,
         targetReps: [12, 12, 12],
         actualWeight: 9,
         actualReps: [12, 12, 12],
       },
       {
-        name: "Tricep Pushdown",
+        name: "Cable Tricep Pushdown",
         targetWeight: 52,
         targetReps: [10, 10, 10],
         actualWeight: 52,
         actualReps: [10, 10, 10],
       },
       {
-        name: "Seated Row",
+        name: "Machine Seated Row",
         targetWeight: 109,
         targetReps: [8, 8, 8],
         actualWeight: 109,
         actualReps: [8, 8, 8],
       },
       {
-        name: "Seated Chest Press",
+        name: "Machine Seated Chest Press",
         targetWeight: 106,
         targetReps: [9, 9, 9],
         actualWeight: 106,
@@ -987,7 +987,7 @@ const historyLogs: ExerciseLog[] = [
     exercises: [
       { name: "Chin-ups", targetReps: [10, 10, 10], actualReps: [10, 10, 8] },
       {
-        name: "Seated Row",
+        name: "Machine Seated Row",
         targetWeight: 109,
         targetReps: [10, 10, 10, 10],
         actualWeight: 109,
@@ -1008,7 +1008,7 @@ const historyLogs: ExerciseLog[] = [
         actualReps: [8, 8, 8],
       },
       {
-        name: "Cable Curl",
+        name: "Cable Bicep Curl",
         targetWeight: 45.4,
         targetReps: [12, 12, 12],
         actualWeight: 45.4,
@@ -1044,14 +1044,14 @@ const historyLogs: ExerciseLog[] = [
         actualReps: [10, 10, 10],
       },
       {
-        name: "Tricep Pushdown",
+        name: "Cable Tricep Pushdown",
         targetWeight: 54.4,
         targetReps: [10, 10, 10],
         actualWeight: 54.4,
         actualReps: [10, 10, 10],
       },
       {
-        name: "Cable Curl",
+        name: "Cable Bicep Curl",
         targetWeight: 49.9,
         targetReps: [10, 10, 10],
         actualWeight: 49.9,
@@ -1073,6 +1073,27 @@ const weightLog: BodyweightEntry[] = [
   { date: "2026-03-20", weight: 77.8 },
   { date: "2026-03-27", weight: 77.7 },
 ];
+
+const MAXED_MACHINE_EXERCISES = new Set(["Machine Seated Row", "Machine Seated Chest Press"]);
+
+function applyMachineWeightDefaults(plan: WeeklyPlan): void {
+  for (const session of plan.sessions) {
+    for (const exercise of session.exercises) {
+      exercise.machineWeightMaxedOut ??= MAXED_MACHINE_EXERCISES.has(exercise.name);
+    }
+  }
+}
+
+function applyMachineWeightDefaultsToLogs(logs: ExerciseLog[]): void {
+  for (const log of logs) {
+    for (const exercise of log.exercises) {
+      exercise.machineWeightMaxedOut ??= MAXED_MACHINE_EXERCISES.has(exercise.name);
+    }
+  }
+}
+
+applyMachineWeightDefaults(currentPlan);
+applyMachineWeightDefaultsToLogs(historyLogs);
 
 // ── Run seed ─────────────────────────────────────────────────────────
 async function seed() {
@@ -1104,6 +1125,7 @@ async function seed() {
       exercises: log.exercises.map((ex) => ({
         name: ex.name,
         targetWeight: ex.targetWeight,
+        machineWeightMaxedOut: ex.machineWeightMaxedOut,
         targetReps: ex.targetReps,
         notes: ex.notes,
       })),

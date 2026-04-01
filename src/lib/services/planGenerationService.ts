@@ -58,6 +58,7 @@ function progressExercise(
     return {
       name: plan.name,
       targetWeight: plan.targetWeight,
+      machineWeightMaxedOut: plan.machineWeightMaxedOut,
       targetReps: [...plan.targetReps],
       notes: plan.notes,
     };
@@ -74,18 +75,37 @@ function progressExercise(
       const newReps = [...actual.reps];
       const minIdx = newReps.indexOf(Math.min(...newReps));
       newReps[minIdx] += 1;
-      return { name: plan.name, targetReps: newReps };
+      return {
+        name: plan.name,
+        machineWeightMaxedOut: plan.machineWeightMaxedOut,
+        targetReps: newReps,
+      };
     }
     // Retry same target
-    return { name: plan.name, targetReps: [...plan.targetReps] };
+    return {
+      name: plan.name,
+      machineWeightMaxedOut: plan.machineWeightMaxedOut,
+      targetReps: [...plan.targetReps],
+    };
   }
 
   // Weighted exercise
   if (hitAllReps) {
+    if (plan.machineWeightMaxedOut) {
+      return {
+        name: plan.name,
+        targetWeight: plan.targetWeight,
+        machineWeightMaxedOut: true,
+        targetReps: [...plan.targetReps],
+        notes: `Max machine weight reached at ${plan.targetWeight} kg`,
+      };
+    }
+
     const increment = plan.targetWeight < 20 ? 1 : 2.5;
     return {
       name: plan.name,
       targetWeight: plan.targetWeight + increment,
+      machineWeightMaxedOut: plan.machineWeightMaxedOut,
       targetReps: [...plan.targetReps],
       notes: `Progressed from ${plan.targetWeight} kg`,
     };
@@ -95,6 +115,7 @@ function progressExercise(
   return {
     name: plan.name,
     targetWeight: plan.targetWeight,
+    machineWeightMaxedOut: plan.machineWeightMaxedOut,
     targetReps: [...plan.targetReps],
     notes:
       actual.reps.length > 0 ? `Retry — last week hit ${actual.reps.join(", ")} reps` : plan.notes,
@@ -210,6 +231,7 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
       }
       // Carry forward targetWeight from source plan if the LLM dropped it
       this.backfillWeights(parsed, currentPlan);
+      this.backfillMachineFlags(parsed, currentPlan);
       return parsed;
     } catch (err) {
       const message = err instanceof Error ? err.message : "Unknown LLM error";
@@ -237,6 +259,25 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
     }
   }
 
+  private backfillMachineFlags(generated: WeeklyPlan, source: WeeklyPlan): void {
+    const machineFlagMap = new Map<string, boolean>();
+    for (const session of source.sessions) {
+      for (const ex of session.exercises) {
+        if (ex.machineWeightMaxedOut !== undefined) {
+          machineFlagMap.set(ex.name, ex.machineWeightMaxedOut);
+        }
+      }
+    }
+
+    for (const session of generated.sessions) {
+      for (const ex of session.exercises) {
+        if (ex.machineWeightMaxedOut === undefined && machineFlagMap.has(ex.name)) {
+          ex.machineWeightMaxedOut = machineFlagMap.get(ex.name);
+        }
+      }
+    }
+  }
+
   private buildPrompt(
     currentPlan: WeeklyPlan,
     completedLogs: ExerciseLog[],
@@ -249,7 +290,8 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
       const exercises = session.exercises
         .map((ex) => {
           const w = ex.targetWeight ? ` @ ${ex.targetWeight}kg` : "";
-          return `${ex.name}: ${ex.targetReps.join(",")} reps${w}`;
+          const machineFlag = ex.machineWeightMaxedOut ? " [MAX MACHINE WEIGHT]" : "";
+          return `${ex.name}: ${ex.targetReps.join(",")} reps${w}${machineFlag}`;
         })
         .join("; ");
       parts.push(`  ${session.day} (${session.label}): ${exercises}`);
@@ -263,8 +305,9 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
             const reps = (ex.actualReps ?? ex.targetReps).join(",");
             const w = ex.actualWeight ?? ex.targetWeight;
             const weightText = w ? ` @ ${w}kg` : "";
+            const machineFlag = ex.machineWeightMaxedOut ? " [MAX MACHINE WEIGHT]" : "";
             const notesText = ex.notes ? ` (${ex.notes})` : "";
-            return `${ex.name}: ${reps} reps${weightText}${notesText}`;
+            return `${ex.name}: ${reps} reps${weightText}${machineFlag}${notesText}`;
           })
           .join("; ");
         parts.push(`  ${log.day} (${log.label}): ${exercises}`);
@@ -283,7 +326,8 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
             const reps = (ex.actualReps ?? ex.targetReps).join(",");
             const w = ex.actualWeight ?? ex.targetWeight;
             const weightText = w ? ` @ ${w}kg` : "";
-            return `${ex.name}: ${reps} reps${weightText}`;
+            const machineFlag = ex.machineWeightMaxedOut ? " [MAX MACHINE WEIGHT]" : "";
+            return `${ex.name}: ${reps} reps${weightText}${machineFlag}`;
           })
           .join("; ");
         parts.push(`  ${log.day} (${log.label}): ${exercises}`);

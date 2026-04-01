@@ -210,7 +210,8 @@ Return ONLY valid JSON, no markdown fences.`,
             const reps = (ex.actualReps ?? ex.targetReps).join(",");
             const w = ex.actualWeight ?? ex.targetWeight;
             const weightText = w ? ` @ ${w}kg` : "";
-            return `${ex.name}: ${reps} reps${weightText}`;
+            const machineFlag = ex.machineWeightMaxedOut ? " [MAX MACHINE WEIGHT]" : "";
+            return `${ex.name}: ${reps} reps${weightText}${machineFlag}`;
           })
           .join("; ");
         parts.push(`  ${log.day} (${log.label}): ${exSummary}`);
@@ -227,7 +228,8 @@ Return ONLY valid JSON, no markdown fences.`,
             const reps = (ex.actualReps ?? ex.targetReps).join(",");
             const w = ex.actualWeight ?? ex.targetWeight;
             const weightText = w ? ` @ ${w}kg` : "";
-            return `${ex.name}: ${reps} reps${weightText}`;
+            const machineFlag = ex.machineWeightMaxedOut ? " [MAX MACHINE WEIGHT]" : "";
+            return `${ex.name}: ${reps} reps${weightText}${machineFlag}`;
           })
           .join("; ");
         parts.push(`  ${log.day} (${log.label}): ${exSummary}`);

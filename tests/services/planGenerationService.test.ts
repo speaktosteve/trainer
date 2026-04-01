@@ -89,6 +89,83 @@ describe("SmartCopyProvider", () => {
     expect(benchPress!.notes).toContain("62.5 kg");
   });
 
+  it("does not increase weight when machine weight is maxed out", async () => {
+    const machinePlan: WeeklyPlan = {
+      weekStart: "2026-03-30",
+      sessions: [
+        {
+          day: "monday",
+          label: "Pull",
+          exercises: [
+            {
+              name: "Machine Seated Row",
+              targetWeight: 109,
+              machineWeightMaxedOut: true,
+              targetReps: [10, 10, 10],
+            },
+          ],
+        },
+      ],
+    };
+    const logs = [
+      makeLog("monday", [
+        {
+          name: "Machine Seated Row",
+          targetWeight: 109,
+          machineWeightMaxedOut: true,
+          targetReps: [10, 10, 10],
+          actualWeight: 109,
+          actualReps: [10, 10, 10],
+        },
+      ]),
+    ];
+
+    const result = await provider.generateNextPlan(machinePlan, logs, []);
+    const row = result.sessions[0].exercises[0];
+    expect(row.targetWeight).toBe(109);
+    expect(row.machineWeightMaxedOut).toBe(true);
+    expect(row.notes).toContain("Max machine weight reached");
+  });
+
+  it("does not increase weight when machineWeightMaxedOut is true", async () => {
+    const machinePlan: WeeklyPlan = {
+      weekStart: "2026-03-30",
+      sessions: [
+        {
+          day: "monday",
+          label: "Pull",
+          exercises: [
+            {
+              name: "Machine Seated Row",
+              targetWeight: 109,
+              machineWeightMaxedOut: true,
+              targetReps: [10, 10, 10],
+            },
+          ],
+        },
+      ],
+    };
+    const logs = [
+      makeLog("monday", [
+        {
+          name: "Machine Seated Row",
+          targetWeight: 109,
+          machineWeightMaxedOut: true,
+          targetReps: [10, 10, 10],
+          actualWeight: 109,
+          actualReps: [10, 10, 10],
+        },
+      ]),
+    ];
+
+    const result = await provider.generateNextPlan(machinePlan, logs, []);
+    const exercise = result.sessions[0].exercises[0];
+
+    expect(exercise.targetWeight).toBe(109);
+    expect(exercise.machineWeightMaxedOut).toBe(true);
+    expect(exercise.notes).toContain("Max machine weight reached");
+  });
+
   it("bumps weight by 1 kg for a weighted exercise < 20 kg when all reps are hit", async () => {
     const lightPlan: WeeklyPlan = {
       weekStart: "2026-03-30",
@@ -307,5 +384,118 @@ describe("LLMPlanProvider", () => {
     const bench = result.sessions[0].exercises.find((e) => e.name === "Bench Press");
     // Should be backfilled from the source plan
     expect(bench!.targetWeight).toBe(62.5);
+  });
+
+  it("includes machine max flags in the LLM prompt and backfills them when omitted", async () => {
+    const machinePlan: WeeklyPlan = {
+      weekStart: "2026-03-30",
+      sessions: [
+        {
+          day: "monday",
+          label: "Push",
+          exercises: [
+            {
+              name: "Machine Seated Chest Press",
+              targetWeight: 109,
+              machineWeightMaxedOut: true,
+              targetReps: [10, 10, 10],
+            },
+          ],
+        },
+      ],
+    };
+    const completedLogs = [
+      makeLog("monday", [
+        {
+          name: "Machine Seated Chest Press",
+          targetWeight: 109,
+          machineWeightMaxedOut: true,
+          targetReps: [10, 10, 10],
+          actualWeight: 109,
+          actualReps: [10, 10, 10],
+        },
+      ]),
+    ];
+    const llmPayload: WeeklyPlan = {
+      weekStart: "2026-04-06",
+      sessions: [
+        {
+          day: "monday",
+          label: "Push",
+          exercises: [
+            { name: "Machine Seated Chest Press", targetWeight: 109, targetReps: [10, 10, 10] },
+          ],
+        },
+      ],
+    };
+    const mockCreate = vi.fn().mockResolvedValue({
+      choices: [{ message: { content: JSON.stringify(llmPayload) } }],
+    });
+    vi.mocked(getOpenAIClient).mockReturnValue({
+      chat: { completions: { create: mockCreate } },
+    } as any);
+
+    const provider = new LLMPlanProvider();
+    const result = await provider.generateNextPlan(machinePlan, completedLogs, []);
+
+    expect(mockCreate).toHaveBeenCalledTimes(1);
+    const userPrompt = mockCreate.mock.calls[0][0].messages[1].content as string;
+    expect(userPrompt).toContain("[MAX MACHINE WEIGHT]");
+    expect(result.sessions[0].exercises[0].machineWeightMaxedOut).toBe(true);
+  });
+
+  it("includes max machine weight markers in the LLM prompt and backfills the flag", async () => {
+    const sourcePlan: WeeklyPlan = {
+      weekStart: "2026-03-30",
+      sessions: [
+        {
+          day: "monday",
+          label: "Push",
+          exercises: [
+            {
+              name: "Machine Seated Chest Press",
+              targetWeight: 109,
+              machineWeightMaxedOut: true,
+              targetReps: [10, 10, 10],
+            },
+          ],
+        },
+      ],
+    };
+    const completedLogs = [
+      makeLog("monday", [
+        {
+          name: "Machine Seated Chest Press",
+          targetWeight: 109,
+          machineWeightMaxedOut: true,
+          targetReps: [10, 10, 10],
+          actualWeight: 109,
+          actualReps: [10, 10, 10],
+        },
+      ]),
+    ];
+    const llmPayload: WeeklyPlan = {
+      weekStart: "2026-04-06",
+      sessions: [
+        {
+          day: "monday",
+          label: "Push",
+          exercises: [{ name: "Machine Seated Chest Press", targetWeight: 109, targetReps: [10, 10, 10] }],
+        },
+      ],
+    };
+    const mockCreate = vi.fn().mockResolvedValue({
+      choices: [{ message: { content: JSON.stringify(llmPayload) } }],
+    });
+    vi.mocked(getOpenAIClient).mockReturnValue({
+      chat: { completions: { create: mockCreate } },
+    } as any);
+
+    const provider = new LLMPlanProvider();
+    const result = await provider.generateNextPlan(sourcePlan, completedLogs, []);
+    const prompt = mockCreate.mock.calls[0][0].messages[1].content as string;
+
+    expect(prompt).toContain("[MAX MACHINE WEIGHT]");
+    expect(result.sessions[0].exercises[0].machineWeightMaxedOut).toBe(true);
   });
 });

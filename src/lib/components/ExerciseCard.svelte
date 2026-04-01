@@ -16,14 +16,19 @@
 	let editing = $state(false);
 	let weightOverride = $state<number | null>(null);
 	let repsOverride = $state<number[] | null>(null);
+	let machineMaxedOverride = $state<boolean | null>(null);
 
 	let actualWeight = $derived(weightOverride ?? exercise.actualWeight ?? exercise.targetWeight ?? 0);
 	let actualReps = $derived(repsOverride ?? exercise.actualReps ?? [...exercise.targetReps]);
+	let machineWeightMaxedOut = $derived(
+		machineMaxedOverride ?? exercise.machineWeightMaxedOut ?? false
+	);
 
 	function handleComplete() {
 		if (onComplete) {
 			onComplete({
 				...exercise,
+				machineWeightMaxedOut,
 				actualWeight: exercise.targetWeight !== undefined ? actualWeight : undefined,
 				actualReps: [...actualReps]
 			});
@@ -42,6 +47,9 @@
 	<div class="flex items-start justify-between">
 		<div class="flex-1">
 			<h4 class="text-sm font-semibold text-base-content">{exercise.name}</h4>
+			{#if machineWeightMaxedOut}
+				<p class="mt-0.5 text-xs font-medium text-warning">Machine weight maxed</p>
+			{/if}
 			{#if completed && exercise.actualReps}
 				<p class="mt-0.5 text-xs text-success">
 					Actual: {formatReps(exercise.actualReps)}
@@ -87,18 +95,29 @@
 
 	{#if editing}
 		<div class="mt-3 space-y-2 border-t border-base-300 pt-3">
-			{#if exercise.targetWeight !== undefined}
-				<label class="block">
-					<span class="text-xs text-base-content/60">Weight (kg)</span>
-					<input
-						type="number"
-						step="0.5"
-						value={actualWeight}
-						oninput={(e) => (weightOverride = Number(e.currentTarget.value))}
-						class="input input-bordered input-sm mt-1 w-full"
-					/>
-				</label>
-			{/if}
+			<div class="flex flex-wrap items-end gap-3">
+				{#if exercise.targetWeight !== undefined}
+					<label class="min-w-32 flex-1">
+						<span class="text-xs text-base-content/60">Weight (kg)</span>
+						<input
+							type="number"
+							step="0.5"
+							value={actualWeight}
+							oninput={(e) => (weightOverride = Number(e.currentTarget.value))}
+							class="input input-bordered input-sm mt-1 w-full"
+						/>
+					</label>
+					<label class="label label-text-alt mt-5 cursor-pointer justify-start self-center gap-2 p-0">
+						<input
+							type="checkbox"
+							class="checkbox checkbox-sm"
+							checked={machineWeightMaxedOut}
+							onchange={(e) => (machineMaxedOverride = e.currentTarget.checked)}
+						/>
+						<span class="label-text text-xs">Max machine weight</span>
+					</label>
+				{/if}
+			</div>
 			<div>
 				<span class="text-xs text-base-content/60">Reps per set</span>
 				<div class="mt-1 flex gap-2">
