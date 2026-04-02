@@ -135,7 +135,7 @@ jobs:
           az account set --subscription "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
 
           az containerapp update \
-            --name "$CONTAINER_APP_NAME" \
-            --resource-group "$RESOURCE_GROUP" \
+            --name trainer-ca \
+            --resource-group trainer \
             --image "$IMAGE_TAG" \
             --set-env-vars "${env_args[@]}"
