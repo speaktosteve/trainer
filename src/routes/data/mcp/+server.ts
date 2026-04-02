@@ -10,6 +10,9 @@ interface RpcRequest {
   params?: {
     name?: string;
     arguments?: unknown;
+    protocolVersion?: string;
+    capabilities?: unknown;
+    clientInfo?: unknown;
   };
 }
 
@@ -75,7 +78,7 @@ function sseResponse(events: string[]): Response {
 
 function responseSuccess(payload: RpcSuccess, useSse: boolean): Response {
   if (useSse) {
-    return sseResponse([sseMessage("result", payload)]);
+    return sseResponse([sseMessage("message", payload)]);
   }
   return json(payload);
 }
@@ -88,7 +91,7 @@ function responseError(
   useSse: boolean,
 ): Response {
   if (useSse) {
-    return sseResponse([sseMessage("error", makeRpcErrorPayload(id, code, message))]);
+    return sseResponse([sseMessage("message", makeRpcErrorPayload(id, code, message))]);
   }
   return makeRpcError(id, code, message, status);
 }
@@ -174,6 +177,45 @@ export const POST: RequestHandler = async ({ request, url }) => {
     return responseError(id, -32600, "Invalid Request: method is required", 400, useSse);
   }
 
+  // ── MCP Handshake ──────────────────────────────────────────────────────────
+
+  // Claude sends `initialize` first to negotiate protocol version & capabilities.
+  if (method === "initialize") {
+    return responseSuccess(
+      {
+        jsonrpc: "2.0",
+        id: id ?? null,
+        result: {
+          protocolVersion: "2024-11-05",
+          capabilities: {
+            tools: {},
+          },
+          serverInfo: {
+            name: "trainer-mcp",
+            version: "1.0.0",
+          },
+        },
+      },
+      useSse,
+    );
+  }
+
+  // Claude sends this notification after a successful `initialize`.
+  // It is a one-way notification so no meaningful result is expected,
+  // but we must not return a Method-Not-Found error.
+  if (method === "notifications/initialized") {
+    return responseSuccess(
+      {
+        jsonrpc: "2.0",
+        id: id ?? null,
+        result: {},
+      },
+      useSse,
+    );
+  }
+
+  // ── Tool Methods ───────────────────────────────────────────────────────────
+
   if (method === "tools/list") {
     return responseSuccess({ jsonrpc: "2.0", id, result: { tools: listMcpTools() } }, useSse);
   }
@@ -181,6 +223,8 @@ export const POST: RequestHandler = async ({ request, url }) => {
   if (method === "tools/call") {
     return handleToolsCall(id, params, useSse);
   }
+
+  // ── Fallback ───────────────────────────────────────────────────────────────
 
   return responseError(id, -32601, `Method not found: ${method}`, 404, useSse);
 };
