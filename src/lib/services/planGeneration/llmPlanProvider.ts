@@ -225,9 +225,10 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
       lines: [],
     };
 
-    const detail = corrections.length === 1
-      ? corrections[0]
-      : `${corrections.length} exercises auto-corrected to enforced progression rules`;
+    const detail =
+      corrections.length === 1
+        ? corrections[0]
+        : `${corrections.length} exercises auto-corrected to enforced progression rules`;
 
     summary.lines = [
       ...summary.lines,
@@ -249,7 +250,8 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
         ...session,
         exercises: session.exercises.map((exercise, index) => ({
           ...exercise,
-          exerciseId: exercise.exerciseId ?? this.deriveExerciseId(session.day, exercise.name, index),
+          exerciseId:
+            exercise.exerciseId ?? this.deriveExerciseId(session.day, exercise.name, index),
         })),
       })),
     };
@@ -299,7 +301,9 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
       return lookups.byId.get(generatedExercise.exerciseId);
     }
 
-    const legacyMatch = lookups.byLegacy.get(buildLegacyExerciseKey(generatedDay, generatedExercise.name));
+    const legacyMatch = lookups.byLegacy.get(
+      buildLegacyExerciseKey(generatedDay, generatedExercise.name),
+    );
     if (legacyMatch) {
       return legacyMatch;
     }
@@ -404,9 +408,10 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
     }
 
     target.machineWeightMaxedOut = true;
-    target.notes = target.notes === "No record last week"
-      ? "Machine already at max weight; No record last week"
-      : "Machine already at max weight";
+    target.notes =
+      target.notes === "No record last week"
+        ? "Machine already at max weight; No record last week"
+        : "Machine already at max weight";
   }
 
   private buildPrompt(

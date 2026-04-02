@@ -45,7 +45,10 @@ export class SmartCopyProvider implements PlanGenerationProvider {
  * - If reps fell short: keep same weight, maybe note it
  * - Bodyweight exercises: try to add a rep to the weakest set
  */
-function progressExercise(plan: ExerciseEntry, actual: ExercisePerformance | undefined): ExerciseEntry {
+function progressExercise(
+  plan: ExerciseEntry,
+  actual: ExercisePerformance | undefined,
+): ExerciseEntry {
   // No completion data — carry forward as-is
   if (!actual) {
     return {

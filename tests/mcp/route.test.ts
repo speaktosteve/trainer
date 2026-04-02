@@ -125,7 +125,9 @@ describe("/data/mcp route", () => {
   });
 
   it("POST supports SSE response for tools/call", async () => {
-    vi.mocked(executeMcpTool).mockResolvedValue({ data: { weekStart: "2026-03-30", sessions: [] } });
+    vi.mocked(executeMcpTool).mockResolvedValue({
+      data: { weekStart: "2026-03-30", sessions: [] },
+    });
 
     const request = new Request("http://localhost/data/mcp?transport=sse", {
       method: "POST",

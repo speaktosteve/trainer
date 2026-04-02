@@ -531,7 +531,9 @@ describe("LLMPlanProvider", () => {
         {
           day: "monday",
           label: "Push",
-          exercises: [{ name: "Machine Seated Chest Press", targetWeight: 109, targetReps: [10, 10, 10] }],
+          exercises: [
+            { name: "Machine Seated Chest Press", targetWeight: 109, targetReps: [10, 10, 10] },
+          ],
         },
       ],
     };

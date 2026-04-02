@@ -14,5 +14,5 @@ export const planGenerator: PlanGenerationProvider = new SmartCopyProvider();
 export const llmPlanGenerator: PlanGenerationProvider = new LLMPlanProvider();
 
 export function getPlanGenerator(): PlanGenerationProvider {
-	return isLLMConfigured() ? llmPlanGenerator : planGenerator;
+  return isLLMConfigured() ? llmPlanGenerator : planGenerator;
 }
