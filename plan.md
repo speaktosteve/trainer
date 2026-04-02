@@ -1,11 +1,11 @@
 # Plan: Trainer SvelteKit Web App
 
-A mobile-first **SvelteKit + TypeScript + Tailwind** web app for planning weekly gym sessions and tracking exercise/weight history. Data stored in **Azure Table Storage**, deployed to **Azure Static Web Apps**. AI summary is **mocked for now** (easy to swap in Azure OpenAI later). Well-architected with service/utility layers and unit test coverage via **Vitest**.
+A mobile-first **SvelteKit + TypeScript + Tailwind** web app for planning weekly gym sessions and tracking exercise/weight history. Data stored in **Azure Table Storage**, deployed to **Azure Container Apps**. AI summary is **mocked for now** (easy to swap in Azure OpenAI later). Well-architected with service/utility layers and unit test coverage via **Vitest**.
 
 ## Decisions
 
 - **AI summary**: Mock/placeholder — returns a template string based on recent data; interface ready for Azure OpenAI later
-- **Deployment**: Azure Static Web Apps with SvelteKit SSR adapter
+- **Deployment**: Azure Container Apps with a Node container image
 - **Exercise schema**: Weight-training focused — sets × reps @ weight (kg), with bodyweight exercise support (chin-ups). Training split: Mon Push / Tue Lower / Wed Pull / Fri Full Body
 - **Auth**: None; single-user with a hardcoded partition key (`"default"`)
 - **Data access**: SvelteKit `+server.ts` API routes call Azure Table Storage directly — no separate Functions project needed
@@ -14,7 +14,7 @@ A mobile-first **SvelteKit + TypeScript + Tailwind** web app for planning weekly
 
 ## Phase 1 — Project Scaffold
 
-1. Init SvelteKit project with Vite, TypeScript, Tailwind CSS 4, and `svelte-adapter-azure-swa`
+1. Init SvelteKit project with Vite, TypeScript, Tailwind CSS 4, and a production Node adapter
 2. Configure Vitest for unit testing
 3. Add dependencies: `@azure/data-tables`, `date-fns`
 4. Set up folder structure
@@ -70,7 +70,7 @@ A mobile-first **SvelteKit + TypeScript + Tailwind** web app for planning weekly
 ## Phase 6 — Deployment
 
 25. Configure SvelteKit with Azure SWA adapter
-26. `swa-cli.config.json` for local dev
+26. Container-based deployment flow for Azure Container Apps
 27. GitHub Actions CI: lint → test → build → deploy to SWA
 28. Document all setup/deploy steps in README
 

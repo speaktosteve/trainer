@@ -1,5 +1,9 @@
 name: Build and Deploy
 
+permissions:
+  contents: read
+  id-token: write
+
 on:
   workflow_dispatch:
   push:
@@ -22,35 +26,114 @@ jobs:
       - run: vp build
 
   deploy:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: build_and_test
     runs-on: ubuntu-latest
-    name: Deploy to Azure Static Web Apps
+    name: Deploy to Azure Container Apps
+    env:
+      ACR_NAME: ${{ vars.AZURE_CONTAINER_REGISTRY_NAME }}
+      CONTAINER_APP_NAME: ${{ vars.AZURE_CONTAINER_APP_NAME }}
+      IMAGE_NAME: ${{ vars.AZURE_CONTAINER_IMAGE_NAME }}
+      OPENAI_DEPLOYMENT: ${{ vars.AZURE_OPENAI_DEPLOYMENT }}
+      OPENAI_ENDPOINT: ${{ vars.AZURE_OPENAI_ENDPOINT }}
+      RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
     steps:
       - uses: actions/checkout@v4
-      - uses: voidzero-dev/setup-vp@v1
-      - run: npm ci
-      - run: vp build
-      - run: cp build/staticwebapp.config.json build/static/staticwebapp.config.json
-      - name: Deploy
-        uses: Azure/static-web-apps-deploy@v1
-        with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          action: "upload"
-          app_location: "/build/static"
-          api_location: "/build/server"
-          output_location: ""
-          skip_app_build: true
+      - name: Validate required repository variables
+        run: |
+          missing=()
 
-  close_pull_request:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    runs-on: ubuntu-latest
-    name: Close PR staging environment
-    steps:
-      - name: Close staging environment
-        uses: Azure/static-web-apps-deploy@v1
+          if [ -z "$ACR_NAME" ]; then
+            missing+=("AZURE_CONTAINER_REGISTRY_NAME")
+          fi
+
+          if [ -z "$CONTAINER_APP_NAME" ]; then
+            missing+=("AZURE_CONTAINER_APP_NAME")
+          fi
+
+          if [ -z "$IMAGE_NAME" ]; then
+            missing+=("AZURE_CONTAINER_IMAGE_NAME")
+          fi
+
+          if [ -z "$RESOURCE_GROUP" ]; then
+            missing+=("AZURE_RESOURCE_GROUP")
+          fi
+
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "Missing required GitHub repository variables:" >&2
+            printf ' - %s\n' "${missing[@]}" >&2
+            exit 1
+          fi
+      - name: Validate required secrets
+        env:
+          AZURE_CLIENT_ID_VALUE: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_TENANT_ID_VALUE: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_SUBSCRIPTION_ID_VALUE: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_STORAGE_CONNECTION_STRING_VALUE: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+        run: |
+          missing=()
+
+          if [ -z "$AZURE_CLIENT_ID_VALUE" ]; then
+            missing+=("AZURE_CLIENT_ID")
+          fi
+
+          if [ -z "$AZURE_TENANT_ID_VALUE" ]; then
+            missing+=("AZURE_TENANT_ID")
+          fi
+
+          if [ -z "$AZURE_SUBSCRIPTION_ID_VALUE" ]; then
+            missing+=("AZURE_SUBSCRIPTION_ID")
+          fi
+
+          if [ -z "$AZURE_STORAGE_CONNECTION_STRING_VALUE" ]; then
+            missing+=("AZURE_STORAGE_CONNECTION_STRING")
+          fi
+
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "Missing required GitHub secrets:" >&2
+            printf ' - %s\n' "${missing[@]}" >&2
+            exit 1
+          fi
+      - name: Azure Login
+        uses: azure/login@v2
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-          app_location: "/"
-          action: "close"
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Install Container Apps extension
+        run: az extension add --name containerapp --upgrade --yes
+      - name: Build and Push to ACR
+        run: |
+          az acr login --name "$ACR_NAME"
+          IMAGE_TAG="$ACR_NAME.azurecr.io/$IMAGE_NAME:${{ github.sha }}"
+          docker build -t "$IMAGE_TAG" .
+          docker push "$IMAGE_TAG"
+          echo "IMAGE_TAG=$IMAGE_TAG" >> "$GITHUB_ENV"
+      - name: Update Container App
+        env:
+          STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+          OPENAI_KEY: ${{ secrets.AZURE_OPENAI_KEY }}
+        run: |
+          env_args=(
+            "AZURE_STORAGE_CONNECTION_STRING=$STORAGE_CONNECTION_STRING"
+            "HOST=0.0.0.0"
+            "PORT=3000"
+          )
+
+          if [ -n "$OPENAI_ENDPOINT" ]; then
+            env_args+=("AZURE_OPENAI_ENDPOINT=$OPENAI_ENDPOINT")
+          fi
+
+          if [ -n "$OPENAI_KEY" ]; then
+            env_args+=("AZURE_OPENAI_KEY=$OPENAI_KEY")
+          fi
+
+          if [ -n "$OPENAI_DEPLOYMENT" ]; then
+            env_args+=("AZURE_OPENAI_DEPLOYMENT=$OPENAI_DEPLOYMENT")
+          fi
+
+          az containerapp update \
+            --name "$CONTAINER_APP_NAME" \
+            --resource-group "$RESOURCE_GROUP" \
+            --image "$IMAGE_TAG" \
+            --set-env-vars "${env_args[@]}"

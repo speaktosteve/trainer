@@ -7,7 +7,7 @@
 ![daisyUI](https://img.shields.io/badge/daisyUI-5-5A0EF8?logo=daisyui&logoColor=white)
 ![Vite+](https://img.shields.io/badge/Vite+-646CFF?logo=vite&logoColor=white)
 ![Vitest](https://img.shields.io/badge/Vitest-6E9F18?logo=vitest&logoColor=white)
-![Azure Static Web Apps](https://img.shields.io/badge/Azure_Static_Web_Apps-0078D4?logo=microsoft-azure&logoColor=white)
+![Azure Container Apps](https://img.shields.io/badge/Azure_Container_Apps-0078D4?logo=microsoft-azure&logoColor=white)
 ![Azure Table Storage](https://img.shields.io/badge/Azure_Table_Storage-0078D4?logo=microsoft-azure&logoColor=white)
 
 A mobile-first web app for tracking and planning gym sessions. Built with SvelteKit, TypeScript, and Tailwind CSS, backed by Azure Table Storage.
@@ -27,7 +27,7 @@ A mobile-first web app for tracking and planning gym sessions. Built with Svelte
 - Azure OpenAI (gpt-4o-mini)
 - Chart.js (weight trend chart)
 - Vitest (unit tests)
-- Azure Static Web Apps (deployment)
+- Azure Container Apps (deployment)
 
 ## Getting Started
 
@@ -113,7 +113,7 @@ tests/
 
 ### API Routes
 
-All server routes live under `/data/` (not `/api/`, which is reserved by Azure Static Web Apps):
+All server routes live under `/data/`:
 
 | Route                  | Methods           | Purpose                                                                             |
 | ---------------------- | ----------------- | ----------------------------------------------------------------------------------- |
@@ -247,9 +247,45 @@ vp test          # watch mode
 
 ## Deployment
 
-The app is configured for Azure Static Web Apps via `svelte-adapter-azure-swa`.
+The app is configured for container deployment via `@sveltejs/adapter-node` and runs as a single Node server in Azure Container Apps.
 
-1. Create an Azure Static Web App resource
-2. Set `AZURE_STORAGE_CONNECTION_STRING` in the SWA environment variables
-3. Optionally set the `AZURE_OPENAI_*` variables for AI-powered plan generation
-4. Connect your GitHub repo — the included GitHub Actions workflow handles CI/CD (lint → test → build → deploy)
+### Runtime Environment Variables
+
+Set these in the Azure Container App itself:
+
+- `AZURE_STORAGE_CONNECTION_STRING` (required)
+- `AZURE_OPENAI_ENDPOINT` (optional)
+- `AZURE_OPENAI_KEY` (optional)
+- `AZURE_OPENAI_DEPLOYMENT` (optional, defaults to `gpt-4o-mini`)
+- `HOST=0.0.0.0`
+- `PORT=3000`
+
+### GitHub Actions Configuration
+
+Set these GitHub secrets for OIDC-based Azure login:
+
+- `AZURE_CLIENT_ID`
+- `AZURE_TENANT_ID`
+- `AZURE_SUBSCRIPTION_ID`
+- `AZURE_STORAGE_CONNECTION_STRING`
+- `AZURE_OPENAI_KEY` (optional)
+
+Set these GitHub repository variables:
+
+- `AZURE_CONTAINER_REGISTRY_NAME` (example: `myregistry`)
+- `AZURE_CONTAINER_IMAGE_NAME` (example: `trainer`)
+- `AZURE_CONTAINER_APP_NAME`
+- `AZURE_RESOURCE_GROUP`
+- `AZURE_OPENAI_ENDPOINT` (optional)
+- `AZURE_OPENAI_DEPLOYMENT` (optional)
+
+### Deployment Flow
+
+On each push to `main`, GitHub Actions will:
+
+1. Run `vp run check`
+2. Run `vp test --run`
+3. Build the production container image
+4. Push the image to Azure Container Registry
+5. Update the Azure Container App to the new image tag
+6. Apply runtime app settings for storage, networking, and optional OpenAI configuration
