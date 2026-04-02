@@ -144,7 +144,7 @@ describe("/data/mcp route", () => {
     const body = await readBodyText(response);
 
     expect(response.headers.get("content-type")).toContain("text/event-stream");
-    expect(body).toContain("event: result");
+    expect(body).toContain("event: message");
     expect(body).toContain('"id":30');
   });
 
