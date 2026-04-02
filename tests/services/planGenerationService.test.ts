@@ -584,11 +584,11 @@ describe("LLMPlanProvider", () => {
       ]),
     ];
 
-    const llmPayload: WeeklyPlan = {
+    const llmPayload = {
       weekStart: "2026-04-06",
       sessions: [
         {
-          day: "Monday",
+          day: "monday",
           label: "Push",
           exercises: [
             {
@@ -639,7 +639,7 @@ describe("LLMPlanProvider", () => {
       weekStart: "2026-04-06",
       sessions: [
         {
-          day: "Monday",
+          day: "monday",
           label: "Push",
           exercises: [
             {
@@ -701,7 +701,7 @@ describe("LLMPlanProvider", () => {
       weekStart: "2026-04-06",
       sessions: [
         {
-          day: "Monday",
+          day: "monday",
           label: "Upper A",
           exercises: [
             {
@@ -764,7 +764,7 @@ describe("LLMPlanProvider", () => {
       weekStart: "2026-04-06",
       sessions: [
         {
-          day: "Monday",
+          day: "monday",
           label: "Push",
           exercises: [
             {
