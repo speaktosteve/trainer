@@ -1,13 +1,20 @@
 import { describe, it, expect, vi, beforeEach } from "vite-plus/test";
-import { SmartCopyProvider, LLMPlanProvider } from "$lib/services/planGenerationService";
+import {
+  SmartCopyProvider,
+  LLMPlanProvider,
+  getPlanGenerator,
+  planGenerator,
+  llmPlanGenerator,
+} from "$lib/services/planGenerationService";
 import type { WeeklyPlan, ExerciseLog } from "$lib/types";
 
 vi.mock("$lib/services/openaiClient", () => ({
   getOpenAIClient: vi.fn(),
   getDeploymentName: vi.fn(() => "gpt-4o-mini"),
+  isLLMConfigured: vi.fn(() => false),
 }));
 
-import { getOpenAIClient } from "$lib/services/openaiClient";
+import { getOpenAIClient, isLLMConfigured } from "$lib/services/openaiClient";
 
 const basePlan: WeeklyPlan = {
   weekStart: "2026-03-30",
@@ -42,6 +49,18 @@ function makeLog(
     exercises,
   };
 }
+
+describe("getPlanGenerator", () => {
+  it("returns llmPlanGenerator when LLM is configured", () => {
+    vi.mocked(isLLMConfigured).mockReturnValue(true);
+    expect(getPlanGenerator()).toBe(llmPlanGenerator);
+  });
+
+  it("returns planGenerator when LLM is not configured", () => {
+    vi.mocked(isLLMConfigured).mockReturnValue(false);
+    expect(getPlanGenerator()).toBe(planGenerator);
+  });
+});
 
 describe("SmartCopyProvider", () => {
   const provider = new SmartCopyProvider();
@@ -124,7 +143,8 @@ describe("SmartCopyProvider", () => {
     const row = result.sessions[0].exercises[0];
     expect(row.targetWeight).toBe(109);
     expect(row.machineWeightMaxedOut).toBe(true);
-    expect(row.notes).toContain("Max machine weight reached");
+    expect(row.targetReps).toEqual([11, 10, 10]);
+    expect(row.notes).toBe("Machine already at max weight");
   });
 
   it("does not increase weight when machineWeightMaxedOut is true", async () => {
@@ -163,7 +183,8 @@ describe("SmartCopyProvider", () => {
 
     expect(exercise.targetWeight).toBe(109);
     expect(exercise.machineWeightMaxedOut).toBe(true);
-    expect(exercise.notes).toContain("Max machine weight reached");
+    expect(exercise.targetReps).toEqual([11, 10, 10]);
+    expect(exercise.notes).toBe("Machine already at max weight");
   });
 
   it("bumps weight by 1 kg for a weighted exercise < 20 kg when all reps are hit", async () => {
@@ -212,6 +233,35 @@ describe("SmartCopyProvider", () => {
     expect(benchPress!.targetWeight).toBe(62.5);
     expect(benchPress!.notes).toContain("Retry");
     expect(benchPress!.notes).toContain("6, 5, 5, 4");
+  });
+
+  it("does not progress when total reps match but set targets are missed", async () => {
+    const perSetPlan: WeeklyPlan = {
+      weekStart: "2026-03-30",
+      sessions: [
+        {
+          day: "monday",
+          label: "Push",
+          exercises: [{ name: "Bench Press", targetWeight: 62.5, targetReps: [5, 5, 5] }],
+        },
+      ],
+    };
+    const logs = [
+      makeLog("monday", [
+        {
+          name: "Bench Press",
+          targetWeight: 62.5,
+          targetReps: [5, 5, 5],
+          actualWeight: 62.5,
+          actualReps: [8, 4, 3],
+        },
+      ]),
+    ];
+
+    const result = await provider.generateNextPlan(perSetPlan, logs, []);
+    const bench = result.sessions[0].exercises[0];
+    expect(bench.targetWeight).toBe(62.5);
+    expect(bench.notes).toContain("Retry");
   });
 
   it("adds a rep to the lowest set for a bodyweight exercise when all reps are hit", async () => {
@@ -356,7 +406,8 @@ describe("LLMPlanProvider", () => {
     const result = await provider.generateNextPlan(basePlan, [], []);
     // weekStart must be next week, not what LLM returned
     expect(result.weekStart).toBe("2026-04-06");
-    expect(result.sessions[0].exercises[0].targetWeight).toBe(65);
+    expect(result.sessions[0].exercises[0].targetWeight).toBe(62.5);
+    expect(result.sessions[0].exercises[0].notes).toContain("No record last week");
   });
 
   it("backfills targetWeight from source plan when LLM omits it", async () => {
@@ -497,5 +548,426 @@ describe("LLMPlanProvider", () => {
 
     expect(prompt).toContain("[MAX MACHINE WEIGHT]");
     expect(result.sessions[0].exercises[0].machineWeightMaxedOut).toBe(true);
+  });
+
+  it("enforces machine max weight and adds exact note for maxed machines", async () => {
+    const sourcePlan: WeeklyPlan = {
+      weekStart: "2026-03-30",
+      sessions: [
+        {
+          day: "monday",
+          label: "Push",
+          exercises: [
+            {
+              name: "Machine Seated Chest Press",
+              targetWeight: 109,
+              machineWeightMaxedOut: true,
+              targetReps: [10, 10, 10],
+            },
+          ],
+        },
+      ],
+    };
+
+    const completedLogs = [
+      makeLog("monday", [
+        {
+          name: "Machine Seated Chest Press",
+          targetWeight: 109,
+          machineWeightMaxedOut: true,
+          targetReps: [10, 10, 10],
+          actualWeight: 109,
+          actualReps: [10, 10, 10],
+        },
+      ]),
+    ];
+
+    const llmPayload: WeeklyPlan = {
+      weekStart: "2026-04-06",
+      sessions: [
+        {
+          day: "Monday",
+          label: "Push",
+          exercises: [
+            {
+              name: "Machine Seated Chest Press",
+              targetWeight: 112,
+              targetReps: [10, 10, 10],
+            },
+          ],
+        },
+      ],
+    };
+
+    const mockCreate = vi.fn().mockResolvedValue({
+      choices: [{ message: { content: JSON.stringify(llmPayload) } }],
+    });
+    vi.mocked(getOpenAIClient).mockReturnValue({
+      chat: { completions: { create: mockCreate } },
+    } as any);
+
+    const provider = new LLMPlanProvider();
+    const result = await provider.generateNextPlan(sourcePlan, completedLogs, []);
+    const ex = result.sessions[0].exercises[0];
+
+    expect(ex.targetWeight).toBe(109);
+    expect(ex.machineWeightMaxedOut).toBe(true);
+    expect(ex.notes).toBe("Machine already at max weight");
+  });
+
+  it("keeps targets unchanged and adds note when no record exists for the week", async () => {
+    const sourcePlan: WeeklyPlan = {
+      weekStart: "2026-03-30",
+      sessions: [
+        {
+          day: "monday",
+          label: "Push",
+          exercises: [
+            {
+              name: "Bench Press",
+              targetWeight: 62.5,
+              targetReps: [6, 6, 6, 6],
+            },
+          ],
+        },
+      ],
+    };
+
+    const llmPayload: WeeklyPlan = {
+      weekStart: "2026-04-06",
+      sessions: [
+        {
+          day: "Monday",
+          label: "Push",
+          exercises: [
+            {
+              name: "Bench Press",
+              targetWeight: 65,
+              targetReps: [7, 7, 7, 7],
+            },
+          ],
+        },
+      ],
+    };
+
+    const mockCreate = vi.fn().mockResolvedValue({
+      choices: [{ message: { content: JSON.stringify(llmPayload) } }],
+    });
+    vi.mocked(getOpenAIClient).mockReturnValue({
+      chat: { completions: { create: mockCreate } },
+    } as any);
+
+    const provider = new LLMPlanProvider();
+    const result = await provider.generateNextPlan(sourcePlan, [], []);
+    const ex = result.sessions[0].exercises[0];
+
+    expect(ex.targetWeight).toBe(62.5);
+    expect(ex.targetReps).toEqual([6, 6, 6, 6]);
+    expect(ex.notes).toBe("No record last week");
+  });
+
+  it("does not leak notes between same exercise names on different days", async () => {
+    const sourcePlan: WeeklyPlan = {
+      weekStart: "2026-03-30",
+      sessions: [
+        {
+          day: "monday",
+          label: "Upper A",
+          exercises: [
+            {
+              name: "Seated Shoulder Press",
+              targetWeight: 14,
+              targetReps: [10, 10, 10],
+            },
+          ],
+        },
+        {
+          day: "friday",
+          label: "Full Body",
+          exercises: [
+            {
+              name: "Seated Shoulder Press",
+              targetWeight: 16,
+              targetReps: [10, 10, 10],
+            },
+          ],
+        },
+      ],
+    };
+
+    const llmPayload: WeeklyPlan = {
+      weekStart: "2026-04-06",
+      sessions: [
+        {
+          day: "Monday",
+          label: "Upper A",
+          exercises: [
+            {
+              name: "Seated Shoulder Press",
+              targetWeight: 14,
+              targetReps: [10, 10, 10],
+              notes: "Holding at 16kg",
+            },
+          ],
+        },
+      ],
+    };
+
+    const mockCreate = vi.fn().mockResolvedValue({
+      choices: [{ message: { content: JSON.stringify(llmPayload) } }],
+    });
+    vi.mocked(getOpenAIClient).mockReturnValue({
+      chat: { completions: { create: mockCreate } },
+    } as any);
+
+    const provider = new LLMPlanProvider();
+    const result = await provider.generateNextPlan(sourcePlan, [], []);
+    const ex = result.sessions[0].exercises[0];
+
+    expect(ex.targetWeight).toBe(14);
+    expect(ex.notes).toBe("No record last week");
+  });
+
+  it("stops increasing machine-max reps once every set reaches 15", async () => {
+    const machinePlan: WeeklyPlan = {
+      weekStart: "2026-03-30",
+      sessions: [
+        {
+          day: "monday",
+          label: "Push",
+          exercises: [
+            {
+              name: "Machine Seated Chest Press",
+              targetWeight: 109,
+              machineWeightMaxedOut: true,
+              targetReps: [15, 15, 15],
+            },
+          ],
+        },
+      ],
+    };
+    const completedLogs = [
+      makeLog("monday", [
+        {
+          name: "Machine Seated Chest Press",
+          targetWeight: 109,
+          machineWeightMaxedOut: true,
+          targetReps: [15, 15, 15],
+          actualWeight: 109,
+          actualReps: [15, 15, 15],
+        },
+      ]),
+    ];
+    const llmPayload: WeeklyPlan = {
+      weekStart: "2026-04-06",
+      sessions: [
+        {
+          day: "Monday",
+          label: "Push",
+          exercises: [
+            {
+              name: "Machine Seated Chest Press",
+              targetWeight: 112,
+              targetReps: [15, 15, 15],
+            },
+          ],
+        },
+      ],
+    };
+    const mockCreate = vi.fn().mockResolvedValue({
+      choices: [{ message: { content: JSON.stringify(llmPayload) } }],
+    });
+    vi.mocked(getOpenAIClient).mockReturnValue({
+      chat: { completions: { create: mockCreate } },
+    } as any);
+
+    const provider = new LLMPlanProvider();
+    const result = await provider.generateNextPlan(machinePlan, completedLogs, []);
+
+    expect(result.sessions[0].exercises[0].targetReps).toEqual([15, 15, 15]);
+  });
+
+  it("does not increase machine-max reps when only total volume is met", async () => {
+    const machinePlan: WeeklyPlan = {
+      weekStart: "2026-03-30",
+      sessions: [
+        {
+          day: "monday",
+          label: "Push",
+          exercises: [
+            {
+              name: "Machine Seated Chest Press",
+              targetWeight: 109,
+              machineWeightMaxedOut: true,
+              targetReps: [5, 5, 5],
+            },
+          ],
+        },
+      ],
+    };
+    const completedLogs = [
+      makeLog("monday", [
+        {
+          name: "Machine Seated Chest Press",
+          targetWeight: 109,
+          machineWeightMaxedOut: true,
+          targetReps: [5, 5, 5],
+          actualWeight: 109,
+          actualReps: [8, 4, 3],
+        },
+      ]),
+    ];
+    const llmPayload: WeeklyPlan = {
+      weekStart: "2026-04-06",
+      sessions: [
+        {
+          day: "monday",
+          label: "Push",
+          exercises: [
+            {
+              name: "Machine Seated Chest Press",
+              targetWeight: 112,
+              targetReps: [5, 5, 5],
+            },
+          ],
+        },
+      ],
+    };
+    const mockCreate = vi.fn().mockResolvedValue({
+      choices: [{ message: { content: JSON.stringify(llmPayload) } }],
+    });
+    vi.mocked(getOpenAIClient).mockReturnValue({
+      chat: { completions: { create: mockCreate } },
+    } as any);
+
+    const provider = new LLMPlanProvider();
+    const result = await provider.generateNextPlan(machinePlan, completedLogs, []);
+
+    expect(result.sessions[0].exercises[0].targetReps).toEqual([5, 5, 5]);
+  });
+
+  it("matches by exerciseId when LLM moves exercise day", async () => {
+    const sourcePlan: WeeklyPlan = {
+      weekStart: "2026-03-30",
+      sessions: [
+        {
+          day: "monday",
+          label: "Push",
+          exercises: [
+            {
+              exerciseId: "monday:0:machine seated chest press",
+              name: "Machine Seated Chest Press",
+              targetWeight: 109,
+              machineWeightMaxedOut: true,
+              targetReps: [10, 10, 10],
+            },
+          ],
+        },
+      ],
+    };
+    const completedLogs = [
+      makeLog("monday", [
+        {
+          exerciseId: "monday:0:machine seated chest press",
+          name: "Machine Seated Chest Press",
+          targetWeight: 109,
+          machineWeightMaxedOut: true,
+          targetReps: [10, 10, 10],
+          actualWeight: 109,
+          actualReps: [10, 10, 10],
+        },
+      ]),
+    ];
+    const llmPayload: WeeklyPlan = {
+      weekStart: "2026-04-06",
+      sessions: [
+        {
+          day: "wednesday",
+          label: "Push",
+          exercises: [
+            {
+              exerciseId: "monday:0:machine seated chest press",
+              name: "Machine Seated Chest Press",
+              targetWeight: 112,
+              targetReps: [10, 10, 10],
+            },
+          ],
+        },
+      ],
+    };
+
+    const mockCreate = vi.fn().mockResolvedValue({
+      choices: [{ message: { content: JSON.stringify(llmPayload) } }],
+    });
+    vi.mocked(getOpenAIClient).mockReturnValue({
+      chat: { completions: { create: mockCreate } },
+    } as any);
+
+    const provider = new LLMPlanProvider();
+    const result = await provider.generateNextPlan(sourcePlan, completedLogs, []);
+    const ex = result.sessions[0].exercises[0];
+
+    expect(ex.exerciseId).toBe("monday:0:machine seated chest press");
+    expect(ex.targetWeight).toBe(109);
+    expect(ex.targetReps).toEqual([11, 10, 10]);
+    expect(ex.notes).toBe("Machine already at max weight");
+  });
+
+  it("appends summary correction line when constraints adjust generated values", async () => {
+    const sourcePlan: WeeklyPlan = {
+      weekStart: "2026-03-30",
+      sessions: [
+        {
+          day: "monday",
+          label: "Push",
+          exercises: [
+            {
+              name: "Bench Press",
+              targetWeight: 62.5,
+              targetReps: [6, 6, 6, 6],
+            },
+          ],
+        },
+      ],
+    };
+
+    const llmPayload: WeeklyPlan = {
+      weekStart: "2026-04-06",
+      sessions: [
+        {
+          day: "monday",
+          label: "Push",
+          exercises: [
+            {
+              name: "Bench Press",
+              targetWeight: 70,
+              targetReps: [8, 8, 8, 8],
+            },
+          ],
+        },
+      ],
+      summary: {
+        weekStart: "2026-04-06",
+        text: "",
+        headline: "Big jump week",
+        lines: [{ icon: "📈", label: "Bench", detail: "Jumping to 70kg" }],
+      },
+    };
+
+    const mockCreate = vi.fn().mockResolvedValue({
+      choices: [{ message: { content: JSON.stringify(llmPayload) } }],
+    });
+    vi.mocked(getOpenAIClient).mockReturnValue({
+      chat: { completions: { create: mockCreate } },
+    } as any);
+
+    const provider = new LLMPlanProvider();
+    const result = await provider.generateNextPlan(sourcePlan, [], []);
+
+    expect(result.sessions[0].exercises[0].targetWeight).toBe(62.5);
+    const correctionLine = result.summary?.lines.find((line) => line.label === "Auto-correct");
+    expect(correctionLine).toBeDefined();
+    expect(correctionLine?.icon).toBe("🔒");
+    expect(result.summary?.text).toContain("🔒");
   });
 });

@@ -2,8 +2,7 @@ import { json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { getPlan, savePlan } from "$lib/services/planService";
 import { getExerciseLogsForWeek } from "$lib/services/exerciseService";
-import { planGenerator, llmPlanGenerator } from "$lib/services/planGenerationService";
-import { isLLMConfigured } from "$lib/services/openaiClient";
+import { getPlanGenerator } from "$lib/services/planGenerationService";
 import { getWeekStart } from "$lib/utils/dates";
 
 /**
@@ -40,7 +39,7 @@ export const POST: RequestHandler = async ({ request }) => {
   prevDate.setDate(prevDate.getDate() - 7);
   const previousLogs = await getExerciseLogsForWeek(prevDate.toISOString().slice(0, 10));
 
-  const generator = isLLMConfigured() ? llmPlanGenerator : planGenerator;
+  const generator = getPlanGenerator();
 
   let nextPlan;
   try {

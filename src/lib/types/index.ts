@@ -1,5 +1,7 @@
 // ── Core exercise entry ──────────────────────────────────────────────
 export interface ExerciseEntry {
+  /** Stable identifier for an exercise across weeks and day moves. */
+  exerciseId?: string;
   name: string;
   /** Target weight in kg. Omit for bodyweight exercises (e.g. chin-ups). */
   targetWeight?: number;

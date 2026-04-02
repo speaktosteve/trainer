@@ -17,5 +17,13 @@ export function getDeploymentName(): string {
 }
 
 export function isLLMConfigured(): boolean {
+  const hasEndpoint = Boolean(env.AZURE_OPENAI_ENDPOINT);
+  const hasKey = Boolean(env.AZURE_OPENAI_KEY);
+  if (hasEndpoint && !hasKey) {
+    console.warn(
+      "AZURE_OPENAI_ENDPOINT is set but AZURE_OPENAI_KEY is missing. LLM features will be unavailable.",
+    );
+  }
+  console.info(`LLM configured: ${hasEndpoint && hasKey ? "yes" : "no"}`);
   return Boolean(env.AZURE_OPENAI_ENDPOINT && env.AZURE_OPENAI_KEY);
 }

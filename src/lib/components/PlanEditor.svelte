@@ -26,6 +26,11 @@
 		friday: 'Friday'
 	};
 
+	function getDayLabel(day: string): string {
+		const normalizedDay = day.toLowerCase();
+		return dayLabels[normalizedDay] ?? day;
+	}
+
 	function updateExercise(sessionIdx: number, exIdx: number, field: string, value: unknown) {
 		const session = editPlan.sessions[sessionIdx];
 		const ex = session.exercises[exIdx];
@@ -71,12 +76,12 @@
 		Adjust weights, reps, and notes before saving.
 	</p>
 
-	<div class="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
+	<div class="space-y-4 md:gap-4 md:space-y-0">
 	{#each editPlan.sessions as session, sIdx (session.day)}
 		<div class="card card-border bg-base-100 shadow-sm">
 			<div class="border-b border-base-300 p-3">
 				<h3 class="text-sm font-bold text-base-content">
-					{dayLabels[session.day]} — {session.label}
+					{getDayLabel(session.day)} — {session.label}
 				</h3>
 			</div>
 

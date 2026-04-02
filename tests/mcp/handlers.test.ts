@@ -12,6 +12,7 @@ vi.mock("$lib/services/planService", () => ({
 }));
 
 vi.mock("$lib/services/summaryService", () => ({
+  getSummaryProvider: vi.fn(),
   summaryProvider: { generateSummary: vi.fn() },
   llmSummaryProvider: { generateSummary: vi.fn() },
 }));
@@ -27,11 +28,12 @@ import {
   getWeightHistory,
 } from "$lib/services/exerciseService";
 import { getCurrentWeekPlan, getPlan } from "$lib/services/planService";
-import { summaryProvider } from "$lib/services/summaryService";
+import { getSummaryProvider, summaryProvider } from "$lib/services/summaryService";
 
 describe("mcp handlers", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.mocked(getSummaryProvider).mockReturnValue(summaryProvider as any);
   });
 
   it("lists expected read-only tools", () => {
@@ -108,6 +110,7 @@ describe("mcp handlers", () => {
 
     expect((result.data as { weekStart: string }).weekStart).toBe("2026-03-30");
     expect(getExerciseLogsForWeek).toHaveBeenCalledWith("2026-03-30");
+    expect(getSummaryProvider).toHaveBeenCalledTimes(1);
     expect(summaryProvider.generateSummary).toHaveBeenCalledTimes(1);
   });
 

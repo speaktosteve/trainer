@@ -24,6 +24,11 @@
 		wednesday: 'Wednesday',
 		friday: 'Friday'
 	};
+	
+	function getDayLabel(day: string): string {
+		const normalizedDay = day.toLowerCase();
+		return dayLabels[normalizedDay] ?? day;
+	}
 
 	const completedCount = $derived(
 		session.exercises.filter((ex) => ex.name in completedExercises).length
@@ -52,7 +57,7 @@
 	>
 		<div>
 			<h3 class="text-sm font-bold text-base-content">
-				{dayLabels[session.day]} — {session.label}
+				{getDayLabel(session.day)} — {session.label}
 			</h3>
 			<p class="mt-0.5 text-xs text-base-content/60">
 				{session.exercises.length} exercises · {completedCount}/{session.exercises.length} done

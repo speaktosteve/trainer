@@ -6,8 +6,7 @@ import {
 } from "$lib/services/exerciseService";
 import { getCurrentWeekPlan, getPlan } from "$lib/services/planService";
 import { getWeekStart } from "$lib/utils/dates";
-import { isLLMConfigured } from "$lib/services/openaiClient";
-import { llmSummaryProvider, summaryProvider } from "$lib/services/summaryService";
+import { getSummaryProvider } from "$lib/services/summaryService";
 import { MCP_TOOLS } from "./tools";
 import { ensureObject, parseIsoDate, parseLimit } from "./validation";
 
@@ -75,7 +74,7 @@ async function getWeekSummaryTool(
   const previousLogs = await getExerciseLogsForWeek(prevWeekStart);
   const weightHistory = await getWeightHistory();
 
-  const provider = isLLMConfigured() ? llmSummaryProvider : summaryProvider;
+  const provider = getSummaryProvider();
   const summary = await provider.generateSummary(
     weekStart,
     currentLogs,

@@ -1,5 +1,5 @@
 import type { ExerciseLog, BodyweightEntry, WeeklySummary, SummaryLine } from "$lib/types";
-import { getOpenAIClient, getDeploymentName } from "./openaiClient";
+import { getOpenAIClient, getDeploymentName, isLLMConfigured } from "./openaiClient";
 
 /**
  * Summary provider interface — swap this implementation
@@ -242,3 +242,7 @@ Return ONLY valid JSON, no markdown fences.`,
 
 /** LLM-backed singleton — use when Azure OpenAI is configured */
 export const llmSummaryProvider: SummaryProvider = new LLMSummaryProvider();
+
+export function getSummaryProvider(): SummaryProvider {
+  return isLLMConfigured() ? llmSummaryProvider : summaryProvider;
+}

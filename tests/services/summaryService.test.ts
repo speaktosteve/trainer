@@ -1,5 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from "vite-plus/test";
-import { MockSummaryProvider, LLMSummaryProvider } from "$lib/services/summaryService";
+import {
+  MockSummaryProvider,
+  LLMSummaryProvider,
+  getSummaryProvider,
+  summaryProvider,
+  llmSummaryProvider,
+} from "$lib/services/summaryService";
 import type { ExerciseLog, BodyweightEntry } from "$lib/types";
 
 vi.mock("$lib/services/openaiClient", () => ({
@@ -8,9 +14,21 @@ vi.mock("$lib/services/openaiClient", () => ({
   isLLMConfigured: vi.fn(() => false),
 }));
 
-import { getOpenAIClient } from "$lib/services/openaiClient";
+import { getOpenAIClient, isLLMConfigured } from "$lib/services/openaiClient";
 
 const provider = new MockSummaryProvider();
+
+describe("getSummaryProvider", () => {
+  it("returns llmSummaryProvider when LLM is configured", () => {
+    vi.mocked(isLLMConfigured).mockReturnValue(true);
+    expect(getSummaryProvider()).toBe(llmSummaryProvider);
+  });
+
+  it("returns summaryProvider when LLM is not configured", () => {
+    vi.mocked(isLLMConfigured).mockReturnValue(false);
+    expect(getSummaryProvider()).toBe(summaryProvider);
+  });
+});
 
 function makeLog(overrides: Partial<ExerciseLog> = {}): ExerciseLog {
   return {
