@@ -132,6 +132,8 @@ jobs:
             env_args+=("AZURE_OPENAI_DEPLOYMENT=$OPENAI_DEPLOYMENT")
           fi
 
+          az account set --subscription "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+
           az containerapp update \
             --name "$CONTAINER_APP_NAME" \
             --resource-group "$RESOURCE_GROUP" \
