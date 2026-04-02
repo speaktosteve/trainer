@@ -132,7 +132,7 @@ jobs:
             env_args+=("AZURE_OPENAI_DEPLOYMENT=$OPENAI_DEPLOYMENT")
           fi
 
-          az account set --subscription "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+          az account set --subscription 0c942927-9d06-4ec5-ac05-541aa3773539
 
           az containerapp update \
             --name trainer-ca \
