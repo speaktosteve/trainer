@@ -5,9 +5,7 @@ import type { WeeklyPlan } from "$lib/types";
 
 export const GET: RequestHandler = async () => {
   const plan = await getCurrentWeekPlan();
-  if (!plan) {
-    return json(null, { status: 404 });
-  }
+  // Empty-state is expected for first run, so return 200 with null.
   return json(plan);
 };
 

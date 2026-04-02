@@ -22,6 +22,23 @@ const connectionString = connStr;
 
 const DEFAULT_PK = "default";
 
+function shouldAllowInsecureConnection(conn: string): boolean {
+  const normalized = conn.toLowerCase();
+  if (normalized.includes("usedevelopmentstorage=true")) {
+    return true;
+  }
+
+  if (!normalized.includes("tableendpoint=http://")) {
+    return false;
+  }
+
+  return /(tableendpoint=http:\/\/(localhost|127\.0\.0\.1|host\.docker\.internal|azurite)(:\d+)?\/)/.test(
+    normalized,
+  );
+}
+
+const allowInsecureConnection = shouldAllowInsecureConnection(connectionString);
+
 // ── Confirmation prompt ──────────────────────────────────────────────
 if (!process.argv.includes("--force")) {
   const readline = await import("node:readline");
@@ -41,9 +58,13 @@ function reverseTimestamp(date: Date): string {
 }
 
 async function ensureTable(name: string): Promise<TableClient> {
-  const svc = TableServiceClient.fromConnectionString(connectionString);
+  const svc = TableServiceClient.fromConnectionString(connectionString, {
+    allowInsecureConnection,
+  });
   await svc.createTable(name).catch(() => {});
-  const client = TableClient.fromConnectionString(connectionString, name);
+  const client = TableClient.fromConnectionString(connectionString, name, {
+    allowInsecureConnection,
+  });
 
   // Clear all existing entities
   const entities = client.listEntities({ queryOptions: { select: ["partitionKey", "rowKey"] } });

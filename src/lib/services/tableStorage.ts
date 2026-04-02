@@ -6,6 +6,22 @@ export type TableName = "Plans" | "ExerciseLogs" | "BodyWeight";
 let serviceClient: TableServiceClient | null = null;
 const tableClients = new Map<TableName, TableClient>();
 
+function shouldAllowInsecureConnection(connStr: string): boolean {
+  const normalized = connStr.toLowerCase();
+  if (normalized.includes("usedevelopmentstorage=true")) {
+    return true;
+  }
+
+  if (!normalized.includes("tableendpoint=http://")) {
+    return false;
+  }
+
+  // Restrict insecure HTTP to known local Azurite-style hosts.
+  return /(tableendpoint=http:\/\/(localhost|127\.0\.0\.1|host\.docker\.internal|azurite)(:\d+)?\/)/.test(
+    normalized,
+  );
+}
+
 function getConnectionString(): string {
   const connStr = env.AZURE_STORAGE_CONNECTION_STRING;
   if (!connStr) {
@@ -19,7 +35,10 @@ function getConnectionString(): string {
 
 function getServiceClient(): TableServiceClient {
   if (!serviceClient) {
-    serviceClient = TableServiceClient.fromConnectionString(getConnectionString());
+    const connStr = getConnectionString();
+    serviceClient = TableServiceClient.fromConnectionString(connStr, {
+      allowInsecureConnection: shouldAllowInsecureConnection(connStr),
+    });
   }
   return serviceClient;
 }
@@ -32,7 +51,10 @@ export async function getTableClient(tableName: TableName): Promise<TableClient>
   const existing = tableClients.get(tableName);
   if (existing) return existing;
 
-  const client = TableClient.fromConnectionString(getConnectionString(), tableName);
+  const connStr = getConnectionString();
+  const client = TableClient.fromConnectionString(connStr, tableName, {
+    allowInsecureConnection: shouldAllowInsecureConnection(connStr),
+  });
   await getServiceClient()
     .createTable(tableName)
     .catch(() => {

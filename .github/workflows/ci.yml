@@ -132,10 +132,10 @@ jobs:
             env_args+=("AZURE_OPENAI_DEPLOYMENT=$OPENAI_DEPLOYMENT")
           fi
 
-          az account set --subscription 0c942927-9d06-4ec5-ac05-541aa3773539
+          az account set --subscription "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
 
           az containerapp update \
-            --name trainer-ca \
-            --resource-group trainer \
+            --name "$CONTAINER_APP_NAME" \
+            --resource-group "$RESOURCE_GROUP" \
             --image "$IMAGE_TAG" \
             --set-env-vars "${env_args[@]}"

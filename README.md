@@ -71,6 +71,80 @@ vp dev
 
 Open [http://localhost:5173](http://localhost:5173) on your phone or in a mobile-width browser.
 
+### Run In Docker Locally
+
+```bash
+# Copy env template and configure values
+cp .env.example .env
+```
+
+If you use Azurite on your host machine, update `AZURE_STORAGE_CONNECTION_STRING` in `.env` so the container can reach it:
+
+```bash
+AZURE_STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;TableEndpoint=http://host.docker.internal:10002/devstoreaccount1;
+```
+
+If you want sample data, seed once from your host before starting the container:
+
+```bash
+vp pm install
+vp run seed
+```
+
+Then build and run the app container:
+
+```bash
+# Build image
+docker build -t trainer:local .
+
+# Run container (maps host :3000 -> container :3000)
+docker run --rm --name trainer-local --env-file .env -p 3000:3000 trainer:local
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+Optional: run Azurite in Docker (if you do not run it on your host):
+
+```bash
+docker run --rm --name azurite -p 10002:10002 mcr.microsoft.com/azure-storage/azurite azurite-table --tableHost 0.0.0.0 --tablePort 10002
+```
+
+Stop containers:
+
+```bash
+docker stop trainer-local
+docker stop azurite
+```
+
+### Run App + Azurite With Docker Compose
+
+Use Docker Compose to start both services with one command.
+
+```bash
+# Copy env template (optional OpenAI values can be set here)
+cp .env.example .env
+
+# Build and start app + azurite
+docker compose up --build
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+The compose setup in `docker-compose.yml` already points the app to the Azurite container, so you do not need to edit `AZURE_STORAGE_CONNECTION_STRING` for this workflow.
+
+Stop and remove containers:
+
+```bash
+docker compose down
+```
+
+If you want sample data, seed once from your host before starting compose:
+
+```bash
+vp pm install
+vp run seed
+```
+
 ## Scripts
 
 | Command         | Description                               |
