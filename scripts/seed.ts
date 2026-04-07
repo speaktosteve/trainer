@@ -238,6 +238,12 @@ const currentPlan: WeeklyPlan = {
           targetReps: [10, 10, 10],
         },
         {
+          exerciseId: "fri-machine-seated-row-single-arm",
+          name: "Machine Seated Row - Single Arm",
+          targetWeight: 25,
+          targetReps: [10, 10, 10],
+        },
+        {
           exerciseId: "fri-seated-shoulder-press",
           name: "Seated Shoulder Press",
           targetWeight: 16,

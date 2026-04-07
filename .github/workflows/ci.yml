@@ -3,6 +3,8 @@ name: Build and Deploy
 permissions:
   contents: read
   id-token: write
+  pull-requests: write # Required for PR comments (Bundle Size)
+  checks: write # Required for detailed test reports
 
 on:
   workflow_dispatch:
@@ -19,11 +21,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: voidzero-dev/setup-vp@v1
+
       - run: npm ci
-      - run: vp run check
-      - run: vp test --run
-      - run: vp build
+
+      - name: Check Linting
+        run: vp run check
+
+      - name: Run Tests with Coverage
+        # --coverage triggers the report; Vite+ handles the Summary auto-injection
+        run: vp test --run --coverage
+
+      - name: Build and Report Bundle Size
+        # This action automatically finds your build folder (dist)
+        # and leaves a PR comment with the size changes.
+        uses: preactjs/compressed-size-action@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          build-script: "vp build"
+          pattern: "{dist,build}/**/*.{js,css,html}"
 
   deploy:
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
