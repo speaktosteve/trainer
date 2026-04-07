@@ -37,6 +37,12 @@
 					}
 				}
 			}
+
+			const pendingPlanRes = await fetch(`/data/plans/next?sourceWeek=${plan.weekStart}`);
+			if (pendingPlanRes.ok) {
+				nextPlan = await pendingPlanRes.json();
+				showEditor = nextPlan !== null;
+			}
 		}
 
 		loading = false;
@@ -118,6 +124,17 @@
 			completedExercises = {};
 		}
 	}
+
+	async function discardNextPlan() {
+		if (!plan) return;
+		const params = new URLSearchParams({ sourceWeek: plan.weekStart });
+		const res = await fetch(`/data/plans/next?${params}`, { method: 'DELETE' });
+
+		if (res.ok) {
+			showEditor = false;
+			nextPlan = null;
+		}
+	}
 </script>
 
 <svelte:head>
@@ -129,7 +146,7 @@
 		plan={nextPlan}
 		previousResults={completedExercises}
 		onSave={saveNextPlan}
-		onCancel={() => { showEditor = false; nextPlan = null; }}
+		onDiscard={discardNextPlan}
 	/>
 {:else}
 	<div class="mb-4 flex items-center justify-between">

@@ -1,9 +1,27 @@
 import { json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
-import { getPlan, savePlan } from "$lib/services/planService";
+import {
+  deletePendingNextPlan,
+  getPendingNextPlan,
+  getPlan,
+  savePendingNextPlan,
+  savePlan,
+} from "$lib/services/planService";
 import { getExerciseLogsForWeek } from "$lib/services/exerciseService";
 import { getPlanGenerator } from "$lib/services/planGenerationService";
 import { getWeekStart } from "$lib/utils/dates";
+
+export const GET: RequestHandler = async ({ url }) => {
+  const sourceWeek = url.searchParams.get("sourceWeek") ?? getWeekStart();
+  const pendingPlan = await getPendingNextPlan(sourceWeek);
+  return json(pendingPlan);
+};
+
+export const DELETE: RequestHandler = async ({ url }) => {
+  const sourceWeek = url.searchParams.get("sourceWeek") ?? getWeekStart();
+  await deletePendingNextPlan(sourceWeek);
+  return json({ ok: true });
+};
 
 /**
  * POST /data/plans/next
@@ -25,6 +43,11 @@ export const POST: RequestHandler = async ({ request }) => {
   nextDate.setDate(nextDate.getDate() + 7);
   const nextWeekStart = nextDate.toISOString().slice(0, 10);
 
+  const pendingPlan = await getPendingNextPlan(sourceWeek);
+  if (pendingPlan) {
+    return json(pendingPlan);
+  }
+
   const existingNext = await getPlan(nextWeekStart);
   if (existingNext) {
     return json(
@@ -39,6 +62,14 @@ export const POST: RequestHandler = async ({ request }) => {
   prevDate.setDate(prevDate.getDate() - 7);
   const previousLogs = await getExerciseLogsForWeek(prevDate.toISOString().slice(0, 10));
 
+  const generationInput = {
+    sourceWeek,
+    sourcePlan: currentPlan,
+    completedLogs,
+    previousLogs,
+  };
+  console.log("PLAN_GENERATION_INPUT", JSON.stringify(generationInput));
+
   const generator = getPlanGenerator();
 
   let nextPlan;
@@ -52,6 +83,9 @@ export const POST: RequestHandler = async ({ request }) => {
   // If save=true in the body, save immediately (for when user confirms)
   if (body.save) {
     await savePlan(nextPlan);
+    await deletePendingNextPlan(sourceWeek);
+  } else {
+    await savePendingNextPlan(sourceWeek, nextPlan);
   }
 
   return json(nextPlan, { status: 201 });

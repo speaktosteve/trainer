@@ -11,6 +11,7 @@ export const GET: RequestHandler = async () => {
 
 export const POST: RequestHandler = async ({ request }) => {
   const plan: WeeklyPlan = await request.json();
+  console.log("PLAN_SAVE_INPUT", JSON.stringify({ method: "POST", plan }));
   if (!plan.weekStart || !Array.isArray(plan.sessions)) {
     return json({ error: "Invalid plan: weekStart and sessions are required" }, { status: 400 });
   }
@@ -20,6 +21,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
 export const PUT: RequestHandler = async ({ request }) => {
   const plan: WeeklyPlan = await request.json();
+  console.log("PLAN_SAVE_INPUT", JSON.stringify({ method: "PUT", plan }));
   if (!plan.weekStart || !Array.isArray(plan.sessions)) {
     return json({ error: "Invalid plan: weekStart and sessions are required" }, { status: 400 });
   }

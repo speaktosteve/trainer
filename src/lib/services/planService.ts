@@ -3,8 +3,25 @@ import type { WeeklyPlan, PlanEntity } from "$lib/types";
 import { getTableClient, DEFAULT_PK } from "./tableStorage";
 import { getWeekStart } from "$lib/utils/dates";
 
+const PENDING_NEXT_PLAN_PREFIX = "pending:";
+
+type PendingNextPlan = {
+  sourceWeek: string;
+  plan: WeeklyPlan;
+};
+
 async function getClient(): Promise<TableClient> {
   return getTableClient("Plans");
+}
+
+function getPendingNextPlanRowKey(sourceWeek: string): string {
+  return `${PENDING_NEXT_PLAN_PREFIX}${sourceWeek}`;
+}
+
+function getPreviousWeekStart(weekStart: string): string {
+  const previous = new Date(weekStart);
+  previous.setDate(previous.getDate() - 7);
+  return previous.toISOString().slice(0, 10);
 }
 
 /**
@@ -57,6 +74,61 @@ export async function getPlan(weekStart: string): Promise<WeeklyPlan | null> {
 }
 
 /**
+ * Get a persisted next-plan draft generated from the given source week.
+ */
+export async function getPendingNextPlan(sourceWeek: string): Promise<WeeklyPlan | null> {
+  const client = await getClient();
+  try {
+    const entity = await client.getEntity<PlanEntity>(DEFAULT_PK, getPendingNextPlanRowKey(sourceWeek));
+    const draft = JSON.parse(entity.data) as PendingNextPlan;
+    return draft.plan;
+  } catch (e: unknown) {
+    if (
+      e &&
+      typeof e === "object" &&
+      "statusCode" in e &&
+      (e as { statusCode: number }).statusCode === 404
+    ) {
+      return null;
+    }
+    throw e;
+  }
+}
+
+/**
+ * Persist a generated next-plan draft until the user accepts it.
+ */
+export async function savePendingNextPlan(sourceWeek: string, plan: WeeklyPlan): Promise<void> {
+  const client = await getClient();
+  const entity: PlanEntity = {
+    partitionKey: DEFAULT_PK,
+    rowKey: getPendingNextPlanRowKey(sourceWeek),
+    data: JSON.stringify({ sourceWeek, plan } satisfies PendingNextPlan),
+  };
+  await client.upsertEntity(entity, "Replace");
+}
+
+/**
+ * Delete a persisted next-plan draft for the given source week.
+ */
+export async function deletePendingNextPlan(sourceWeek: string): Promise<void> {
+  const client = await getClient();
+  try {
+    await client.deleteEntity(DEFAULT_PK, getPendingNextPlanRowKey(sourceWeek));
+  } catch (e: unknown) {
+    if (
+      e &&
+      typeof e === "object" &&
+      "statusCode" in e &&
+      (e as { statusCode: number }).statusCode === 404
+    ) {
+      return;
+    }
+    throw e;
+  }
+}
+
+/**
  * Save (upsert) a weekly plan.
  */
 export async function savePlan(plan: WeeklyPlan): Promise<void> {
@@ -67,6 +139,7 @@ export async function savePlan(plan: WeeklyPlan): Promise<void> {
     data: JSON.stringify(plan),
   };
   await client.upsertEntity(entity, "Replace");
+  await deletePendingNextPlan(getPreviousWeekStart(plan.weekStart));
 }
 
 /**

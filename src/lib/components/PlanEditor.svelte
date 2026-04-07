@@ -5,12 +5,12 @@
 	let {
 		plan,
 		onSave,
-		onCancel,
+		onDiscard,
 		previousResults = {}
 	}: {
 		plan: WeeklyPlan;
 		onSave: (plan: WeeklyPlan) => void;
-		onCancel: () => void;
+		onDiscard: () => void;
 		/** Completed exercises from the previous week, keyed by day then exercise name. */
 		previousResults?: Record<string, Record<string, ExerciseEntry>>;
 	} = $props();
@@ -69,6 +69,12 @@
 		if (reps.length > 1) {
 			reps.pop();
 			editPlan = { ...editPlan };
+		}
+	}
+
+	function confirmDiscard() {
+		if (window.confirm('Discard this generated plan draft? This cannot be undone.')) {
+			onDiscard();
 		}
 	}
 </script>
@@ -180,10 +186,10 @@
 			Save Plan
 		</button>
 		<button
-			class="btn btn-ghost"
-			onclick={onCancel}
+			class="btn btn-error btn-outline"
+			onclick={confirmDiscard}
 		>
-			Cancel
+			Discard
 		</button>
 	</div>
 </div>

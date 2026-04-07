@@ -15,7 +15,15 @@ vi.mock("$lib/utils/dates", async () => {
   };
 });
 
-import { getCurrentWeekPlan, getPlan, savePlan, getPlansForRange } from "$lib/services/planService";
+import {
+  deletePendingNextPlan,
+  getCurrentWeekPlan,
+  getPendingNextPlan,
+  getPlan,
+  getPlansForRange,
+  savePendingNextPlan,
+  savePlan,
+} from "$lib/services/planService";
 import { getTableClient } from "$lib/services/tableStorage";
 
 const mockPlan: WeeklyPlan = {
@@ -41,6 +49,7 @@ function createMockTableClient(entities: PlanEntity[] = []) {
       return found;
     }),
     upsertEntity: vi.fn(),
+    deleteEntity: vi.fn(),
     listEntities: vi.fn((_options?: { queryOptions?: { filter?: string; select?: string[] } }) => ({
       [Symbol.asyncIterator]: async function* () {
         for (const e of entities) yield e;
@@ -148,6 +157,7 @@ describe("planService", () => {
         },
         "Replace",
       );
+      expect(mockClient.deleteEntity).toHaveBeenCalledWith("default", "pending:2026-03-23");
     });
 
     it("uses the plan's weekStart as the row key", async () => {
@@ -159,6 +169,60 @@ describe("planService", () => {
 
       const entity = mockClient.upsertEntity.mock.calls[0][0];
       expect(entity.rowKey).toBe("2026-04-06");
+      expect(mockClient.deleteEntity).toHaveBeenCalledWith("default", "pending:2026-03-30");
+    });
+  });
+
+  describe("pending next plan", () => {
+    it("returns a pending next plan for a source week", async () => {
+      const pendingPlan = { ...mockPlan, weekStart: "2026-04-06" };
+      const entity: PlanEntity = {
+        partitionKey: "default",
+        rowKey: "pending:2026-03-30",
+        data: JSON.stringify({ sourceWeek: "2026-03-30", plan: pendingPlan }),
+      };
+      const mockClient = createMockTableClient([entity]);
+      vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+
+      const result = await getPendingNextPlan("2026-03-30");
+
+      expect(result).toEqual(pendingPlan);
+      expect(mockClient.getEntity).toHaveBeenCalledWith("default", "pending:2026-03-30");
+    });
+
+    it("returns null when no pending next plan exists", async () => {
+      const mockClient = createMockTableClient([]);
+      vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+
+      const result = await getPendingNextPlan("2026-03-30");
+
+      expect(result).toBeNull();
+    });
+
+    it("persists a pending next plan with a prefixed row key", async () => {
+      const mockClient = createMockTableClient();
+      vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+      const pendingPlan = { ...mockPlan, weekStart: "2026-04-06" };
+
+      await savePendingNextPlan("2026-03-30", pendingPlan);
+
+      expect(mockClient.upsertEntity).toHaveBeenCalledWith(
+        {
+          partitionKey: "default",
+          rowKey: "pending:2026-03-30",
+          data: JSON.stringify({ sourceWeek: "2026-03-30", plan: pendingPlan }),
+        },
+        "Replace",
+      );
+    });
+
+    it("deletes a pending next plan for the source week", async () => {
+      const mockClient = createMockTableClient();
+      vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+
+      await deletePendingNextPlan("2026-03-30");
+
+      expect(mockClient.deleteEntity).toHaveBeenCalledWith("default", "pending:2026-03-30");
     });
   });
 
