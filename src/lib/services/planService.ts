@@ -8,11 +8,31 @@ async function getClient(): Promise<TableClient> {
 }
 
 /**
- * Get the plan for the current week.
+ * Get the plan for the current week, or fall back to the most recent plan if
+ * no plan exists for this week.
  */
 export async function getCurrentWeekPlan(): Promise<WeeklyPlan | null> {
   const weekStart = getWeekStart();
-  return getPlan(weekStart);
+  const plan = await getPlan(weekStart);
+  if (plan) return plan;
+  return getMostRecentPlan(weekStart);
+}
+
+async function getMostRecentPlan(beforeWeekStart: string): Promise<WeeklyPlan | null> {
+  const client = await getClient();
+  const entities = client.listEntities<PlanEntity>({
+    queryOptions: {
+      filter: `PartitionKey eq '${DEFAULT_PK}' and RowKey lt '${beforeWeekStart}'`,
+    },
+  });
+  let latest: WeeklyPlan | null = null;
+  for await (const entity of entities) {
+    const candidate = JSON.parse(entity.data) as WeeklyPlan;
+    if (!latest || candidate.weekStart > latest.weekStart) {
+      latest = candidate;
+    }
+  }
+  return latest;
 }
 
 /**

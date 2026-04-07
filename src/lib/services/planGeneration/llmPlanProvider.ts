@@ -161,8 +161,12 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
         const sourceRef = this.resolveSourceExercise(ex, session.day, sourceLookups);
         if (!sourceRef) continue;
 
-        if (!this.hasCompletion(sourceRef, completionLookups)) {
+        const hasCompletion = this.hasCompletion(sourceRef, completionLookups);
+
+        if (!hasCompletion) {
           this.applyNoRecordConstraint(ex, sourceRef.exercise);
+        } else {
+          this.clearNoRecordNote(ex);
         }
 
         this.applyMachineMaxConstraint(
@@ -385,6 +389,18 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
     target.targetReps = [...sourceExercise.targetReps];
     target.targetWeight = sourceExercise.targetWeight;
     target.notes = "No record last week";
+  }
+
+  private clearNoRecordNote(target: ExerciseEntry): void {
+    if (!target.notes) return;
+
+    const notes = target.notes
+      .split(";")
+      .map((segment) => segment.trim())
+      .filter((segment) => segment.length > 0);
+
+    const filtered = notes.filter((segment) => segment.toLowerCase() !== "no record last week");
+    target.notes = filtered.length > 0 ? filtered.join("; ") : undefined;
   }
 
   private applyMachineMaxConstraint(

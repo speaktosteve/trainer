@@ -668,6 +668,68 @@ describe("LLMPlanProvider", () => {
     expect(ex.notes).toBe("No record last week");
   });
 
+  it("removes stale no-record notes when completion exists", async () => {
+    const sourcePlan: WeeklyPlan = {
+      weekStart: "2026-03-30",
+      sessions: [
+        {
+          day: "monday",
+          label: "Pull",
+          exercises: [
+            {
+              name: "Lat Pull",
+              targetWeight: 68,
+              targetReps: [12, 12, 10],
+            },
+          ],
+        },
+      ],
+    };
+
+    const completedLogs = [
+      makeLog("monday", [
+        {
+          name: "Lat Pull",
+          targetWeight: 68,
+          targetReps: [12, 12, 10],
+          actualWeight: 68,
+          actualReps: [12, 12, 10],
+        },
+      ]),
+    ];
+
+    const llmPayload: WeeklyPlan = {
+      weekStart: "2026-04-06",
+      sessions: [
+        {
+          day: "monday",
+          label: "Pull",
+          exercises: [
+            {
+              name: "Lat Pull",
+              targetWeight: 68,
+              targetReps: [12, 12, 10],
+              notes: "No record last week",
+            },
+          ],
+        },
+      ],
+    };
+
+    const mockCreate = vi.fn().mockResolvedValue({
+      choices: [{ message: { content: JSON.stringify(llmPayload) } }],
+    });
+    vi.mocked(getOpenAIClient).mockReturnValue({
+      chat: { completions: { create: mockCreate } },
+    } as any);
+
+    const provider = new LLMPlanProvider();
+    const result = await provider.generateNextPlan(sourcePlan, completedLogs, []);
+    const ex = result.sessions[0].exercises[0];
+
+    expect(ex.notes).toBeUndefined();
+  });
+
   it("does not leak notes between same exercise names on different days", async () => {
     const sourcePlan: WeeklyPlan = {
       weekStart: "2026-03-30",

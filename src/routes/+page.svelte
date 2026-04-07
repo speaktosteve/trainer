@@ -127,6 +127,7 @@
 {#if showEditor && nextPlan}
 	<PlanEditor
 		plan={nextPlan}
+		previousResults={completedExercises}
 		onSave={saveNextPlan}
 		onCancel={() => { showEditor = false; nextPlan = null; }}
 	/>

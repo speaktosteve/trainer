@@ -78,7 +78,21 @@ describe("planService", () => {
       expect(mockClient.getEntity).toHaveBeenCalledWith("default", "2026-03-30");
     });
 
-    it("returns null when no plan exists", async () => {
+    it("falls back to most recent plan when no plan for current week", async () => {
+      const recentPlan: WeeklyPlan = { ...mockPlan, weekStart: "2026-03-23" };
+      const entity: PlanEntity = {
+        partitionKey: "default",
+        rowKey: "2026-03-23",
+        data: JSON.stringify(recentPlan),
+      };
+      const mockClient = createMockTableClient([entity]);
+      vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+
+      const result = await getCurrentWeekPlan();
+      expect(result).toEqual(recentPlan);
+    });
+
+    it("returns null when no plans exist at all", async () => {
       const mockClient = createMockTableClient([]);
       vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
 

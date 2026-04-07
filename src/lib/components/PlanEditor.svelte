@@ -1,16 +1,27 @@
 <script lang="ts">
-	import type { WeeklyPlan } from '$lib/types';
+	import type { WeeklyPlan, ExerciseEntry } from '$lib/types';
 	import SummaryBanner from '$lib/components/SummaryBanner.svelte';
 
 	let {
 		plan,
 		onSave,
-		onCancel
+		onCancel,
+		previousResults = {}
 	}: {
 		plan: WeeklyPlan;
 		onSave: (plan: WeeklyPlan) => void;
 		onCancel: () => void;
+		/** Completed exercises from the previous week, keyed by day then exercise name. */
+		previousResults?: Record<string, Record<string, ExerciseEntry>>;
 	} = $props();
+
+	function getPreviousResult(day: string, name: string): ExerciseEntry | undefined {
+		return previousResults[day]?.[name];
+	}
+
+	function formatPreviousReps(reps: number[]): string {
+		return reps.join(', ');
+	}
 
 	function clonePlan(): WeeklyPlan {
 		return structuredClone($state.snapshot(plan));
@@ -87,8 +98,21 @@
 
 			<div class="space-y-3 p-3">
 				{#each session.exercises as exercise, eIdx (exercise.name)}
+					{@const prev = getPreviousResult(session.day, exercise.name)}
 					<div class="rounded-lg border border-base-300 bg-base-200 p-3">
 						<h4 class="text-sm font-semibold text-base-content">{exercise.name}</h4>
+
+						{#if prev}
+							<div class="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-base-content/50">
+								<span class="font-medium uppercase tracking-wide">Last week</span>
+								{#if prev.actualWeight !== undefined}
+									<span>{prev.actualWeight} kg</span>
+								{/if}
+								{#if prev.actualReps}
+									<span>× {formatPreviousReps(prev.actualReps)}</span>
+								{/if}
+							</div>
+						{/if}
 
 						<div class="mt-2 flex flex-wrap items-end gap-3">
 							{#if exercise.targetWeight !== undefined}
