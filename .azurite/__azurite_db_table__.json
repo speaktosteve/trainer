@@ -1,1 +1,879 @@
-{"filename":"/data/__azurite_db_table__.json","collections":[{"name":"$TABLES_COLLECTION$","data":[{"account":"devstoreaccount1","table":"Plans","meta":{"revision":0,"created":1775132306796,"version":0},"$loki":1},{"account":"devstoreaccount1","table":"ExerciseLogs","meta":{"revision":0,"created":1775132605120,"version":0},"$loki":2},{"account":"devstoreaccount1","table":"BodyWeight","meta":{"revision":0,"created":1775132605185,"version":0},"$loki":3}],"idIndex":null,"binaryIndices":{"account":{"name":"account","dirty":false,"values":[2,1,0]},"table":{"name":"table","dirty":false,"values":[2,1,0]}},"constraints":null,"uniqueNames":[],"transforms":{},"objType":"$TABLES_COLLECTION$","dirty":false,"cachedIndex":null,"cachedBinaryIndex":null,"cachedData":null,"adaptiveBinaryIndices":true,"transactional":false,"cloneObjects":false,"cloneMethod":"parse-stringify","asyncListeners":false,"disableMeta":false,"disableChangesApi":true,"disableDeltaChangesApi":true,"autoupdate":false,"serializableIndices":true,"disableFreeze":true,"ttl":null,"maxId":3,"DynamicViews":[],"events":{"insert":[],"update":[],"pre-insert":[],"pre-update":[],"close":[],"flushbuffer":[],"error":[],"delete":[null],"warning":[null]},"changes":[],"dirtyIds":[]},{"name":"$SERVICES_COLLECTION$","data":[],"idIndex":null,"binaryIndices":{},"constraints":null,"uniqueNames":["accountName"],"transforms":{},"objType":"$SERVICES_COLLECTION$","dirty":false,"cachedIndex":null,"cachedBinaryIndex":null,"cachedData":null,"adaptiveBinaryIndices":true,"transactional":false,"cloneObjects":false,"cloneMethod":"parse-stringify","asyncListeners":false,"disableMeta":false,"disableChangesApi":true,"disableDeltaChangesApi":true,"autoupdate":false,"serializableIndices":true,"disableFreeze":true,"ttl":null,"maxId":0,"DynamicViews":[],"events":{"insert":[],"update":[],"pre-insert":[],"pre-update":[],"close":[],"flushbuffer":[],"error":[],"delete":[null],"warning":[null]},"changes":[],"dirtyIds":[]},{"name":"devstoreaccount1$Plans","data":[{"PartitionKey":"default","RowKey":"2026-03-30","properties":{"PartitionKey":"default","RowKey":"2026-03-30","data":"{\"weekStart\":\"2026-03-30\",\"sessions\":[{\"day\":\"monday\",\"label\":\"Push\",\"exercises\":[{\"exerciseId\":\"mon-bench-press\",\"name\":\"Bench Press\",\"targetWeight\":62.5,\"targetReps\":[6,6,6,6],\"notes\":\"Small jump since 60 kg felt good\",\"machineWeightMaxedOut\":false},{\"exerciseId\":\"mon-incline-db-press\",\"name\":\"Incline DB Press\",\"targetWeight\":18,\"targetReps\":[10,10,10,10],\"notes\":\"Time to level up from the 16s\",\"machineWeightMaxedOut\":false},{\"exerciseId\":\"mon-seated-shoulder-press\",\"name\":\"Seated Shoulder Press\",\"targetWeight\":14,\"targetReps\":[10,10,10],\"notes\":\"Clean up the reps from last week\",\"machineWeightMaxedOut\":false},{\"exerciseId\":\"mon-cable-lateral-raises\",\"name\":\"Cable Lateral Raises\",\"targetWeight\":9,\"targetReps\":[12,12,12],\"machineWeightMaxedOut\":false},{\"exerciseId\":\"mon-cable-tricep-pushdown\",\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":54.4,\"targetReps\":[10,10,10],\"notes\":\"Matching your Friday win\",\"machineWeightMaxedOut\":false},{\"exerciseId\":\"mon-machine-seated-row\",\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"targetReps\":[8,8,8],\"machineWeightMaxedOut\":true},{\"exerciseId\":\"mon-machine-seated-chest-press\",\"name\":\"Machine Seated Chest Press\",\"targetWeight\":109,\"targetReps\":[10,10,10],\"notes\":\"Adding 1 rep per set\",\"machineWeightMaxedOut\":true}]},{\"day\":\"tuesday\",\"label\":\"Lower\",\"sessionNotes\":\"Listen to your body regarding the injury\",\"exercises\":[{\"exerciseId\":\"tue-leg-press\",\"name\":\"Leg Press\",\"targetWeight\":145,\"targetReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"exerciseId\":\"tue-leg-press-calves\",\"name\":\"Leg Press Calves\",\"targetWeight\":106.6,\"targetReps\":[14,14,14,20],\"machineWeightMaxedOut\":false},{\"exerciseId\":\"tue-rdl\",\"name\":\"RDL\",\"targetWeight\":62.5,\"targetReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"exerciseId\":\"tue-squat\",\"name\":\"Squat\",\"targetWeight\":75,\"targetReps\":[6,6,6],\"machineWeightMaxedOut\":false},{\"exerciseId\":\"tue-leg-curl\",\"name\":\"Leg Curl\",\"targetWeight\":63,\"targetReps\":[12,12,12],\"machineWeightMaxedOut\":false},{\"exerciseId\":\"tue-leg-extension\",\"name\":\"Leg Extension\",\"targetWeight\":75,\"targetReps\":[10,10,10],\"machineWeightMaxedOut\":false}]},{\"day\":\"wednesday\",\"label\":\"Pull\",\"exercises\":[{\"exerciseId\":\"wed-chin-ups\",\"name\":\"Chin-ups\",\"targetReps\":[10,10,9],\"notes\":\"Pushing for one more rep on the last set\",\"machineWeightMaxedOut\":false},{\"exerciseId\":\"wed-machine-seated-row\",\"name\":\"Machine Seated Row\",\"targetWeight\":111,\"targetReps\":[10,10,10,10],\"notes\":\"Small 2 kg bump\",\"machineWeightMaxedOut\":true},{\"exerciseId\":\"wed-lat-pull\",\"name\":\"Lat Pull\",\"targetWeight\":65,\"targetReps\":[12,12,12],\"notes\":\"Micro-increase\",\"machineWeightMaxedOut\":false},{\"exerciseId\":\"wed-db-curl\",\"name\":\"DB Curl\",\"targetWeight\":14,\"targetReps\":[10,10,10],\"notes\":\"Moving away from the 12s\",\"machineWeightMaxedOut\":false},{\"exerciseId\":\"wed-hammer-curl\",\"name\":\"Hammer Curl\",\"targetWeight\":14,\"targetReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"exerciseId\":\"wed-cable-bicep-curl\",\"name\":\"Cable Bicep Curl\",\"targetWeight\":47.5,\"targetReps\":[12,12,12],\"machineWeightMaxedOut\":false}]},{\"day\":\"friday\",\"label\":\"Full Body\",\"exercises\":[{\"exerciseId\":\"fri-bench-press\",\"name\":\"Bench Press\",\"targetWeight\":67.5,\"targetReps\":[5,5,5,5,5],\"notes\":\"Goal: get 5 reps on that final set\",\"machineWeightMaxedOut\":false},{\"exerciseId\":\"fri-leg-press\",\"name\":\"Leg Press\",\"targetWeight\":152.1,\"targetReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"exerciseId\":\"fri-machine-seated-row\",\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"targetReps\":[10,10,10],\"machineWeightMaxedOut\":true},{\"exerciseId\":\"fri-seated-shoulder-press\",\"name\":\"Seated Shoulder Press\",\"targetWeight\":16,\"targetReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"exerciseId\":\"fri-cable-bicep-curl\",\"name\":\"Cable Bicep Curl\",\"targetWeight\":52,\"targetReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"exerciseId\":\"fri-cable-tricep-pushdown\",\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":56.5,\"targetReps\":[10,10,10],\"notes\":\"Small bump since you're moving 54.4 kg well\",\"machineWeightMaxedOut\":false},{\"exerciseId\":\"fri-smith-shoulder-press\",\"name\":\"Smith Shoulder Press\",\"targetWeight\":42.5,\"targetReps\":[10,10,10],\"notes\":\"Small increase\",\"machineWeightMaxedOut\":false}]}]}","Timestamp":"2026-04-02T12:23:25.0812510Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.0812510Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.0812510Z'\"","meta":{"revision":0,"created":1775132605083,"version":0},"$loki":1},{"PartitionKey":"default","RowKey":"2026-02-16","properties":{"PartitionKey":"default","RowKey":"2026-02-16","data":"{\"weekStart\":\"2026-02-16\",\"sessions\":[{\"day\":\"monday\",\"label\":\"Push\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":50,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6,6]},{\"name\":\"Incline DB Press\",\"targetWeight\":14,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Seated Shoulder Press\",\"targetWeight\":14,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6]},{\"name\":\"Cable Lateral Raises\",\"targetWeight\":6,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":45,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Machine Seated Row\",\"targetWeight\":102,\"machineWeightMaxedOut\":true,\"targetReps\":[6,6,6]},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":84,\"machineWeightMaxedOut\":true,\"targetReps\":[8,8,8]}]},{\"day\":\"tuesday\",\"label\":\"Lower\",\"exercises\":[{\"name\":\"Leg Press\",\"targetWeight\":88,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Squat\",\"targetWeight\":50,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6]},{\"name\":\"RDL\",\"targetWeight\":40,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Leg Curl\",\"targetWeight\":40,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]},{\"name\":\"Leg Extension\",\"targetWeight\":54,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]}]},{\"day\":\"wednesday\",\"label\":\"Pull\",\"exercises\":[{\"name\":\"Chin-ups\",\"machineWeightMaxedOut\":false,\"targetReps\":[5,5,5]},{\"name\":\"Machine Seated Row\",\"targetWeight\":102,\"machineWeightMaxedOut\":true,\"targetReps\":[8,8,8]},{\"name\":\"DB Curl\",\"targetWeight\":12,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":22,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]}]},{\"day\":\"friday\",\"label\":\"Full Body\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":52.5,\"machineWeightMaxedOut\":false,\"targetReps\":[5,5,5,5]},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":30,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]}]}]}","Timestamp":"2026-04-02T12:23:25.0862555Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.0862555Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.0862555Z'\"","meta":{"revision":0,"created":1775132605088,"version":0},"$loki":2},{"PartitionKey":"default","RowKey":"2026-02-23","properties":{"PartitionKey":"default","RowKey":"2026-02-23","data":"{\"weekStart\":\"2026-02-23\",\"sessions\":[{\"day\":\"monday\",\"label\":\"Push\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":50,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6,6]},{\"name\":\"Incline DB Press\",\"targetWeight\":14,\"machineWeightMaxedOut\":false,\"targetReps\":[9,9,9]},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":45,\"machineWeightMaxedOut\":false,\"targetReps\":[9,9,9]},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"machineWeightMaxedOut\":true,\"targetReps\":[8,8,8]},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":88,\"machineWeightMaxedOut\":true,\"targetReps\":[8,8,8]}]},{\"day\":\"tuesday\",\"label\":\"Lower\",\"exercises\":[{\"name\":\"Leg Press\",\"targetWeight\":115,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Squat\",\"targetWeight\":52.5,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6]},{\"name\":\"RDL\",\"targetWeight\":45,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Leg Curl\",\"targetWeight\":47,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]},{\"name\":\"Leg Extension\",\"targetWeight\":60,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]}]},{\"day\":\"wednesday\",\"label\":\"Pull\",\"exercises\":[{\"name\":\"Chin-ups\",\"machineWeightMaxedOut\":false,\"targetReps\":[5,5,5]},{\"name\":\"DB Curl\",\"targetWeight\":10,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":25,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]}]},{\"day\":\"friday\",\"label\":\"Full Body\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":55,\"machineWeightMaxedOut\":false,\"targetReps\":[5,5,5,5,5]},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":32.5,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]}]}]}","Timestamp":"2026-04-02T12:23:25.0902589Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.0902589Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.0902589Z'\"","meta":{"revision":0,"created":1775132605091,"version":0},"$loki":3},{"PartitionKey":"default","RowKey":"2026-03-02","properties":{"PartitionKey":"default","RowKey":"2026-03-02","data":"{\"weekStart\":\"2026-03-02\",\"sessions\":[{\"day\":\"monday\",\"label\":\"Push\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":55,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6,6]},{\"name\":\"Incline DB Press\",\"targetWeight\":16,\"machineWeightMaxedOut\":false,\"targetReps\":[9,9,9]},{\"name\":\"Seated Shoulder Press\",\"targetWeight\":12,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Cable Lateral Raises\",\"targetWeight\":9,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"machineWeightMaxedOut\":true,\"targetReps\":[8,8,8]},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":93,\"machineWeightMaxedOut\":true,\"targetReps\":[9,9,9]}]},{\"day\":\"tuesday\",\"label\":\"Lower\",\"exercises\":[{\"name\":\"Leg Press\",\"targetWeight\":133,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Squat\",\"targetWeight\":65,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6]},{\"name\":\"RDL\",\"targetWeight\":50,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Leg Curl\",\"targetWeight\":50,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]},{\"name\":\"Leg Extension\",\"targetWeight\":61,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]}]},{\"day\":\"wednesday\",\"label\":\"Pull\",\"exercises\":[{\"name\":\"Chin-ups\",\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6]},{\"name\":\"DB Curl\",\"targetWeight\":10,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":31,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]}]},{\"day\":\"friday\",\"label\":\"Full Body\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":57.5,\"machineWeightMaxedOut\":false,\"targetReps\":[5,5,5,5,5]},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":32.5,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]}]}]}","Timestamp":"2026-04-02T12:23:25.0972679Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.0972679Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.0972679Z'\"","meta":{"revision":0,"created":1775132605100,"version":0},"$loki":4},{"PartitionKey":"default","RowKey":"2026-03-09","properties":{"PartitionKey":"default","RowKey":"2026-03-09","data":"{\"weekStart\":\"2026-03-09\",\"sessions\":[{\"day\":\"monday\",\"label\":\"Push\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":57.5,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6,6]},{\"name\":\"Incline DB Press\",\"targetWeight\":16,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]},{\"name\":\"Seated Shoulder Press\",\"targetWeight\":14,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Cable Lateral Raises\",\"targetWeight\":9,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"machineWeightMaxedOut\":true,\"targetReps\":[10,10,10]},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":97,\"machineWeightMaxedOut\":true,\"targetReps\":[9,9,9]}]},{\"day\":\"tuesday\",\"label\":\"Lower\",\"exercises\":[{\"name\":\"Leg Press\",\"targetWeight\":140,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Squat\",\"targetWeight\":70,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6]},{\"name\":\"RDL\",\"targetWeight\":55,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Leg Curl\",\"targetWeight\":54,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]},{\"name\":\"Leg Extension\",\"targetWeight\":63,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]}]},{\"day\":\"wednesday\",\"label\":\"Pull\",\"exercises\":[{\"name\":\"Chin-ups\",\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"DB Curl\",\"targetWeight\":12,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Hammer Curl\",\"targetWeight\":14,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":38,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]}]},{\"day\":\"friday\",\"label\":\"Full Body\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":60,\"machineWeightMaxedOut\":false,\"targetReps\":[5,5,5,5,5]},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":35,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":48,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]}]}]}","Timestamp":"2026-04-02T12:23:25.1052752Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1052752Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1052752Z'\"","meta":{"revision":0,"created":1775132605107,"version":0},"$loki":5},{"PartitionKey":"default","RowKey":"2026-03-16","properties":{"PartitionKey":"default","RowKey":"2026-03-16","data":"{\"weekStart\":\"2026-03-16\",\"sessions\":[{\"day\":\"monday\",\"label\":\"Push\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":60,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6,6]},{\"name\":\"Incline DB Press\",\"targetWeight\":16,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":50,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"machineWeightMaxedOut\":true,\"targetReps\":[10,10,10]},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":102,\"machineWeightMaxedOut\":true,\"targetReps\":[9,9,9]}]},{\"day\":\"tuesday\",\"label\":\"Lower\",\"exercises\":[{\"name\":\"Leg Press\",\"targetWeight\":152,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Squat\",\"targetWeight\":75,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6]},{\"name\":\"RDL\",\"targetWeight\":60,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Leg Curl\",\"targetWeight\":61,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]},{\"name\":\"Leg Extension\",\"targetWeight\":72,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]}]},{\"day\":\"wednesday\",\"label\":\"Pull\",\"exercises\":[{\"name\":\"Chin-ups\",\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"DB Curl\",\"targetWeight\":12,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Hammer Curl\",\"targetWeight\":14,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":45,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]}]},{\"day\":\"friday\",\"label\":\"Full Body\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":65,\"machineWeightMaxedOut\":false,\"targetReps\":[5,5,5,5,5],\"notes\":\"Also hit 70x2 after\"},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":40,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":49.9,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":54.4,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]}]}]}","Timestamp":"2026-04-02T12:23:25.1112802Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1112802Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1112802Z'\"","meta":{"revision":0,"created":1775132605112,"version":0},"$loki":6},{"PartitionKey":"default","RowKey":"2026-03-23","properties":{"PartitionKey":"default","RowKey":"2026-03-23","data":"{\"weekStart\":\"2026-03-23\",\"sessions\":[{\"day\":\"monday\",\"label\":\"Push\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":60,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6,6]},{\"name\":\"Incline DB Press\",\"targetWeight\":16,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10,10]},{\"name\":\"Seated Shoulder Press\",\"targetWeight\":14,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Cable Lateral Raises\",\"targetWeight\":9,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":52,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"machineWeightMaxedOut\":true,\"targetReps\":[8,8,8]},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":106,\"machineWeightMaxedOut\":true,\"targetReps\":[9,9,9]}]},{\"day\":\"wednesday\",\"label\":\"Pull\",\"exercises\":[{\"name\":\"Chin-ups\",\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"machineWeightMaxedOut\":true,\"targetReps\":[10,10,10,10]},{\"name\":\"DB Curl\",\"targetWeight\":12,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Hammer Curl\",\"targetWeight\":14,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":45.4,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]}]},{\"day\":\"friday\",\"label\":\"Full Body\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":67.5,\"machineWeightMaxedOut\":false,\"targetReps\":[5,5,5,5,5]},{\"name\":\"Seated Shoulder Press\",\"targetWeight\":16,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":40,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":54.4,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":49.9,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]}]}]}","Timestamp":"2026-04-02T12:23:25.1152845Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1152845Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1152845Z'\"","meta":{"revision":0,"created":1775132605116,"version":0},"$loki":7}],"idIndex":null,"binaryIndices":{"PartitionKey":{"name":"PartitionKey","dirty":false,"values":[6,5,4,3,2,1,0]},"RowKey":{"name":"RowKey","dirty":false,"values":[1,2,3,4,5,6,0]}},"constraints":null,"uniqueNames":[],"transforms":{},"objType":"devstoreaccount1$Plans","dirty":false,"cachedIndex":null,"cachedBinaryIndex":null,"cachedData":null,"adaptiveBinaryIndices":true,"transactional":false,"cloneObjects":false,"cloneMethod":"parse-stringify","asyncListeners":false,"disableMeta":false,"disableChangesApi":true,"disableDeltaChangesApi":true,"autoupdate":false,"serializableIndices":true,"disableFreeze":true,"ttl":null,"maxId":7,"DynamicViews":[],"events":{"insert":[],"update":[],"pre-insert":[],"pre-update":[],"close":[],"flushbuffer":[],"error":[],"delete":[null],"warning":[null]},"changes":[],"dirtyIds":[]},{"name":"devstoreaccount1$ExerciseLogs","data":[{"PartitionKey":"default","RowKey":"8228756799999","properties":{"PartitionKey":"default","RowKey":"8228756799999","data":"{\"day\":\"monday\",\"label\":\"Push\",\"weekStart\":\"2026-02-16\",\"completedDate\":\"2026-02-16\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":50,\"targetReps\":[6,6,6,6],\"actualWeight\":50,\"actualReps\":[6,6,6,4],\"machineWeightMaxedOut\":false},{\"name\":\"Incline DB Press\",\"targetWeight\":14,\"targetReps\":[8,8,8],\"actualWeight\":14,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Seated Shoulder Press\",\"targetWeight\":14,\"targetReps\":[6,6,6],\"actualWeight\":14,\"actualReps\":[6,4,4],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Lateral Raises\",\"targetWeight\":6,\"targetReps\":[10,10,10],\"actualWeight\":6,\"actualReps\":[10,10,8],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":45,\"targetReps\":[8,8,8],\"actualWeight\":45,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Machine Seated Row\",\"targetWeight\":102,\"targetReps\":[6,6,6],\"actualWeight\":102,\"actualReps\":[6,6,6],\"machineWeightMaxedOut\":true},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":84,\"targetReps\":[8,8,8],\"actualWeight\":84,\"actualReps\":[8,8,7],\"machineWeightMaxedOut\":true}]}","Timestamp":"2026-04-02T12:23:25.1282975Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1282975Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1282975Z'\"","meta":{"revision":0,"created":1775132605129,"version":0},"$loki":1},{"PartitionKey":"default","RowKey":"8228655999999","properties":{"PartitionKey":"default","RowKey":"8228655999999","data":"{\"day\":\"tuesday\",\"label\":\"Lower\",\"weekStart\":\"2026-02-16\",\"completedDate\":\"2026-02-17\",\"exercises\":[{\"name\":\"Leg Press\",\"targetWeight\":88,\"targetReps\":[10,10,10],\"actualWeight\":88,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Squat\",\"targetWeight\":50,\"targetReps\":[6,6,6],\"actualWeight\":50,\"actualReps\":[6,6,6],\"machineWeightMaxedOut\":false},{\"name\":\"RDL\",\"targetWeight\":40,\"targetReps\":[8,8,8],\"actualWeight\":40,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Leg Curl\",\"targetWeight\":40,\"targetReps\":[12,12,12],\"actualWeight\":40,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false},{\"name\":\"Leg Extension\",\"targetWeight\":54,\"targetReps\":[10,10,10],\"actualWeight\":54,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false}]}","Timestamp":"2026-04-02T12:23:25.1313000Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1313000Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1313000Z'\"","meta":{"revision":0,"created":1775132605132,"version":0},"$loki":2},{"PartitionKey":"default","RowKey":"8228562399999","properties":{"PartitionKey":"default","RowKey":"8228562399999","data":"{\"day\":\"wednesday\",\"label\":\"Pull\",\"weekStart\":\"2026-02-16\",\"completedDate\":\"2026-02-18\",\"exercises\":[{\"name\":\"Chin-ups\",\"targetReps\":[5,5,5],\"actualReps\":[3,4,3],\"machineWeightMaxedOut\":false},{\"name\":\"Machine Seated Row\",\"targetWeight\":102,\"targetReps\":[8,8,8],\"actualWeight\":102,\"actualReps\":[6,6,6],\"machineWeightMaxedOut\":true},{\"name\":\"DB Curl\",\"targetWeight\":12,\"targetReps\":[8,8,8],\"actualWeight\":12,\"actualReps\":[6,6,6],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":22,\"targetReps\":[12,12,12],\"actualWeight\":22,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false}]}","Timestamp":"2026-04-02T12:23:25.1343033Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1343033Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1343033Z'\"","meta":{"revision":0,"created":1775132605135,"version":0},"$loki":3},{"PartitionKey":"default","RowKey":"8228439999999","properties":{"PartitionKey":"default","RowKey":"8228439999999","data":"{\"day\":\"friday\",\"label\":\"Full Body\",\"weekStart\":\"2026-02-16\",\"completedDate\":\"2026-02-20\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":52.5,\"targetReps\":[5,5,5,5],\"actualWeight\":52.5,\"actualReps\":[5,5,5,5],\"machineWeightMaxedOut\":false},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":30,\"targetReps\":[8,8,8],\"actualWeight\":30,\"actualReps\":[8,6,6],\"machineWeightMaxedOut\":false}]}","Timestamp":"2026-04-02T12:23:25.1373056Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1373056Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1373056Z'\"","meta":{"revision":0,"created":1775132605137,"version":0},"$loki":4},{"PartitionKey":"default","RowKey":"8228184399999","properties":{"PartitionKey":"default","RowKey":"8228184399999","data":"{\"day\":\"monday\",\"label\":\"Push\",\"weekStart\":\"2026-02-23\",\"completedDate\":\"2026-02-23\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":50,\"targetReps\":[6,6,6,6],\"actualWeight\":50,\"actualReps\":[6,6,6,6],\"machineWeightMaxedOut\":false},{\"name\":\"Incline DB Press\",\"targetWeight\":14,\"targetReps\":[9,9,9],\"actualWeight\":14,\"actualReps\":[9,9,9],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":45,\"targetReps\":[9,9,9],\"actualWeight\":45,\"actualReps\":[9,9,9],\"machineWeightMaxedOut\":false},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"targetReps\":[8,8,8],\"actualWeight\":109,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":true},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":88,\"targetReps\":[8,8,8],\"actualWeight\":88,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":true}]}","Timestamp":"2026-04-02T12:23:25.1393078Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1393078Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1393078Z'\"","meta":{"revision":0,"created":1775132605139,"version":0},"$loki":5},{"PartitionKey":"default","RowKey":"8228036799999","properties":{"PartitionKey":"default","RowKey":"8228036799999","data":"{\"day\":\"tuesday\",\"label\":\"Lower\",\"weekStart\":\"2026-02-23\",\"completedDate\":\"2026-02-24\",\"exercises\":[{\"name\":\"Leg Press\",\"targetWeight\":115,\"targetReps\":[10,10,10],\"actualWeight\":115,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Squat\",\"targetWeight\":52.5,\"targetReps\":[6,6,6],\"actualWeight\":52.5,\"actualReps\":[6,6,10],\"machineWeightMaxedOut\":false},{\"name\":\"RDL\",\"targetWeight\":45,\"targetReps\":[8,8,8],\"actualWeight\":45,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Leg Curl\",\"targetWeight\":47,\"targetReps\":[12,12,12],\"actualWeight\":47,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false},{\"name\":\"Leg Extension\",\"targetWeight\":60,\"targetReps\":[10,10,10],\"actualWeight\":60,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false}]}","Timestamp":"2026-04-02T12:23:25.1423104Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1423104Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1423104Z'\"","meta":{"revision":0,"created":1775132605142,"version":0},"$loki":6},{"PartitionKey":"default","RowKey":"8228022399999","properties":{"PartitionKey":"default","RowKey":"8228022399999","data":"{\"day\":\"wednesday\",\"label\":\"Pull\",\"weekStart\":\"2026-02-23\",\"completedDate\":\"2026-02-25\",\"exercises\":[{\"name\":\"Chin-ups\",\"targetReps\":[5,5,5],\"actualReps\":[4,4,4],\"machineWeightMaxedOut\":false},{\"name\":\"DB Curl\",\"targetWeight\":10,\"targetReps\":[8,8,8],\"actualWeight\":10,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":25,\"targetReps\":[12,12,12],\"actualWeight\":25,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false}]}","Timestamp":"2026-04-02T12:23:25.1443132Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1443132Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1443132Z'\"","meta":{"revision":0,"created":1775132605145,"version":0},"$loki":7},{"PartitionKey":"default","RowKey":"8227842399999","properties":{"PartitionKey":"default","RowKey":"8227842399999","data":"{\"day\":\"friday\",\"label\":\"Full Body\",\"weekStart\":\"2026-02-23\",\"completedDate\":\"2026-02-27\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":55,\"targetReps\":[5,5,5,5,5],\"actualWeight\":55,\"actualReps\":[5,5,5,5,5],\"machineWeightMaxedOut\":false},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":32.5,\"targetReps\":[8,8,8],\"actualWeight\":32.5,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false}]}","Timestamp":"2026-04-02T12:23:25.1473156Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1473156Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1473156Z'\"","meta":{"revision":0,"created":1775132605147,"version":0},"$loki":8},{"PartitionKey":"default","RowKey":"8227514799999","properties":{"PartitionKey":"default","RowKey":"8227514799999","data":"{\"day\":\"monday\",\"label\":\"Push\",\"weekStart\":\"2026-03-02\",\"completedDate\":\"2026-03-02\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":55,\"targetReps\":[6,6,6,6],\"actualWeight\":55,\"actualReps\":[6,6,6,6],\"machineWeightMaxedOut\":false},{\"name\":\"Incline DB Press\",\"targetWeight\":16,\"targetReps\":[9,9,9],\"actualWeight\":16,\"actualReps\":[9,9,9],\"machineWeightMaxedOut\":false},{\"name\":\"Seated Shoulder Press\",\"targetWeight\":12,\"targetReps\":[8,8,8],\"actualWeight\":12,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Lateral Raises\",\"targetWeight\":9,\"targetReps\":[12,12,12],\"actualWeight\":9,\"actualReps\":[12,12,10],\"machineWeightMaxedOut\":false},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"targetReps\":[8,8,8],\"actualWeight\":109,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":true},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":93,\"targetReps\":[9,9,9],\"actualWeight\":93,\"actualReps\":[9,9,8],\"machineWeightMaxedOut\":true}]}","Timestamp":"2026-04-02T12:23:25.1493175Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1493175Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1493175Z'\"","meta":{"revision":0,"created":1775132605149,"version":0},"$loki":9},{"PartitionKey":"default","RowKey":"8227485999999","properties":{"PartitionKey":"default","RowKey":"8227485999999","data":"{\"day\":\"tuesday\",\"label\":\"Lower\",\"weekStart\":\"2026-03-02\",\"completedDate\":\"2026-03-03\",\"exercises\":[{\"name\":\"Leg Press\",\"targetWeight\":133,\"targetReps\":[10,10,10],\"actualWeight\":133,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Squat\",\"targetWeight\":65,\"targetReps\":[6,6,6],\"actualWeight\":65,\"actualReps\":[6,6,6],\"machineWeightMaxedOut\":false},{\"name\":\"RDL\",\"targetWeight\":50,\"targetReps\":[8,8,8],\"actualWeight\":50,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Leg Curl\",\"targetWeight\":50,\"targetReps\":[12,12,12],\"actualWeight\":50,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false},{\"name\":\"Leg Extension\",\"targetWeight\":61,\"targetReps\":[10,10,10],\"actualWeight\":61,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false}]}","Timestamp":"2026-04-02T12:23:25.1513197Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1513197Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1513197Z'\"","meta":{"revision":0,"created":1775132605151,"version":0},"$loki":10},{"PartitionKey":"default","RowKey":"8227363599999","properties":{"PartitionKey":"default","RowKey":"8227363599999","data":"{\"day\":\"wednesday\",\"label\":\"Pull\",\"weekStart\":\"2026-03-02\",\"completedDate\":\"2026-03-04\",\"exercises\":[{\"name\":\"Chin-ups\",\"targetReps\":[6,6,6],\"actualReps\":[6,6,5],\"machineWeightMaxedOut\":false},{\"name\":\"DB Curl\",\"targetWeight\":10,\"targetReps\":[10,10,10],\"actualWeight\":10,\"actualReps\":[10,9,10],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":31,\"targetReps\":[12,12,12],\"actualWeight\":31,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false}]}","Timestamp":"2026-04-02T12:23:25.1533220Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1533220Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1533220Z'\"","meta":{"revision":0,"created":1775132605154,"version":0},"$loki":11},{"PartitionKey":"default","RowKey":"8227237599999","properties":{"PartitionKey":"default","RowKey":"8227237599999","data":"{\"day\":\"friday\",\"label\":\"Full Body\",\"weekStart\":\"2026-03-02\",\"completedDate\":\"2026-03-06\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":57.5,\"targetReps\":[5,5,5,5,5],\"actualWeight\":57.5,\"actualReps\":[5,5,5,5,5],\"machineWeightMaxedOut\":false},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":32.5,\"targetReps\":[8,8,8],\"actualWeight\":32.5,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false}]}","Timestamp":"2026-04-02T12:23:25.1553241Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1553241Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1553241Z'\"","meta":{"revision":0,"created":1775132605156,"version":0},"$loki":12},{"PartitionKey":"default","RowKey":"8226960399999","properties":{"PartitionKey":"default","RowKey":"8226960399999","data":"{\"day\":\"monday\",\"label\":\"Push\",\"weekStart\":\"2026-03-09\",\"completedDate\":\"2026-03-09\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":57.5,\"targetReps\":[6,6,6,6],\"actualWeight\":57.5,\"actualReps\":[6,6,6,6],\"machineWeightMaxedOut\":false},{\"name\":\"Incline DB Press\",\"targetWeight\":16,\"targetReps\":[12,12,12],\"actualWeight\":16,\"actualReps\":[12,12,10],\"machineWeightMaxedOut\":false},{\"name\":\"Seated Shoulder Press\",\"targetWeight\":14,\"targetReps\":[10,10,10],\"actualWeight\":14,\"actualReps\":[10,9,7],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Lateral Raises\",\"targetWeight\":9,\"targetReps\":[12,12,12],\"actualWeight\":9,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"targetReps\":[10,10,10],\"actualWeight\":109,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":true},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":97,\"targetReps\":[9,9,9],\"actualWeight\":97,\"actualReps\":[9,9,9],\"machineWeightMaxedOut\":true}]}","Timestamp":"2026-04-02T12:23:25.1583271Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1583271Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1583271Z'\"","meta":{"revision":0,"created":1775132605159,"version":0},"$loki":13},{"PartitionKey":"default","RowKey":"8226870399999","properties":{"PartitionKey":"default","RowKey":"8226870399999","data":"{\"day\":\"tuesday\",\"label\":\"Lower\",\"weekStart\":\"2026-03-09\",\"completedDate\":\"2026-03-10\",\"exercises\":[{\"name\":\"Leg Press\",\"targetWeight\":140,\"targetReps\":[10,10,10],\"actualWeight\":140,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Squat\",\"targetWeight\":70,\"targetReps\":[6,6,6],\"actualWeight\":70,\"actualReps\":[6,6,8],\"machineWeightMaxedOut\":false},{\"name\":\"RDL\",\"targetWeight\":55,\"targetReps\":[8,8,8],\"actualWeight\":55,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Leg Curl\",\"targetWeight\":54,\"targetReps\":[12,12,12],\"actualWeight\":54,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false},{\"name\":\"Leg Extension\",\"targetWeight\":63,\"targetReps\":[10,10,10],\"actualWeight\":63,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false}]}","Timestamp":"2026-04-02T12:23:25.1613294Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1613294Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1613294Z'\"","meta":{"revision":0,"created":1775132605161,"version":0},"$loki":14},{"PartitionKey":"default","RowKey":"8226791199999","properties":{"PartitionKey":"default","RowKey":"8226791199999","data":"{\"day\":\"wednesday\",\"label\":\"Pull\",\"weekStart\":\"2026-03-09\",\"completedDate\":\"2026-03-11\",\"exercises\":[{\"name\":\"Chin-ups\",\"targetReps\":[10,10,10],\"actualReps\":[10,7,4],\"machineWeightMaxedOut\":false},{\"name\":\"DB Curl\",\"targetWeight\":12,\"targetReps\":[10,10,10],\"actualWeight\":12,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Hammer Curl\",\"targetWeight\":14,\"targetReps\":[8,8,8],\"actualWeight\":14,\"actualReps\":[6,5,5],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":38,\"targetReps\":[12,12,12],\"actualWeight\":38,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false}]}","Timestamp":"2026-04-02T12:23:25.1633318Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1633318Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1633318Z'\"","meta":{"revision":0,"created":1775132605163,"version":0},"$loki":15},{"PartitionKey":"default","RowKey":"8226621999999","properties":{"PartitionKey":"default","RowKey":"8226621999999","data":"{\"day\":\"friday\",\"label\":\"Full Body\",\"weekStart\":\"2026-03-09\",\"completedDate\":\"2026-03-13\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":60,\"targetReps\":[5,5,5,5,5],\"actualWeight\":60,\"actualReps\":[5,5,5,5,5],\"machineWeightMaxedOut\":false},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":35,\"targetReps\":[10,10,10],\"actualWeight\":35,\"actualReps\":[9,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":48,\"targetReps\":[10,10,10],\"actualWeight\":48,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false}]}","Timestamp":"2026-04-02T12:23:25.1653344Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1653344Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1653344Z'\"","meta":{"revision":0,"created":1775132605166,"version":0},"$loki":16},{"PartitionKey":"default","RowKey":"8226305199999","properties":{"PartitionKey":"default","RowKey":"8226305199999","data":"{\"day\":\"monday\",\"label\":\"Push\",\"weekStart\":\"2026-03-16\",\"completedDate\":\"2026-03-16\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":60,\"targetReps\":[6,6,6,6],\"actualWeight\":60,\"actualReps\":[6,6,6],\"machineWeightMaxedOut\":false},{\"name\":\"Incline DB Press\",\"targetWeight\":16,\"targetReps\":[10,10,10],\"actualWeight\":16,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":50,\"targetReps\":[10,10,10],\"actualWeight\":50,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"targetReps\":[10,10,10],\"actualWeight\":109,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":true},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":102,\"targetReps\":[9,9,9],\"actualWeight\":102,\"actualReps\":[9,9,9],\"machineWeightMaxedOut\":true}]}","Timestamp":"2026-04-02T12:23:25.1683371Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1683371Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1683371Z'\"","meta":{"revision":0,"created":1775132605169,"version":0},"$loki":17},{"PartitionKey":"default","RowKey":"8226283599999","properties":{"PartitionKey":"default","RowKey":"8226283599999","data":"{\"day\":\"tuesday\",\"label\":\"Lower\",\"weekStart\":\"2026-03-16\",\"completedDate\":\"2026-03-17\",\"exercises\":[{\"name\":\"Leg Press\",\"targetWeight\":152,\"targetReps\":[10,10,10],\"actualWeight\":152,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Squat\",\"targetWeight\":75,\"targetReps\":[6,6,6],\"actualWeight\":75,\"actualReps\":[6,6],\"machineWeightMaxedOut\":false},{\"name\":\"RDL\",\"targetWeight\":60,\"targetReps\":[8,8,8],\"actualWeight\":60,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Leg Curl\",\"targetWeight\":61,\"targetReps\":[12,12,12],\"actualWeight\":61,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false},{\"name\":\"Leg Extension\",\"targetWeight\":72,\"targetReps\":[10,10,10],\"actualWeight\":72,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false}]}","Timestamp":"2026-04-02T12:23:25.1713399Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1713399Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1713399Z'\"","meta":{"revision":0,"created":1775132605172,"version":0},"$loki":18},{"PartitionKey":"default","RowKey":"8226161199999","properties":{"PartitionKey":"default","RowKey":"8226161199999","data":"{\"day\":\"wednesday\",\"label\":\"Pull\",\"weekStart\":\"2026-03-16\",\"completedDate\":\"2026-03-18\",\"exercises\":[{\"name\":\"Chin-ups\",\"targetReps\":[10,10,10],\"actualReps\":[10,10,6],\"machineWeightMaxedOut\":false},{\"name\":\"DB Curl\",\"targetWeight\":12,\"targetReps\":[10,10,10],\"actualWeight\":12,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Hammer Curl\",\"targetWeight\":14,\"targetReps\":[8,8,8],\"actualWeight\":14,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":45,\"targetReps\":[12,12,12],\"actualWeight\":45,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false}]}","Timestamp":"2026-04-02T12:23:25.1733422Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1733422Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1733422Z'\"","meta":{"revision":0,"created":1775132605174,"version":0},"$loki":19},{"PartitionKey":"default","RowKey":"8225981199999","properties":{"PartitionKey":"default","RowKey":"8225981199999","data":"{\"day\":\"friday\",\"label\":\"Full Body\",\"weekStart\":\"2026-03-16\",\"completedDate\":\"2026-03-20\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":65,\"targetReps\":[5,5,5,5,5],\"actualWeight\":65,\"actualReps\":[5,5,5,5,5],\"notes\":\"Also hit 70x2 after\",\"machineWeightMaxedOut\":false},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":40,\"targetReps\":[10,10,10],\"actualWeight\":40,\"actualReps\":[10,10,8],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":49.9,\"targetReps\":[10,10,10],\"actualWeight\":49.9,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":54.4,\"targetReps\":[10,10,10],\"actualWeight\":54.4,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false}]}","Timestamp":"2026-04-02T12:23:25.1763447Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1763447Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1763447Z'\"","meta":{"revision":0,"created":1775132605176,"version":0},"$loki":20},{"PartitionKey":"default","RowKey":"8225707599999","properties":{"PartitionKey":"default","RowKey":"8225707599999","data":"{\"day\":\"monday\",\"label\":\"Push\",\"weekStart\":\"2026-03-23\",\"completedDate\":\"2026-03-23\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":60,\"targetReps\":[6,6,6,6],\"actualWeight\":60,\"actualReps\":[6,6,6,6],\"machineWeightMaxedOut\":false},{\"name\":\"Incline DB Press\",\"targetWeight\":16,\"targetReps\":[10,10,10,10],\"actualWeight\":16,\"actualReps\":[10,10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Seated Shoulder Press\",\"targetWeight\":14,\"targetReps\":[10,10,10],\"actualWeight\":14,\"actualReps\":[10,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Lateral Raises\",\"targetWeight\":9,\"targetReps\":[12,12,12],\"actualWeight\":9,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":52,\"targetReps\":[10,10,10],\"actualWeight\":52,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"targetReps\":[8,8,8],\"actualWeight\":109,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":true},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":106,\"targetReps\":[9,9,9],\"actualWeight\":106,\"actualReps\":[9,9,9],\"machineWeightMaxedOut\":true}]}","Timestamp":"2026-04-02T12:23:25.1783472Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1783472Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1783472Z'\"","meta":{"revision":0,"created":1775132605179,"version":0},"$loki":21},{"PartitionKey":"default","RowKey":"8225563599999","properties":{"PartitionKey":"default","RowKey":"8225563599999","data":"{\"day\":\"wednesday\",\"label\":\"Pull\",\"weekStart\":\"2026-03-23\",\"completedDate\":\"2026-03-25\",\"exercises\":[{\"name\":\"Chin-ups\",\"targetReps\":[10,10,10],\"actualReps\":[10,10,8],\"machineWeightMaxedOut\":false},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"targetReps\":[10,10,10,10],\"actualWeight\":109,\"actualReps\":[10,10,10,10],\"machineWeightMaxedOut\":true},{\"name\":\"DB Curl\",\"targetWeight\":12,\"targetReps\":[10,10,10],\"actualWeight\":12,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Hammer Curl\",\"targetWeight\":14,\"targetReps\":[8,8,8],\"actualWeight\":14,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":45.4,\"targetReps\":[12,12,12],\"actualWeight\":45.4,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false}]}","Timestamp":"2026-04-02T12:23:25.1813497Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1813497Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1813497Z'\"","meta":{"revision":0,"created":1775132605181,"version":0},"$loki":22},{"PartitionKey":"default","RowKey":"8225379999999","properties":{"PartitionKey":"default","RowKey":"8225379999999","data":"{\"day\":\"friday\",\"label\":\"Full Body\",\"weekStart\":\"2026-03-23\",\"completedDate\":\"2026-03-27\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":67.5,\"targetReps\":[5,5,5,5,5],\"actualWeight\":67.5,\"actualReps\":[5,5,5,5,2],\"machineWeightMaxedOut\":false},{\"name\":\"Seated Shoulder Press\",\"targetWeight\":16,\"targetReps\":[10,10,10],\"actualWeight\":16,\"actualReps\":[10,10,8],\"machineWeightMaxedOut\":false},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":40,\"targetReps\":[10,10,10],\"actualWeight\":40,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":54.4,\"targetReps\":[10,10,10],\"actualWeight\":54.4,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":49.9,\"targetReps\":[10,10,10],\"actualWeight\":49.9,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false}]}","Timestamp":"2026-04-02T12:23:25.1833517Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1833517Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1833517Z'\"","meta":{"revision":0,"created":1775132605183,"version":0},"$loki":23}],"idIndex":null,"binaryIndices":{"PartitionKey":{"name":"PartitionKey","dirty":false,"values":[22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0]},"RowKey":{"name":"RowKey","dirty":false,"values":[22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0]}},"constraints":null,"uniqueNames":[],"transforms":{},"objType":"devstoreaccount1$ExerciseLogs","dirty":false,"cachedIndex":null,"cachedBinaryIndex":null,"cachedData":null,"adaptiveBinaryIndices":true,"transactional":false,"cloneObjects":false,"cloneMethod":"parse-stringify","asyncListeners":false,"disableMeta":false,"disableChangesApi":true,"disableDeltaChangesApi":true,"autoupdate":false,"serializableIndices":true,"disableFreeze":true,"ttl":null,"maxId":23,"DynamicViews":[],"events":{"insert":[],"update":[],"pre-insert":[],"pre-update":[],"close":[],"flushbuffer":[],"error":[],"delete":[null],"warning":[null]},"changes":[],"dirtyIds":[]},{"name":"devstoreaccount1$BodyWeight","data":[{"PartitionKey":"default","RowKey":"2026-01-21","properties":{"PartitionKey":"default","RowKey":"2026-01-21","weight":76.8,"weight@odata.type":"Edm.Double","Timestamp":"2026-04-02T12:23:25.1903593Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1903593Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1903593Z'\"","meta":{"revision":0,"created":1775132605191,"version":0},"$loki":1},{"PartitionKey":"default","RowKey":"2026-01-23","properties":{"PartitionKey":"default","RowKey":"2026-01-23","weight":77.4,"weight@odata.type":"Edm.Double","Timestamp":"2026-04-02T12:23:25.1933623Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1933623Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1933623Z'\"","meta":{"revision":0,"created":1775132605194,"version":0},"$loki":2},{"PartitionKey":"default","RowKey":"2026-01-30","properties":{"PartitionKey":"default","RowKey":"2026-01-30","weight":77.9,"weight@odata.type":"Edm.Double","Timestamp":"2026-04-02T12:23:25.1963647Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1963647Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1963647Z'\"","meta":{"revision":0,"created":1775132605196,"version":0},"$loki":3},{"PartitionKey":"default","RowKey":"2026-02-06","properties":{"PartitionKey":"default","RowKey":"2026-02-06","weight":77.8,"weight@odata.type":"Edm.Double","Timestamp":"2026-04-02T12:23:25.1983673Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.1983673Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.1983673Z'\"","meta":{"revision":0,"created":1775132605199,"version":0},"$loki":4},{"PartitionKey":"default","RowKey":"2026-02-14","properties":{"PartitionKey":"default","RowKey":"2026-02-14","weight":76.9,"weight@odata.type":"Edm.Double","Timestamp":"2026-04-02T12:23:25.2003691Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.2003691Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.2003691Z'\"","meta":{"revision":0,"created":1775132605201,"version":0},"$loki":5},{"PartitionKey":"default","RowKey":"2026-03-06","properties":{"PartitionKey":"default","RowKey":"2026-03-06","weight":77.2,"weight@odata.type":"Edm.Double","Timestamp":"2026-04-02T12:23:25.2033719Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.2033719Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.2033719Z'\"","meta":{"revision":0,"created":1775132605204,"version":0},"$loki":6},{"PartitionKey":"default","RowKey":"2026-03-13","properties":{"PartitionKey":"default","RowKey":"2026-03-13","weight":77.1,"weight@odata.type":"Edm.Double","Timestamp":"2026-04-02T12:23:25.2053739Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.2053739Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.2053739Z'\"","meta":{"revision":0,"created":1775132605206,"version":0},"$loki":7},{"PartitionKey":"default","RowKey":"2026-03-20","properties":{"PartitionKey":"default","RowKey":"2026-03-20","weight":77.8,"weight@odata.type":"Edm.Double","Timestamp":"2026-04-02T12:23:25.2073759Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.2073759Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.2073759Z'\"","meta":{"revision":0,"created":1775132605208,"version":0},"$loki":8},{"PartitionKey":"default","RowKey":"2026-03-27","properties":{"PartitionKey":"default","RowKey":"2026-03-27","weight":77.7,"weight@odata.type":"Edm.Double","Timestamp":"2026-04-02T12:23:25.2093781Z","Timestamp@odata.type":"Edm.DateTime"},"lastModifiedTime":"2026-04-02T12:23:25.2093781Z","eTag":"W/\"datetime'2026-04-02T12%3A23%3A25.2093781Z'\"","meta":{"revision":0,"created":1775132605210,"version":0},"$loki":9}],"idIndex":null,"binaryIndices":{"PartitionKey":{"name":"PartitionKey","dirty":false,"values":[8,7,6,5,4,3,2,1,0]},"RowKey":{"name":"RowKey","dirty":false,"values":[0,1,2,3,4,5,6,7,8]}},"constraints":null,"uniqueNames":[],"transforms":{},"objType":"devstoreaccount1$BodyWeight","dirty":false,"cachedIndex":null,"cachedBinaryIndex":null,"cachedData":null,"adaptiveBinaryIndices":true,"transactional":false,"cloneObjects":false,"cloneMethod":"parse-stringify","asyncListeners":false,"disableMeta":false,"disableChangesApi":true,"disableDeltaChangesApi":true,"autoupdate":false,"serializableIndices":true,"disableFreeze":true,"ttl":null,"maxId":9,"DynamicViews":[],"events":{"insert":[],"update":[],"pre-insert":[],"pre-update":[],"close":[],"flushbuffer":[],"error":[],"delete":[null],"warning":[null]},"changes":[],"dirtyIds":[]}],"databaseVersion":1.5,"engineVersion":1.5,"autosave":true,"autosaveInterval":5000,"autosaveHandle":null,"throttledSaves":true,"options":{"persistenceMethod":"fs","autosave":true,"autosaveInterval":5000,"serializationMethod":"normal","destructureDelimiter":"$<\n"},"persistenceMethod":"fs","persistenceAdapter":null,"verbose":false,"events":{"init":[null],"loaded":[],"flushChanges":[],"close":[],"changes":[],"warning":[]},"ENV":"NODEJS"}
+{
+  "filename": "/data/__azurite_db_table__.json",
+  "collections": [
+    {
+      "name": "$TABLES_COLLECTION$",
+      "data": [
+        {
+          "account": "devstoreaccount1",
+          "table": "Plans",
+          "meta": { "revision": 0, "created": 1775132306796, "version": 0 },
+          "$loki": 1
+        },
+        {
+          "account": "devstoreaccount1",
+          "table": "ExerciseLogs",
+          "meta": { "revision": 0, "created": 1775132605120, "version": 0 },
+          "$loki": 2
+        },
+        {
+          "account": "devstoreaccount1",
+          "table": "BodyWeight",
+          "meta": { "revision": 0, "created": 1775132605185, "version": 0 },
+          "$loki": 3
+        }
+      ],
+      "idIndex": null,
+      "binaryIndices": {
+        "account": { "name": "account", "dirty": false, "values": [2, 1, 0] },
+        "table": { "name": "table", "dirty": false, "values": [2, 1, 0] }
+      },
+      "constraints": null,
+      "uniqueNames": [],
+      "transforms": {},
+      "objType": "$TABLES_COLLECTION$",
+      "dirty": false,
+      "cachedIndex": null,
+      "cachedBinaryIndex": null,
+      "cachedData": null,
+      "adaptiveBinaryIndices": true,
+      "transactional": false,
+      "cloneObjects": false,
+      "cloneMethod": "parse-stringify",
+      "asyncListeners": false,
+      "disableMeta": false,
+      "disableChangesApi": true,
+      "disableDeltaChangesApi": true,
+      "autoupdate": false,
+      "serializableIndices": true,
+      "disableFreeze": true,
+      "ttl": null,
+      "maxId": 3,
+      "DynamicViews": [],
+      "events": {
+        "insert": [],
+        "update": [],
+        "pre-insert": [],
+        "pre-update": [],
+        "close": [],
+        "flushbuffer": [],
+        "error": [],
+        "delete": [null],
+        "warning": [null]
+      },
+      "changes": [],
+      "dirtyIds": []
+    },
+    {
+      "name": "$SERVICES_COLLECTION$",
+      "data": [],
+      "idIndex": null,
+      "binaryIndices": {},
+      "constraints": null,
+      "uniqueNames": ["accountName"],
+      "transforms": {},
+      "objType": "$SERVICES_COLLECTION$",
+      "dirty": false,
+      "cachedIndex": null,
+      "cachedBinaryIndex": null,
+      "cachedData": null,
+      "adaptiveBinaryIndices": true,
+      "transactional": false,
+      "cloneObjects": false,
+      "cloneMethod": "parse-stringify",
+      "asyncListeners": false,
+      "disableMeta": false,
+      "disableChangesApi": true,
+      "disableDeltaChangesApi": true,
+      "autoupdate": false,
+      "serializableIndices": true,
+      "disableFreeze": true,
+      "ttl": null,
+      "maxId": 0,
+      "DynamicViews": [],
+      "events": {
+        "insert": [],
+        "update": [],
+        "pre-insert": [],
+        "pre-update": [],
+        "close": [],
+        "flushbuffer": [],
+        "error": [],
+        "delete": [null],
+        "warning": [null]
+      },
+      "changes": [],
+      "dirtyIds": []
+    },
+    {
+      "name": "devstoreaccount1$Plans",
+      "data": [
+        {
+          "PartitionKey": "default",
+          "RowKey": "2026-03-30",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "2026-03-30",
+            "data": "{\"weekStart\":\"2026-03-30\",\"sessions\":[{\"day\":\"monday\",\"label\":\"Push\",\"exercises\":[{\"exerciseId\":\"mon-bench-press\",\"name\":\"Bench Press\",\"targetWeight\":62.5,\"targetReps\":[6,6,6,6],\"notes\":\"Small jump since 60 kg felt good\",\"machineWeightMaxedOut\":false},{\"exerciseId\":\"mon-incline-db-press\",\"name\":\"Incline DB Press\",\"targetWeight\":18,\"targetReps\":[10,10,10,10],\"notes\":\"Time to level up from the 16s\",\"machineWeightMaxedOut\":false},{\"exerciseId\":\"mon-seated-shoulder-press\",\"name\":\"Seated Shoulder Press\",\"targetWeight\":14,\"targetReps\":[10,10,10],\"notes\":\"Clean up the reps from last week\",\"machineWeightMaxedOut\":false},{\"exerciseId\":\"mon-cable-lateral-raises\",\"name\":\"Cable Lateral Raises\",\"targetWeight\":9,\"targetReps\":[12,12,12],\"machineWeightMaxedOut\":false},{\"exerciseId\":\"mon-cable-tricep-pushdown\",\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":54.4,\"targetReps\":[10,10,10],\"notes\":\"Matching your Friday win\",\"machineWeightMaxedOut\":false},{\"exerciseId\":\"mon-machine-seated-row\",\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"targetReps\":[8,8,8],\"machineWeightMaxedOut\":true},{\"exerciseId\":\"mon-machine-seated-chest-press\",\"name\":\"Machine Seated Chest Press\",\"targetWeight\":109,\"targetReps\":[10,10,10],\"notes\":\"Adding 1 rep per set\",\"machineWeightMaxedOut\":true}]},{\"day\":\"tuesday\",\"label\":\"Lower\",\"sessionNotes\":\"Listen to your body regarding the injury\",\"exercises\":[{\"exerciseId\":\"tue-leg-press\",\"name\":\"Leg Press\",\"targetWeight\":145,\"targetReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"exerciseId\":\"tue-leg-press-calves\",\"name\":\"Leg Press Calves\",\"targetWeight\":106.6,\"targetReps\":[14,14,14,20],\"machineWeightMaxedOut\":false},{\"exerciseId\":\"tue-rdl\",\"name\":\"RDL\",\"targetWeight\":62.5,\"targetReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"exerciseId\":\"tue-squat\",\"name\":\"Squat\",\"targetWeight\":75,\"targetReps\":[6,6,6],\"machineWeightMaxedOut\":false},{\"exerciseId\":\"tue-leg-curl\",\"name\":\"Leg Curl\",\"targetWeight\":63,\"targetReps\":[12,12,12],\"machineWeightMaxedOut\":false},{\"exerciseId\":\"tue-leg-extension\",\"name\":\"Leg Extension\",\"targetWeight\":75,\"targetReps\":[10,10,10],\"machineWeightMaxedOut\":false}]},{\"day\":\"wednesday\",\"label\":\"Pull\",\"exercises\":[{\"exerciseId\":\"wed-chin-ups\",\"name\":\"Chin-ups\",\"targetReps\":[10,10,9],\"notes\":\"Pushing for one more rep on the last set\",\"machineWeightMaxedOut\":false},{\"exerciseId\":\"wed-machine-seated-row\",\"name\":\"Machine Seated Row\",\"targetWeight\":111,\"targetReps\":[10,10,10,10],\"notes\":\"Small 2 kg bump\",\"machineWeightMaxedOut\":true},{\"exerciseId\":\"wed-lat-pull\",\"name\":\"Lat Pull\",\"targetWeight\":65,\"targetReps\":[12,12,12],\"notes\":\"Micro-increase\",\"machineWeightMaxedOut\":false},{\"exerciseId\":\"wed-db-curl\",\"name\":\"DB Curl\",\"targetWeight\":14,\"targetReps\":[10,10,10],\"notes\":\"Moving away from the 12s\",\"machineWeightMaxedOut\":false},{\"exerciseId\":\"wed-hammer-curl\",\"name\":\"Hammer Curl\",\"targetWeight\":14,\"targetReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"exerciseId\":\"wed-cable-bicep-curl\",\"name\":\"Cable Bicep Curl\",\"targetWeight\":47.5,\"targetReps\":[12,12,12],\"machineWeightMaxedOut\":false}]},{\"day\":\"friday\",\"label\":\"Full Body\",\"exercises\":[{\"exerciseId\":\"fri-bench-press\",\"name\":\"Bench Press\",\"targetWeight\":67.5,\"targetReps\":[5,5,5,5,5],\"notes\":\"Goal: get 5 reps on that final set\",\"machineWeightMaxedOut\":false},{\"exerciseId\":\"fri-leg-press\",\"name\":\"Leg Press\",\"targetWeight\":152.1,\"targetReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"exerciseId\":\"fri-machine-seated-row\",\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"targetReps\":[10,10,10],\"machineWeightMaxedOut\":true},{\"exerciseId\":\"fri-seated-shoulder-press\",\"name\":\"Seated Shoulder Press\",\"targetWeight\":16,\"targetReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"exerciseId\":\"fri-cable-bicep-curl\",\"name\":\"Cable Bicep Curl\",\"targetWeight\":52,\"targetReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"exerciseId\":\"fri-cable-tricep-pushdown\",\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":56.5,\"targetReps\":[10,10,10],\"notes\":\"Small bump since you're moving 54.4 kg well\",\"machineWeightMaxedOut\":false},{\"exerciseId\":\"fri-smith-shoulder-press\",\"name\":\"Smith Shoulder Press\",\"targetWeight\":42.5,\"targetReps\":[10,10,10],\"notes\":\"Small increase\",\"machineWeightMaxedOut\":false}]}]}",
+            "Timestamp": "2026-04-02T12:23:25.0812510Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.0812510Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.0812510Z'\"",
+          "meta": { "revision": 0, "created": 1775132605083, "version": 0 },
+          "$loki": 1
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "2026-02-16",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "2026-02-16",
+            "data": "{\"weekStart\":\"2026-02-16\",\"sessions\":[{\"day\":\"monday\",\"label\":\"Push\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":50,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6,6]},{\"name\":\"Incline DB Press\",\"targetWeight\":14,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Seated Shoulder Press\",\"targetWeight\":14,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6]},{\"name\":\"Cable Lateral Raises\",\"targetWeight\":6,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":45,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Machine Seated Row\",\"targetWeight\":102,\"machineWeightMaxedOut\":true,\"targetReps\":[6,6,6]},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":84,\"machineWeightMaxedOut\":true,\"targetReps\":[8,8,8]}]},{\"day\":\"tuesday\",\"label\":\"Lower\",\"exercises\":[{\"name\":\"Leg Press\",\"targetWeight\":88,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Squat\",\"targetWeight\":50,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6]},{\"name\":\"RDL\",\"targetWeight\":40,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Leg Curl\",\"targetWeight\":40,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]},{\"name\":\"Leg Extension\",\"targetWeight\":54,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]}]},{\"day\":\"wednesday\",\"label\":\"Pull\",\"exercises\":[{\"name\":\"Chin-ups\",\"machineWeightMaxedOut\":false,\"targetReps\":[5,5,5]},{\"name\":\"Machine Seated Row\",\"targetWeight\":102,\"machineWeightMaxedOut\":true,\"targetReps\":[8,8,8]},{\"name\":\"DB Curl\",\"targetWeight\":12,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":22,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]}]},{\"day\":\"friday\",\"label\":\"Full Body\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":52.5,\"machineWeightMaxedOut\":false,\"targetReps\":[5,5,5,5]},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":30,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]}]}]}",
+            "Timestamp": "2026-04-02T12:23:25.0862555Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.0862555Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.0862555Z'\"",
+          "meta": { "revision": 0, "created": 1775132605088, "version": 0 },
+          "$loki": 2
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "2026-02-23",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "2026-02-23",
+            "data": "{\"weekStart\":\"2026-02-23\",\"sessions\":[{\"day\":\"monday\",\"label\":\"Push\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":50,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6,6]},{\"name\":\"Incline DB Press\",\"targetWeight\":14,\"machineWeightMaxedOut\":false,\"targetReps\":[9,9,9]},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":45,\"machineWeightMaxedOut\":false,\"targetReps\":[9,9,9]},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"machineWeightMaxedOut\":true,\"targetReps\":[8,8,8]},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":88,\"machineWeightMaxedOut\":true,\"targetReps\":[8,8,8]}]},{\"day\":\"tuesday\",\"label\":\"Lower\",\"exercises\":[{\"name\":\"Leg Press\",\"targetWeight\":115,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Squat\",\"targetWeight\":52.5,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6]},{\"name\":\"RDL\",\"targetWeight\":45,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Leg Curl\",\"targetWeight\":47,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]},{\"name\":\"Leg Extension\",\"targetWeight\":60,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]}]},{\"day\":\"wednesday\",\"label\":\"Pull\",\"exercises\":[{\"name\":\"Chin-ups\",\"machineWeightMaxedOut\":false,\"targetReps\":[5,5,5]},{\"name\":\"DB Curl\",\"targetWeight\":10,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":25,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]}]},{\"day\":\"friday\",\"label\":\"Full Body\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":55,\"machineWeightMaxedOut\":false,\"targetReps\":[5,5,5,5,5]},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":32.5,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]}]}]}",
+            "Timestamp": "2026-04-02T12:23:25.0902589Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.0902589Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.0902589Z'\"",
+          "meta": { "revision": 0, "created": 1775132605091, "version": 0 },
+          "$loki": 3
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "2026-03-02",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "2026-03-02",
+            "data": "{\"weekStart\":\"2026-03-02\",\"sessions\":[{\"day\":\"monday\",\"label\":\"Push\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":55,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6,6]},{\"name\":\"Incline DB Press\",\"targetWeight\":16,\"machineWeightMaxedOut\":false,\"targetReps\":[9,9,9]},{\"name\":\"Seated Shoulder Press\",\"targetWeight\":12,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Cable Lateral Raises\",\"targetWeight\":9,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"machineWeightMaxedOut\":true,\"targetReps\":[8,8,8]},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":93,\"machineWeightMaxedOut\":true,\"targetReps\":[9,9,9]}]},{\"day\":\"tuesday\",\"label\":\"Lower\",\"exercises\":[{\"name\":\"Leg Press\",\"targetWeight\":133,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Squat\",\"targetWeight\":65,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6]},{\"name\":\"RDL\",\"targetWeight\":50,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Leg Curl\",\"targetWeight\":50,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]},{\"name\":\"Leg Extension\",\"targetWeight\":61,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]}]},{\"day\":\"wednesday\",\"label\":\"Pull\",\"exercises\":[{\"name\":\"Chin-ups\",\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6]},{\"name\":\"DB Curl\",\"targetWeight\":10,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":31,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]}]},{\"day\":\"friday\",\"label\":\"Full Body\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":57.5,\"machineWeightMaxedOut\":false,\"targetReps\":[5,5,5,5,5]},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":32.5,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]}]}]}",
+            "Timestamp": "2026-04-02T12:23:25.0972679Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.0972679Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.0972679Z'\"",
+          "meta": { "revision": 0, "created": 1775132605100, "version": 0 },
+          "$loki": 4
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "2026-03-09",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "2026-03-09",
+            "data": "{\"weekStart\":\"2026-03-09\",\"sessions\":[{\"day\":\"monday\",\"label\":\"Push\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":57.5,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6,6]},{\"name\":\"Incline DB Press\",\"targetWeight\":16,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]},{\"name\":\"Seated Shoulder Press\",\"targetWeight\":14,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Cable Lateral Raises\",\"targetWeight\":9,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"machineWeightMaxedOut\":true,\"targetReps\":[10,10,10]},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":97,\"machineWeightMaxedOut\":true,\"targetReps\":[9,9,9]}]},{\"day\":\"tuesday\",\"label\":\"Lower\",\"exercises\":[{\"name\":\"Leg Press\",\"targetWeight\":140,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Squat\",\"targetWeight\":70,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6]},{\"name\":\"RDL\",\"targetWeight\":55,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Leg Curl\",\"targetWeight\":54,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]},{\"name\":\"Leg Extension\",\"targetWeight\":63,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]}]},{\"day\":\"wednesday\",\"label\":\"Pull\",\"exercises\":[{\"name\":\"Chin-ups\",\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"DB Curl\",\"targetWeight\":12,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Hammer Curl\",\"targetWeight\":14,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":38,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]}]},{\"day\":\"friday\",\"label\":\"Full Body\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":60,\"machineWeightMaxedOut\":false,\"targetReps\":[5,5,5,5,5]},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":35,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":48,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]}]}]}",
+            "Timestamp": "2026-04-02T12:23:25.1052752Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1052752Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1052752Z'\"",
+          "meta": { "revision": 0, "created": 1775132605107, "version": 0 },
+          "$loki": 5
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "2026-03-16",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "2026-03-16",
+            "data": "{\"weekStart\":\"2026-03-16\",\"sessions\":[{\"day\":\"monday\",\"label\":\"Push\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":60,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6,6]},{\"name\":\"Incline DB Press\",\"targetWeight\":16,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":50,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"machineWeightMaxedOut\":true,\"targetReps\":[10,10,10]},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":102,\"machineWeightMaxedOut\":true,\"targetReps\":[9,9,9]}]},{\"day\":\"tuesday\",\"label\":\"Lower\",\"exercises\":[{\"name\":\"Leg Press\",\"targetWeight\":152,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Squat\",\"targetWeight\":75,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6]},{\"name\":\"RDL\",\"targetWeight\":60,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Leg Curl\",\"targetWeight\":61,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]},{\"name\":\"Leg Extension\",\"targetWeight\":72,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]}]},{\"day\":\"wednesday\",\"label\":\"Pull\",\"exercises\":[{\"name\":\"Chin-ups\",\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"DB Curl\",\"targetWeight\":12,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Hammer Curl\",\"targetWeight\":14,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":45,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]}]},{\"day\":\"friday\",\"label\":\"Full Body\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":65,\"machineWeightMaxedOut\":false,\"targetReps\":[5,5,5,5,5],\"notes\":\"Also hit 70x2 after\"},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":40,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":49.9,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":54.4,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]}]}]}",
+            "Timestamp": "2026-04-02T12:23:25.1112802Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1112802Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1112802Z'\"",
+          "meta": { "revision": 0, "created": 1775132605112, "version": 0 },
+          "$loki": 6
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "2026-03-23",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "2026-03-23",
+            "data": "{\"weekStart\":\"2026-03-23\",\"sessions\":[{\"day\":\"monday\",\"label\":\"Push\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":60,\"machineWeightMaxedOut\":false,\"targetReps\":[6,6,6,6]},{\"name\":\"Incline DB Press\",\"targetWeight\":16,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10,10]},{\"name\":\"Seated Shoulder Press\",\"targetWeight\":14,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Cable Lateral Raises\",\"targetWeight\":9,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":52,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"machineWeightMaxedOut\":true,\"targetReps\":[8,8,8]},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":106,\"machineWeightMaxedOut\":true,\"targetReps\":[9,9,9]}]},{\"day\":\"wednesday\",\"label\":\"Pull\",\"exercises\":[{\"name\":\"Chin-ups\",\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"machineWeightMaxedOut\":true,\"targetReps\":[10,10,10,10]},{\"name\":\"DB Curl\",\"targetWeight\":12,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Hammer Curl\",\"targetWeight\":14,\"machineWeightMaxedOut\":false,\"targetReps\":[8,8,8]},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":45.4,\"machineWeightMaxedOut\":false,\"targetReps\":[12,12,12]}]},{\"day\":\"friday\",\"label\":\"Full Body\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":67.5,\"machineWeightMaxedOut\":false,\"targetReps\":[5,5,5,5,5]},{\"name\":\"Seated Shoulder Press\",\"targetWeight\":16,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":40,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":54.4,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":49.9,\"machineWeightMaxedOut\":false,\"targetReps\":[10,10,10]}]}]}",
+            "Timestamp": "2026-04-02T12:23:25.1152845Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1152845Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1152845Z'\"",
+          "meta": { "revision": 0, "created": 1775132605116, "version": 0 },
+          "$loki": 7
+        }
+      ],
+      "idIndex": null,
+      "binaryIndices": {
+        "PartitionKey": { "name": "PartitionKey", "dirty": false, "values": [6, 5, 4, 3, 2, 1, 0] },
+        "RowKey": { "name": "RowKey", "dirty": false, "values": [1, 2, 3, 4, 5, 6, 0] }
+      },
+      "constraints": null,
+      "uniqueNames": [],
+      "transforms": {},
+      "objType": "devstoreaccount1$Plans",
+      "dirty": false,
+      "cachedIndex": null,
+      "cachedBinaryIndex": null,
+      "cachedData": null,
+      "adaptiveBinaryIndices": true,
+      "transactional": false,
+      "cloneObjects": false,
+      "cloneMethod": "parse-stringify",
+      "asyncListeners": false,
+      "disableMeta": false,
+      "disableChangesApi": true,
+      "disableDeltaChangesApi": true,
+      "autoupdate": false,
+      "serializableIndices": true,
+      "disableFreeze": true,
+      "ttl": null,
+      "maxId": 7,
+      "DynamicViews": [],
+      "events": {
+        "insert": [],
+        "update": [],
+        "pre-insert": [],
+        "pre-update": [],
+        "close": [],
+        "flushbuffer": [],
+        "error": [],
+        "delete": [null],
+        "warning": [null]
+      },
+      "changes": [],
+      "dirtyIds": []
+    },
+    {
+      "name": "devstoreaccount1$ExerciseLogs",
+      "data": [
+        {
+          "PartitionKey": "default",
+          "RowKey": "8228756799999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8228756799999",
+            "data": "{\"day\":\"monday\",\"label\":\"Push\",\"weekStart\":\"2026-02-16\",\"completedDate\":\"2026-02-16\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":50,\"targetReps\":[6,6,6,6],\"actualWeight\":50,\"actualReps\":[6,6,6,4],\"machineWeightMaxedOut\":false},{\"name\":\"Incline DB Press\",\"targetWeight\":14,\"targetReps\":[8,8,8],\"actualWeight\":14,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Seated Shoulder Press\",\"targetWeight\":14,\"targetReps\":[6,6,6],\"actualWeight\":14,\"actualReps\":[6,4,4],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Lateral Raises\",\"targetWeight\":6,\"targetReps\":[10,10,10],\"actualWeight\":6,\"actualReps\":[10,10,8],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":45,\"targetReps\":[8,8,8],\"actualWeight\":45,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Machine Seated Row\",\"targetWeight\":102,\"targetReps\":[6,6,6],\"actualWeight\":102,\"actualReps\":[6,6,6],\"machineWeightMaxedOut\":true},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":84,\"targetReps\":[8,8,8],\"actualWeight\":84,\"actualReps\":[8,8,7],\"machineWeightMaxedOut\":true}]}",
+            "Timestamp": "2026-04-02T12:23:25.1282975Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1282975Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1282975Z'\"",
+          "meta": { "revision": 0, "created": 1775132605129, "version": 0 },
+          "$loki": 1
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8228655999999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8228655999999",
+            "data": "{\"day\":\"tuesday\",\"label\":\"Lower\",\"weekStart\":\"2026-02-16\",\"completedDate\":\"2026-02-17\",\"exercises\":[{\"name\":\"Leg Press\",\"targetWeight\":88,\"targetReps\":[10,10,10],\"actualWeight\":88,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Squat\",\"targetWeight\":50,\"targetReps\":[6,6,6],\"actualWeight\":50,\"actualReps\":[6,6,6],\"machineWeightMaxedOut\":false},{\"name\":\"RDL\",\"targetWeight\":40,\"targetReps\":[8,8,8],\"actualWeight\":40,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Leg Curl\",\"targetWeight\":40,\"targetReps\":[12,12,12],\"actualWeight\":40,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false},{\"name\":\"Leg Extension\",\"targetWeight\":54,\"targetReps\":[10,10,10],\"actualWeight\":54,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false}]}",
+            "Timestamp": "2026-04-02T12:23:25.1313000Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1313000Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1313000Z'\"",
+          "meta": { "revision": 0, "created": 1775132605132, "version": 0 },
+          "$loki": 2
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8228562399999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8228562399999",
+            "data": "{\"day\":\"wednesday\",\"label\":\"Pull\",\"weekStart\":\"2026-02-16\",\"completedDate\":\"2026-02-18\",\"exercises\":[{\"name\":\"Chin-ups\",\"targetReps\":[5,5,5],\"actualReps\":[3,4,3],\"machineWeightMaxedOut\":false},{\"name\":\"Machine Seated Row\",\"targetWeight\":102,\"targetReps\":[8,8,8],\"actualWeight\":102,\"actualReps\":[6,6,6],\"machineWeightMaxedOut\":true},{\"name\":\"DB Curl\",\"targetWeight\":12,\"targetReps\":[8,8,8],\"actualWeight\":12,\"actualReps\":[6,6,6],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":22,\"targetReps\":[12,12,12],\"actualWeight\":22,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false}]}",
+            "Timestamp": "2026-04-02T12:23:25.1343033Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1343033Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1343033Z'\"",
+          "meta": { "revision": 0, "created": 1775132605135, "version": 0 },
+          "$loki": 3
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8228439999999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8228439999999",
+            "data": "{\"day\":\"friday\",\"label\":\"Full Body\",\"weekStart\":\"2026-02-16\",\"completedDate\":\"2026-02-20\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":52.5,\"targetReps\":[5,5,5,5],\"actualWeight\":52.5,\"actualReps\":[5,5,5,5],\"machineWeightMaxedOut\":false},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":30,\"targetReps\":[8,8,8],\"actualWeight\":30,\"actualReps\":[8,6,6],\"machineWeightMaxedOut\":false}]}",
+            "Timestamp": "2026-04-02T12:23:25.1373056Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1373056Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1373056Z'\"",
+          "meta": { "revision": 0, "created": 1775132605137, "version": 0 },
+          "$loki": 4
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8228184399999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8228184399999",
+            "data": "{\"day\":\"monday\",\"label\":\"Push\",\"weekStart\":\"2026-02-23\",\"completedDate\":\"2026-02-23\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":50,\"targetReps\":[6,6,6,6],\"actualWeight\":50,\"actualReps\":[6,6,6,6],\"machineWeightMaxedOut\":false},{\"name\":\"Incline DB Press\",\"targetWeight\":14,\"targetReps\":[9,9,9],\"actualWeight\":14,\"actualReps\":[9,9,9],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":45,\"targetReps\":[9,9,9],\"actualWeight\":45,\"actualReps\":[9,9,9],\"machineWeightMaxedOut\":false},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"targetReps\":[8,8,8],\"actualWeight\":109,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":true},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":88,\"targetReps\":[8,8,8],\"actualWeight\":88,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":true}]}",
+            "Timestamp": "2026-04-02T12:23:25.1393078Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1393078Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1393078Z'\"",
+          "meta": { "revision": 0, "created": 1775132605139, "version": 0 },
+          "$loki": 5
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8228036799999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8228036799999",
+            "data": "{\"day\":\"tuesday\",\"label\":\"Lower\",\"weekStart\":\"2026-02-23\",\"completedDate\":\"2026-02-24\",\"exercises\":[{\"name\":\"Leg Press\",\"targetWeight\":115,\"targetReps\":[10,10,10],\"actualWeight\":115,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Squat\",\"targetWeight\":52.5,\"targetReps\":[6,6,6],\"actualWeight\":52.5,\"actualReps\":[6,6,10],\"machineWeightMaxedOut\":false},{\"name\":\"RDL\",\"targetWeight\":45,\"targetReps\":[8,8,8],\"actualWeight\":45,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Leg Curl\",\"targetWeight\":47,\"targetReps\":[12,12,12],\"actualWeight\":47,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false},{\"name\":\"Leg Extension\",\"targetWeight\":60,\"targetReps\":[10,10,10],\"actualWeight\":60,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false}]}",
+            "Timestamp": "2026-04-02T12:23:25.1423104Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1423104Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1423104Z'\"",
+          "meta": { "revision": 0, "created": 1775132605142, "version": 0 },
+          "$loki": 6
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8228022399999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8228022399999",
+            "data": "{\"day\":\"wednesday\",\"label\":\"Pull\",\"weekStart\":\"2026-02-23\",\"completedDate\":\"2026-02-25\",\"exercises\":[{\"name\":\"Chin-ups\",\"targetReps\":[5,5,5],\"actualReps\":[4,4,4],\"machineWeightMaxedOut\":false},{\"name\":\"DB Curl\",\"targetWeight\":10,\"targetReps\":[8,8,8],\"actualWeight\":10,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":25,\"targetReps\":[12,12,12],\"actualWeight\":25,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false}]}",
+            "Timestamp": "2026-04-02T12:23:25.1443132Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1443132Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1443132Z'\"",
+          "meta": { "revision": 0, "created": 1775132605145, "version": 0 },
+          "$loki": 7
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8227842399999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8227842399999",
+            "data": "{\"day\":\"friday\",\"label\":\"Full Body\",\"weekStart\":\"2026-02-23\",\"completedDate\":\"2026-02-27\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":55,\"targetReps\":[5,5,5,5,5],\"actualWeight\":55,\"actualReps\":[5,5,5,5,5],\"machineWeightMaxedOut\":false},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":32.5,\"targetReps\":[8,8,8],\"actualWeight\":32.5,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false}]}",
+            "Timestamp": "2026-04-02T12:23:25.1473156Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1473156Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1473156Z'\"",
+          "meta": { "revision": 0, "created": 1775132605147, "version": 0 },
+          "$loki": 8
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8227514799999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8227514799999",
+            "data": "{\"day\":\"monday\",\"label\":\"Push\",\"weekStart\":\"2026-03-02\",\"completedDate\":\"2026-03-02\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":55,\"targetReps\":[6,6,6,6],\"actualWeight\":55,\"actualReps\":[6,6,6,6],\"machineWeightMaxedOut\":false},{\"name\":\"Incline DB Press\",\"targetWeight\":16,\"targetReps\":[9,9,9],\"actualWeight\":16,\"actualReps\":[9,9,9],\"machineWeightMaxedOut\":false},{\"name\":\"Seated Shoulder Press\",\"targetWeight\":12,\"targetReps\":[8,8,8],\"actualWeight\":12,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Lateral Raises\",\"targetWeight\":9,\"targetReps\":[12,12,12],\"actualWeight\":9,\"actualReps\":[12,12,10],\"machineWeightMaxedOut\":false},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"targetReps\":[8,8,8],\"actualWeight\":109,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":true},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":93,\"targetReps\":[9,9,9],\"actualWeight\":93,\"actualReps\":[9,9,8],\"machineWeightMaxedOut\":true}]}",
+            "Timestamp": "2026-04-02T12:23:25.1493175Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1493175Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1493175Z'\"",
+          "meta": { "revision": 0, "created": 1775132605149, "version": 0 },
+          "$loki": 9
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8227485999999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8227485999999",
+            "data": "{\"day\":\"tuesday\",\"label\":\"Lower\",\"weekStart\":\"2026-03-02\",\"completedDate\":\"2026-03-03\",\"exercises\":[{\"name\":\"Leg Press\",\"targetWeight\":133,\"targetReps\":[10,10,10],\"actualWeight\":133,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Squat\",\"targetWeight\":65,\"targetReps\":[6,6,6],\"actualWeight\":65,\"actualReps\":[6,6,6],\"machineWeightMaxedOut\":false},{\"name\":\"RDL\",\"targetWeight\":50,\"targetReps\":[8,8,8],\"actualWeight\":50,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Leg Curl\",\"targetWeight\":50,\"targetReps\":[12,12,12],\"actualWeight\":50,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false},{\"name\":\"Leg Extension\",\"targetWeight\":61,\"targetReps\":[10,10,10],\"actualWeight\":61,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false}]}",
+            "Timestamp": "2026-04-02T12:23:25.1513197Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1513197Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1513197Z'\"",
+          "meta": { "revision": 0, "created": 1775132605151, "version": 0 },
+          "$loki": 10
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8227363599999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8227363599999",
+            "data": "{\"day\":\"wednesday\",\"label\":\"Pull\",\"weekStart\":\"2026-03-02\",\"completedDate\":\"2026-03-04\",\"exercises\":[{\"name\":\"Chin-ups\",\"targetReps\":[6,6,6],\"actualReps\":[6,6,5],\"machineWeightMaxedOut\":false},{\"name\":\"DB Curl\",\"targetWeight\":10,\"targetReps\":[10,10,10],\"actualWeight\":10,\"actualReps\":[10,9,10],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":31,\"targetReps\":[12,12,12],\"actualWeight\":31,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false}]}",
+            "Timestamp": "2026-04-02T12:23:25.1533220Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1533220Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1533220Z'\"",
+          "meta": { "revision": 0, "created": 1775132605154, "version": 0 },
+          "$loki": 11
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8227237599999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8227237599999",
+            "data": "{\"day\":\"friday\",\"label\":\"Full Body\",\"weekStart\":\"2026-03-02\",\"completedDate\":\"2026-03-06\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":57.5,\"targetReps\":[5,5,5,5,5],\"actualWeight\":57.5,\"actualReps\":[5,5,5,5,5],\"machineWeightMaxedOut\":false},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":32.5,\"targetReps\":[8,8,8],\"actualWeight\":32.5,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false}]}",
+            "Timestamp": "2026-04-02T12:23:25.1553241Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1553241Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1553241Z'\"",
+          "meta": { "revision": 0, "created": 1775132605156, "version": 0 },
+          "$loki": 12
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8226960399999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8226960399999",
+            "data": "{\"day\":\"monday\",\"label\":\"Push\",\"weekStart\":\"2026-03-09\",\"completedDate\":\"2026-03-09\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":57.5,\"targetReps\":[6,6,6,6],\"actualWeight\":57.5,\"actualReps\":[6,6,6,6],\"machineWeightMaxedOut\":false},{\"name\":\"Incline DB Press\",\"targetWeight\":16,\"targetReps\":[12,12,12],\"actualWeight\":16,\"actualReps\":[12,12,10],\"machineWeightMaxedOut\":false},{\"name\":\"Seated Shoulder Press\",\"targetWeight\":14,\"targetReps\":[10,10,10],\"actualWeight\":14,\"actualReps\":[10,9,7],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Lateral Raises\",\"targetWeight\":9,\"targetReps\":[12,12,12],\"actualWeight\":9,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"targetReps\":[10,10,10],\"actualWeight\":109,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":true},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":97,\"targetReps\":[9,9,9],\"actualWeight\":97,\"actualReps\":[9,9,9],\"machineWeightMaxedOut\":true}]}",
+            "Timestamp": "2026-04-02T12:23:25.1583271Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1583271Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1583271Z'\"",
+          "meta": { "revision": 0, "created": 1775132605159, "version": 0 },
+          "$loki": 13
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8226870399999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8226870399999",
+            "data": "{\"day\":\"tuesday\",\"label\":\"Lower\",\"weekStart\":\"2026-03-09\",\"completedDate\":\"2026-03-10\",\"exercises\":[{\"name\":\"Leg Press\",\"targetWeight\":140,\"targetReps\":[10,10,10],\"actualWeight\":140,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Squat\",\"targetWeight\":70,\"targetReps\":[6,6,6],\"actualWeight\":70,\"actualReps\":[6,6,8],\"machineWeightMaxedOut\":false},{\"name\":\"RDL\",\"targetWeight\":55,\"targetReps\":[8,8,8],\"actualWeight\":55,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Leg Curl\",\"targetWeight\":54,\"targetReps\":[12,12,12],\"actualWeight\":54,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false},{\"name\":\"Leg Extension\",\"targetWeight\":63,\"targetReps\":[10,10,10],\"actualWeight\":63,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false}]}",
+            "Timestamp": "2026-04-02T12:23:25.1613294Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1613294Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1613294Z'\"",
+          "meta": { "revision": 0, "created": 1775132605161, "version": 0 },
+          "$loki": 14
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8226791199999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8226791199999",
+            "data": "{\"day\":\"wednesday\",\"label\":\"Pull\",\"weekStart\":\"2026-03-09\",\"completedDate\":\"2026-03-11\",\"exercises\":[{\"name\":\"Chin-ups\",\"targetReps\":[10,10,10],\"actualReps\":[10,7,4],\"machineWeightMaxedOut\":false},{\"name\":\"DB Curl\",\"targetWeight\":12,\"targetReps\":[10,10,10],\"actualWeight\":12,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Hammer Curl\",\"targetWeight\":14,\"targetReps\":[8,8,8],\"actualWeight\":14,\"actualReps\":[6,5,5],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":38,\"targetReps\":[12,12,12],\"actualWeight\":38,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false}]}",
+            "Timestamp": "2026-04-02T12:23:25.1633318Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1633318Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1633318Z'\"",
+          "meta": { "revision": 0, "created": 1775132605163, "version": 0 },
+          "$loki": 15
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8226621999999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8226621999999",
+            "data": "{\"day\":\"friday\",\"label\":\"Full Body\",\"weekStart\":\"2026-03-09\",\"completedDate\":\"2026-03-13\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":60,\"targetReps\":[5,5,5,5,5],\"actualWeight\":60,\"actualReps\":[5,5,5,5,5],\"machineWeightMaxedOut\":false},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":35,\"targetReps\":[10,10,10],\"actualWeight\":35,\"actualReps\":[9,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":48,\"targetReps\":[10,10,10],\"actualWeight\":48,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false}]}",
+            "Timestamp": "2026-04-02T12:23:25.1653344Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1653344Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1653344Z'\"",
+          "meta": { "revision": 0, "created": 1775132605166, "version": 0 },
+          "$loki": 16
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8226305199999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8226305199999",
+            "data": "{\"day\":\"monday\",\"label\":\"Push\",\"weekStart\":\"2026-03-16\",\"completedDate\":\"2026-03-16\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":60,\"targetReps\":[6,6,6,6],\"actualWeight\":60,\"actualReps\":[6,6,6],\"machineWeightMaxedOut\":false},{\"name\":\"Incline DB Press\",\"targetWeight\":16,\"targetReps\":[10,10,10],\"actualWeight\":16,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":50,\"targetReps\":[10,10,10],\"actualWeight\":50,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"targetReps\":[10,10,10],\"actualWeight\":109,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":true},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":102,\"targetReps\":[9,9,9],\"actualWeight\":102,\"actualReps\":[9,9,9],\"machineWeightMaxedOut\":true}]}",
+            "Timestamp": "2026-04-02T12:23:25.1683371Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1683371Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1683371Z'\"",
+          "meta": { "revision": 0, "created": 1775132605169, "version": 0 },
+          "$loki": 17
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8226283599999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8226283599999",
+            "data": "{\"day\":\"tuesday\",\"label\":\"Lower\",\"weekStart\":\"2026-03-16\",\"completedDate\":\"2026-03-17\",\"exercises\":[{\"name\":\"Leg Press\",\"targetWeight\":152,\"targetReps\":[10,10,10],\"actualWeight\":152,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Squat\",\"targetWeight\":75,\"targetReps\":[6,6,6],\"actualWeight\":75,\"actualReps\":[6,6],\"machineWeightMaxedOut\":false},{\"name\":\"RDL\",\"targetWeight\":60,\"targetReps\":[8,8,8],\"actualWeight\":60,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Leg Curl\",\"targetWeight\":61,\"targetReps\":[12,12,12],\"actualWeight\":61,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false},{\"name\":\"Leg Extension\",\"targetWeight\":72,\"targetReps\":[10,10,10],\"actualWeight\":72,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false}]}",
+            "Timestamp": "2026-04-02T12:23:25.1713399Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1713399Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1713399Z'\"",
+          "meta": { "revision": 0, "created": 1775132605172, "version": 0 },
+          "$loki": 18
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8226161199999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8226161199999",
+            "data": "{\"day\":\"wednesday\",\"label\":\"Pull\",\"weekStart\":\"2026-03-16\",\"completedDate\":\"2026-03-18\",\"exercises\":[{\"name\":\"Chin-ups\",\"targetReps\":[10,10,10],\"actualReps\":[10,10,6],\"machineWeightMaxedOut\":false},{\"name\":\"DB Curl\",\"targetWeight\":12,\"targetReps\":[10,10,10],\"actualWeight\":12,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Hammer Curl\",\"targetWeight\":14,\"targetReps\":[8,8,8],\"actualWeight\":14,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":45,\"targetReps\":[12,12,12],\"actualWeight\":45,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false}]}",
+            "Timestamp": "2026-04-02T12:23:25.1733422Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1733422Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1733422Z'\"",
+          "meta": { "revision": 0, "created": 1775132605174, "version": 0 },
+          "$loki": 19
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8225981199999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8225981199999",
+            "data": "{\"day\":\"friday\",\"label\":\"Full Body\",\"weekStart\":\"2026-03-16\",\"completedDate\":\"2026-03-20\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":65,\"targetReps\":[5,5,5,5,5],\"actualWeight\":65,\"actualReps\":[5,5,5,5,5],\"notes\":\"Also hit 70x2 after\",\"machineWeightMaxedOut\":false},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":40,\"targetReps\":[10,10,10],\"actualWeight\":40,\"actualReps\":[10,10,8],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":49.9,\"targetReps\":[10,10,10],\"actualWeight\":49.9,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":54.4,\"targetReps\":[10,10,10],\"actualWeight\":54.4,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false}]}",
+            "Timestamp": "2026-04-02T12:23:25.1763447Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1763447Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1763447Z'\"",
+          "meta": { "revision": 0, "created": 1775132605176, "version": 0 },
+          "$loki": 20
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8225707599999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8225707599999",
+            "data": "{\"day\":\"monday\",\"label\":\"Push\",\"weekStart\":\"2026-03-23\",\"completedDate\":\"2026-03-23\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":60,\"targetReps\":[6,6,6,6],\"actualWeight\":60,\"actualReps\":[6,6,6,6],\"machineWeightMaxedOut\":false},{\"name\":\"Incline DB Press\",\"targetWeight\":16,\"targetReps\":[10,10,10,10],\"actualWeight\":16,\"actualReps\":[10,10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Seated Shoulder Press\",\"targetWeight\":14,\"targetReps\":[10,10,10],\"actualWeight\":14,\"actualReps\":[10,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Lateral Raises\",\"targetWeight\":9,\"targetReps\":[12,12,12],\"actualWeight\":9,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":52,\"targetReps\":[10,10,10],\"actualWeight\":52,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"targetReps\":[8,8,8],\"actualWeight\":109,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":true},{\"name\":\"Machine Seated Chest Press\",\"targetWeight\":106,\"targetReps\":[9,9,9],\"actualWeight\":106,\"actualReps\":[9,9,9],\"machineWeightMaxedOut\":true}]}",
+            "Timestamp": "2026-04-02T12:23:25.1783472Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1783472Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1783472Z'\"",
+          "meta": { "revision": 0, "created": 1775132605179, "version": 0 },
+          "$loki": 21
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8225563599999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8225563599999",
+            "data": "{\"day\":\"wednesday\",\"label\":\"Pull\",\"weekStart\":\"2026-03-23\",\"completedDate\":\"2026-03-25\",\"exercises\":[{\"name\":\"Chin-ups\",\"targetReps\":[10,10,10],\"actualReps\":[10,10,8],\"machineWeightMaxedOut\":false},{\"name\":\"Machine Seated Row\",\"targetWeight\":109,\"targetReps\":[10,10,10,10],\"actualWeight\":109,\"actualReps\":[10,10,10,10],\"machineWeightMaxedOut\":true},{\"name\":\"DB Curl\",\"targetWeight\":12,\"targetReps\":[10,10,10],\"actualWeight\":12,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Hammer Curl\",\"targetWeight\":14,\"targetReps\":[8,8,8],\"actualWeight\":14,\"actualReps\":[8,8,8],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":45.4,\"targetReps\":[12,12,12],\"actualWeight\":45.4,\"actualReps\":[12,12,12],\"machineWeightMaxedOut\":false}]}",
+            "Timestamp": "2026-04-02T12:23:25.1813497Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1813497Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1813497Z'\"",
+          "meta": { "revision": 0, "created": 1775132605181, "version": 0 },
+          "$loki": 22
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "8225379999999",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "8225379999999",
+            "data": "{\"day\":\"friday\",\"label\":\"Full Body\",\"weekStart\":\"2026-03-23\",\"completedDate\":\"2026-03-27\",\"exercises\":[{\"name\":\"Bench Press\",\"targetWeight\":67.5,\"targetReps\":[5,5,5,5,5],\"actualWeight\":67.5,\"actualReps\":[5,5,5,5,2],\"machineWeightMaxedOut\":false},{\"name\":\"Seated Shoulder Press\",\"targetWeight\":16,\"targetReps\":[10,10,10],\"actualWeight\":16,\"actualReps\":[10,10,8],\"machineWeightMaxedOut\":false},{\"name\":\"Smith Shoulder Press\",\"targetWeight\":40,\"targetReps\":[10,10,10],\"actualWeight\":40,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Tricep Pushdown\",\"targetWeight\":54.4,\"targetReps\":[10,10,10],\"actualWeight\":54.4,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false},{\"name\":\"Cable Bicep Curl\",\"targetWeight\":49.9,\"targetReps\":[10,10,10],\"actualWeight\":49.9,\"actualReps\":[10,10,10],\"machineWeightMaxedOut\":false}]}",
+            "Timestamp": "2026-04-02T12:23:25.1833517Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1833517Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1833517Z'\"",
+          "meta": { "revision": 0, "created": 1775132605183, "version": 0 },
+          "$loki": 23
+        }
+      ],
+      "idIndex": null,
+      "binaryIndices": {
+        "PartitionKey": {
+          "name": "PartitionKey",
+          "dirty": false,
+          "values": [
+            22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0
+          ]
+        },
+        "RowKey": {
+          "name": "RowKey",
+          "dirty": false,
+          "values": [
+            22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0
+          ]
+        }
+      },
+      "constraints": null,
+      "uniqueNames": [],
+      "transforms": {},
+      "objType": "devstoreaccount1$ExerciseLogs",
+      "dirty": false,
+      "cachedIndex": null,
+      "cachedBinaryIndex": null,
+      "cachedData": null,
+      "adaptiveBinaryIndices": true,
+      "transactional": false,
+      "cloneObjects": false,
+      "cloneMethod": "parse-stringify",
+      "asyncListeners": false,
+      "disableMeta": false,
+      "disableChangesApi": true,
+      "disableDeltaChangesApi": true,
+      "autoupdate": false,
+      "serializableIndices": true,
+      "disableFreeze": true,
+      "ttl": null,
+      "maxId": 23,
+      "DynamicViews": [],
+      "events": {
+        "insert": [],
+        "update": [],
+        "pre-insert": [],
+        "pre-update": [],
+        "close": [],
+        "flushbuffer": [],
+        "error": [],
+        "delete": [null],
+        "warning": [null]
+      },
+      "changes": [],
+      "dirtyIds": []
+    },
+    {
+      "name": "devstoreaccount1$BodyWeight",
+      "data": [
+        {
+          "PartitionKey": "default",
+          "RowKey": "2026-01-21",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "2026-01-21",
+            "weight": 76.8,
+            "weight@odata.type": "Edm.Double",
+            "Timestamp": "2026-04-02T12:23:25.1903593Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1903593Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1903593Z'\"",
+          "meta": { "revision": 0, "created": 1775132605191, "version": 0 },
+          "$loki": 1
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "2026-01-23",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "2026-01-23",
+            "weight": 77.4,
+            "weight@odata.type": "Edm.Double",
+            "Timestamp": "2026-04-02T12:23:25.1933623Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1933623Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1933623Z'\"",
+          "meta": { "revision": 0, "created": 1775132605194, "version": 0 },
+          "$loki": 2
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "2026-01-30",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "2026-01-30",
+            "weight": 77.9,
+            "weight@odata.type": "Edm.Double",
+            "Timestamp": "2026-04-02T12:23:25.1963647Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1963647Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1963647Z'\"",
+          "meta": { "revision": 0, "created": 1775132605196, "version": 0 },
+          "$loki": 3
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "2026-02-06",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "2026-02-06",
+            "weight": 77.8,
+            "weight@odata.type": "Edm.Double",
+            "Timestamp": "2026-04-02T12:23:25.1983673Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.1983673Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.1983673Z'\"",
+          "meta": { "revision": 0, "created": 1775132605199, "version": 0 },
+          "$loki": 4
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "2026-02-14",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "2026-02-14",
+            "weight": 76.9,
+            "weight@odata.type": "Edm.Double",
+            "Timestamp": "2026-04-02T12:23:25.2003691Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.2003691Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.2003691Z'\"",
+          "meta": { "revision": 0, "created": 1775132605201, "version": 0 },
+          "$loki": 5
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "2026-03-06",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "2026-03-06",
+            "weight": 77.2,
+            "weight@odata.type": "Edm.Double",
+            "Timestamp": "2026-04-02T12:23:25.2033719Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.2033719Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.2033719Z'\"",
+          "meta": { "revision": 0, "created": 1775132605204, "version": 0 },
+          "$loki": 6
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "2026-03-13",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "2026-03-13",
+            "weight": 77.1,
+            "weight@odata.type": "Edm.Double",
+            "Timestamp": "2026-04-02T12:23:25.2053739Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.2053739Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.2053739Z'\"",
+          "meta": { "revision": 0, "created": 1775132605206, "version": 0 },
+          "$loki": 7
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "2026-03-20",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "2026-03-20",
+            "weight": 77.8,
+            "weight@odata.type": "Edm.Double",
+            "Timestamp": "2026-04-02T12:23:25.2073759Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.2073759Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.2073759Z'\"",
+          "meta": { "revision": 0, "created": 1775132605208, "version": 0 },
+          "$loki": 8
+        },
+        {
+          "PartitionKey": "default",
+          "RowKey": "2026-03-27",
+          "properties": {
+            "PartitionKey": "default",
+            "RowKey": "2026-03-27",
+            "weight": 77.7,
+            "weight@odata.type": "Edm.Double",
+            "Timestamp": "2026-04-02T12:23:25.2093781Z",
+            "Timestamp@odata.type": "Edm.DateTime"
+          },
+          "lastModifiedTime": "2026-04-02T12:23:25.2093781Z",
+          "eTag": "W/\"datetime'2026-04-02T12%3A23%3A25.2093781Z'\"",
+          "meta": { "revision": 0, "created": 1775132605210, "version": 0 },
+          "$loki": 9
+        }
+      ],
+      "idIndex": null,
+      "binaryIndices": {
+        "PartitionKey": {
+          "name": "PartitionKey",
+          "dirty": false,
+          "values": [8, 7, 6, 5, 4, 3, 2, 1, 0]
+        },
+        "RowKey": { "name": "RowKey", "dirty": false, "values": [0, 1, 2, 3, 4, 5, 6, 7, 8] }
+      },
+      "constraints": null,
+      "uniqueNames": [],
+      "transforms": {},
+      "objType": "devstoreaccount1$BodyWeight",
+      "dirty": false,
+      "cachedIndex": null,
+      "cachedBinaryIndex": null,
+      "cachedData": null,
+      "adaptiveBinaryIndices": true,
+      "transactional": false,
+      "cloneObjects": false,
+      "cloneMethod": "parse-stringify",
+      "asyncListeners": false,
+      "disableMeta": false,
+      "disableChangesApi": true,
+      "disableDeltaChangesApi": true,
+      "autoupdate": false,
+      "serializableIndices": true,
+      "disableFreeze": true,
+      "ttl": null,
+      "maxId": 9,
+      "DynamicViews": [],
+      "events": {
+        "insert": [],
+        "update": [],
+        "pre-insert": [],
+        "pre-update": [],
+        "close": [],
+        "flushbuffer": [],
+        "error": [],
+        "delete": [null],
+        "warning": [null]
+      },
+      "changes": [],
+      "dirtyIds": []
+    }
+  ],
+  "databaseVersion": 1.5,
+  "engineVersion": 1.5,
+  "autosave": true,
+  "autosaveInterval": 5000,
+  "autosaveHandle": null,
+  "throttledSaves": true,
+  "options": {
+    "persistenceMethod": "fs",
+    "autosave": true,
+    "autosaveInterval": 5000,
+    "serializationMethod": "normal",
+    "destructureDelimiter": "$<\n"
+  },
+  "persistenceMethod": "fs",
+  "persistenceAdapter": null,
+  "verbose": false,
+  "events": {
+    "init": [null],
+    "loaded": [],
+    "flushChanges": [],
+    "close": [],
+    "changes": [],
+    "warning": []
+  },
+  "ENV": "NODEJS"
+}

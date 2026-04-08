@@ -79,7 +79,10 @@ export async function getPlan(weekStart: string): Promise<WeeklyPlan | null> {
 export async function getPendingNextPlan(sourceWeek: string): Promise<WeeklyPlan | null> {
   const client = await getClient();
   try {
-    const entity = await client.getEntity<PlanEntity>(DEFAULT_PK, getPendingNextPlanRowKey(sourceWeek));
+    const entity = await client.getEntity<PlanEntity>(
+      DEFAULT_PK,
+      getPendingNextPlanRowKey(sourceWeek),
+    );
     const draft = JSON.parse(entity.data) as PendingNextPlan;
     return draft.plan;
   } catch (e: unknown) {

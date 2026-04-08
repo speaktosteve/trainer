@@ -111,9 +111,7 @@ describe("/data/plans/next route", () => {
   });
 
   it("POST persists a generated next plan when no pending draft exists", async () => {
-    vi.mocked(getPlan)
-      .mockResolvedValueOnce(sourcePlan)
-      .mockResolvedValueOnce(null);
+    vi.mocked(getPlan).mockResolvedValueOnce(sourcePlan).mockResolvedValueOnce(null);
     vi.mocked(getPendingNextPlan).mockResolvedValue(null);
     vi.mocked(getExerciseLogsForWeek).mockResolvedValue([]);
     vi.mocked(getPlanGenerator).mockReturnValue({
@@ -135,9 +133,7 @@ describe("/data/plans/next route", () => {
   });
 
   it("POST saves the accepted next plan and clears the pending draft when save=true", async () => {
-    vi.mocked(getPlan)
-      .mockResolvedValueOnce(sourcePlan)
-      .mockResolvedValueOnce(null);
+    vi.mocked(getPlan).mockResolvedValueOnce(sourcePlan).mockResolvedValueOnce(null);
     vi.mocked(getPendingNextPlan).mockResolvedValue(null);
     vi.mocked(getExerciseLogsForWeek).mockResolvedValue([]);
     vi.mocked(getPlanGenerator).mockReturnValue({
