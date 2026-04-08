@@ -61,4 +61,26 @@ export const MCP_TOOLS: McpTool[] = [
       additionalProperties: false,
     },
   },
+  {
+    name: "get_goals",
+    title: "Get Active Goals",
+    description: "List all currently active goals with progress and target details.",
+    inputSchema: {
+      type: "object",
+      properties: {},
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "get_goal_progress",
+    title: "Get Goal Progress",
+    description: "Retrieve current progress, status, and target details for a specific goal.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        id: { type: "string", description: "Goal id" },
+      },
+      additionalProperties: false,
+    },
+  },
 ];

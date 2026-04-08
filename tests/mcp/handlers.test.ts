@@ -17,6 +17,10 @@ vi.mock("$lib/services/summaryService", () => ({
   llmSummaryProvider: { generateSummary: vi.fn() },
 }));
 
+vi.mock("$lib/services/goalsService", () => ({
+  getGoalsWithProgress: vi.fn(),
+}));
+
 vi.mock("$lib/services/openaiClient", () => ({
   isLLMConfigured: vi.fn(() => false),
 }));
@@ -28,6 +32,7 @@ import {
   getWeightHistory,
 } from "$lib/services/exerciseService";
 import { getCurrentWeekPlan, getPlan } from "$lib/services/planService";
+import { getGoalsWithProgress } from "$lib/services/goalsService";
 import { getSummaryProvider, summaryProvider } from "$lib/services/summaryService";
 
 describe("mcp handlers", () => {
@@ -43,6 +48,8 @@ describe("mcp handlers", () => {
       "get_bodyweight_history",
       "get_plan",
       "get_week_summary",
+      "get_goals",
+      "get_goal_progress",
     ]);
   });
 
@@ -118,6 +125,79 @@ describe("mcp handlers", () => {
     await expect(
       executeMcpTool("get_exercise_history", { startDate: "03/31/2026" }),
     ).rejects.toThrow("startDate must be an ISO date string");
+  });
+
+  it("executes get_goals and returns active goals only", async () => {
+    vi.mocked(getGoalsWithProgress).mockResolvedValue([
+      {
+        id: "goal-1",
+        title: "Bench 70kg",
+        type: "lifting",
+        startDate: "2026-04-01",
+        targetDate: "2026-05-15",
+        targetValue: 70,
+        exerciseName: "Bench Press",
+        status: "in_progress",
+        createdAt: "2026-04-01T09:00:00Z",
+        currentValue: 67.5,
+        progressPercent: 60,
+        progressPoints: [],
+        isOnTrack: true,
+      },
+      {
+        id: "goal-2",
+        title: "3 sessions/week",
+        type: "consistency",
+        startDate: "2026-04-01",
+        targetDate: "2026-05-27",
+        targetValue: 3,
+        sessionsPerWeek: 3,
+        status: "completed",
+        createdAt: "2026-04-01T09:00:00Z",
+        currentValue: 3,
+        progressPercent: 100,
+        progressPoints: [],
+        isOnTrack: true,
+      },
+    ] as any);
+
+    const result = await executeMcpTool("get_goals", {});
+
+    expect(result.data).toHaveLength(1);
+    expect((result.data as Array<{ id: string }>)[0]?.id).toBe("goal-1");
+  });
+
+  it("executes get_goal_progress for a specific goal", async () => {
+    vi.mocked(getGoalsWithProgress).mockResolvedValue([
+      {
+        id: "goal-1",
+        title: "Bench 70kg",
+        type: "lifting",
+        startDate: "2026-04-01",
+        targetDate: "2026-05-15",
+        targetValue: 70,
+        exerciseName: "Bench Press",
+        status: "in_progress",
+        createdAt: "2026-04-01T09:00:00Z",
+        currentValue: 67.5,
+        progressPercent: 60,
+        progressPoints: [],
+        isOnTrack: true,
+      },
+    ] as any);
+
+    const result = await executeMcpTool("get_goal_progress", { id: "goal-1" });
+
+    expect((result.data as { id: string }).id).toBe("goal-1");
+    expect(getGoalsWithProgress).toHaveBeenCalledTimes(1);
+  });
+
+  it("rejects get_goal_progress when goal is missing", async () => {
+    vi.mocked(getGoalsWithProgress).mockResolvedValue([]);
+
+    await expect(executeMcpTool("get_goal_progress", { id: "missing" })).rejects.toThrow(
+      "Goal not found: missing",
+    );
   });
 
   it("rejects unknown tool names", async () => {
