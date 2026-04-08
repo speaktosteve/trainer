@@ -232,7 +232,7 @@
           </div>
 
           <div class="mt-3 rounded-lg border border-base-300 bg-base-200 p-2">
-            <GoalProgressChart points={goal.progressPoints} valueLabel={metricLabel(goal)} />
+            <GoalProgressChart points={goal.progressPoints} valueLabel={metricLabel(goal)} startDate={goal.startDate} targetDate={goal.targetDate} />
           </div>
 
           <div class="mt-3 flex gap-2">
