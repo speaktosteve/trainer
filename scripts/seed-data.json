@@ -10,22 +10,13 @@
             "exerciseId": "mon-bench-press",
             "name": "Bench Press",
             "targetWeight": 62.5,
-            "targetReps": [
-              6,
-              6,
-              6
-            ],
+            "targetReps": [6, 6, 6],
             "machineWeightMaxedOut": false
           },
           {
             "exerciseId": "mon-incline-db-press",
             "name": "Incline DB Press",
-            "targetReps": [
-              10,
-              10,
-              8,
-              6
-            ],
+            "targetReps": [10, 10, 8, 6],
             "notes": "Reps adjusted due to missed targets",
             "targetWeight": 18,
             "machineWeightMaxedOut": false
@@ -34,22 +25,14 @@
             "exerciseId": "mon-seated-shoulder-press",
             "name": "Seated Shoulder Press",
             "targetWeight": 14,
-            "targetReps": [
-              10,
-              10,
-              10
-            ],
+            "targetReps": [10, 10, 10],
             "notes": "No record last week",
             "machineWeightMaxedOut": false
           },
           {
             "exerciseId": "mon-cable-lateral-raises",
             "name": "Cable Lateral Raises",
-            "targetReps": [
-              12,
-              12,
-              13
-            ],
+            "targetReps": [12, 12, 13],
             "notes": "Added 1 rep to the last set",
             "targetWeight": 9,
             "machineWeightMaxedOut": false
@@ -58,11 +41,7 @@
             "exerciseId": "mon-cable-tricep-pushdown",
             "name": "Cable Tricep Pushdown",
             "targetWeight": 54.4,
-            "targetReps": [
-              10,
-              10,
-              10
-            ],
+            "targetReps": [10, 10, 10],
             "notes": "No record last week",
             "machineWeightMaxedOut": false
           },
@@ -70,11 +49,7 @@
             "exerciseId": "mon-machine-seated-row",
             "name": "Machine Seated Row",
             "targetWeight": 109,
-            "targetReps": [
-              9,
-              8,
-              8
-            ],
+            "targetReps": [9, 8, 8],
             "notes": "Machine already at max weight",
             "machineWeightMaxedOut": true
           },
@@ -82,11 +57,7 @@
             "exerciseId": "mon-machine-seated-chest-press",
             "name": "Machine Seated Chest Press",
             "targetWeight": 109,
-            "targetReps": [
-              10,
-              10,
-              10
-            ],
+            "targetReps": [10, 10, 10],
             "notes": "Machine already at max weight; No record last week",
             "machineWeightMaxedOut": true
           }
@@ -100,11 +71,7 @@
             "exerciseId": "tue-leg-press",
             "name": "Leg Press",
             "targetWeight": 145,
-            "targetReps": [
-              10,
-              10,
-              10
-            ],
+            "targetReps": [10, 10, 10],
             "notes": "No record last week",
             "machineWeightMaxedOut": false
           },
@@ -112,12 +79,7 @@
             "exerciseId": "tue-leg-press-calves",
             "name": "Leg Press Calves",
             "targetWeight": 106.6,
-            "targetReps": [
-              14,
-              14,
-              14,
-              20
-            ],
+            "targetReps": [14, 14, 14, 20],
             "notes": "No record last week",
             "machineWeightMaxedOut": false
           },
@@ -125,11 +87,7 @@
             "exerciseId": "tue-rdl",
             "name": "RDL",
             "targetWeight": 62.5,
-            "targetReps": [
-              8,
-              8,
-              8
-            ],
+            "targetReps": [8, 8, 8],
             "notes": "No record last week",
             "machineWeightMaxedOut": false
           },
@@ -137,11 +95,7 @@
             "exerciseId": "tue-squat",
             "name": "Squat",
             "targetWeight": 75,
-            "targetReps": [
-              6,
-              6,
-              6
-            ],
+            "targetReps": [6, 6, 6],
             "notes": "No record last week",
             "machineWeightMaxedOut": false
           },
@@ -149,11 +103,7 @@
             "exerciseId": "tue-leg-curl",
             "name": "Leg Curl",
             "targetWeight": 63,
-            "targetReps": [
-              12,
-              12,
-              12
-            ],
+            "targetReps": [12, 12, 12],
             "notes": "No record last week",
             "machineWeightMaxedOut": false
           },
@@ -161,11 +111,7 @@
             "exerciseId": "tue-leg-extension",
             "name": "Leg Extension",
             "targetWeight": 75,
-            "targetReps": [
-              10,
-              10,
-              10
-            ],
+            "targetReps": [10, 10, 10],
             "notes": "No record last week",
             "machineWeightMaxedOut": false
           },
@@ -173,11 +119,7 @@
             "exerciseId": "tue-cable-crunch",
             "name": "Cable Crunch",
             "targetWeight": 27.2,
-            "targetReps": [
-              10,
-              10,
-              10
-            ],
+            "targetReps": [10, 10, 10],
             "notes": "No record last week",
             "machineWeightMaxedOut": false
           }
@@ -190,23 +132,14 @@
           {
             "exerciseId": "wed-chin-ups",
             "name": "Chin-ups",
-            "targetReps": [
-              10,
-              10,
-              9
-            ],
+            "targetReps": [10, 10, 9],
             "machineWeightMaxedOut": false
           },
           {
             "exerciseId": "wed-machine-seated-row",
             "name": "Machine Seated Row",
             "targetWeight": 109,
-            "targetReps": [
-              11,
-              10,
-              10,
-              10
-            ],
+            "targetReps": [11, 10, 10, 10],
             "notes": "Machine already at max weight",
             "machineWeightMaxedOut": true
           },
@@ -214,11 +147,7 @@
             "exerciseId": "wed-lat-pull",
             "name": "Lat Pull",
             "targetWeight": 68,
-            "targetReps": [
-              12,
-              12,
-              12
-            ],
+            "targetReps": [12, 12, 12],
             "notes": "Reps adjusted due to missed targets",
             "machineWeightMaxedOut": false
           },
@@ -226,33 +155,21 @@
             "exerciseId": "wed-db-curl",
             "name": "DB Curl",
             "targetWeight": 14,
-            "targetReps": [
-              10,
-              10,
-              10
-            ],
+            "targetReps": [10, 10, 10],
             "machineWeightMaxedOut": false
           },
           {
             "exerciseId": "wed-hammer-curl",
             "name": "Hammer Curl",
             "targetWeight": 16,
-            "targetReps": [
-              8,
-              8,
-              8
-            ],
+            "targetReps": [8, 8, 8],
             "machineWeightMaxedOut": false
           },
           {
             "exerciseId": "wed-cable-bicep-curl",
             "name": "Cable Bicep Curl",
             "targetWeight": 49.9,
-            "targetReps": [
-              12,
-              12,
-              12
-            ],
+            "targetReps": [12, 12, 12],
             "machineWeightMaxedOut": false
           }
         ]
@@ -265,13 +182,7 @@
             "exerciseId": "fri-bench-press",
             "name": "Bench Press",
             "targetWeight": 67.5,
-            "targetReps": [
-              5,
-              5,
-              5,
-              5,
-              5
-            ],
+            "targetReps": [5, 5, 5, 5, 5],
             "notes": "No record last week",
             "machineWeightMaxedOut": false
           },
@@ -279,11 +190,7 @@
             "exerciseId": "fri-leg-press",
             "name": "Leg Press",
             "targetWeight": 152.1,
-            "targetReps": [
-              8,
-              8,
-              8
-            ],
+            "targetReps": [8, 8, 8],
             "notes": "No record last week",
             "machineWeightMaxedOut": false
           },
@@ -291,11 +198,7 @@
             "exerciseId": "fri-machine-seated-row",
             "name": "Machine Seated Row",
             "targetWeight": 109,
-            "targetReps": [
-              10,
-              10,
-              10
-            ],
+            "targetReps": [10, 10, 10],
             "notes": "Machine already at max weight; No record last week",
             "machineWeightMaxedOut": true
           },
@@ -303,11 +206,7 @@
             "exerciseId": "fri-machine-seated-row-single-arm",
             "name": "Machine Seated Row - Single Arm",
             "targetWeight": 25,
-            "targetReps": [
-              10,
-              10,
-              10
-            ],
+            "targetReps": [10, 10, 10],
             "notes": "No record last week",
             "machineWeightMaxedOut": false
           },
@@ -315,11 +214,7 @@
             "exerciseId": "fri-seated-shoulder-press",
             "name": "Seated Shoulder Press",
             "targetWeight": 16,
-            "targetReps": [
-              10,
-              10,
-              10
-            ],
+            "targetReps": [10, 10, 10],
             "notes": "No record last week",
             "machineWeightMaxedOut": false
           },
@@ -327,11 +222,7 @@
             "exerciseId": "fri-cable-bicep-curl",
             "name": "Cable Bicep Curl",
             "targetWeight": 52,
-            "targetReps": [
-              10,
-              10,
-              10
-            ],
+            "targetReps": [10, 10, 10],
             "notes": "No record last week",
             "machineWeightMaxedOut": false
           },
@@ -339,11 +230,7 @@
             "exerciseId": "fri-cable-tricep-pushdown",
             "name": "Cable Tricep Pushdown",
             "targetWeight": 56.5,
-            "targetReps": [
-              10,
-              10,
-              10
-            ],
+            "targetReps": [10, 10, 10],
             "notes": "No record last week",
             "machineWeightMaxedOut": false
           },
@@ -351,11 +238,7 @@
             "exerciseId": "fri-smith-shoulder-press",
             "name": "Smith Shoulder Press",
             "targetWeight": 42.5,
-            "targetReps": [
-              10,
-              10,
-              10
-            ],
+            "targetReps": [10, 10, 10],
             "notes": "No record last week",
             "machineWeightMaxedOut": false
           }
@@ -410,115 +293,57 @@
         {
           "name": "Bench Press",
           "targetWeight": 50,
-          "targetReps": [
-            6,
-            6,
-            6,
-            6
-          ],
+          "targetReps": [6, 6, 6, 6],
           "actualWeight": 50,
-          "actualReps": [
-            6,
-            6,
-            6,
-            4
-          ],
+          "actualReps": [6, 6, 6, 4],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Incline DB Press",
           "targetWeight": 14,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 14,
-          "actualReps": [
-            8,
-            8,
-            8
-          ],
+          "actualReps": [8, 8, 8],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Seated Shoulder Press",
           "targetWeight": 14,
-          "targetReps": [
-            6,
-            6,
-            6
-          ],
+          "targetReps": [6, 6, 6],
           "actualWeight": 14,
-          "actualReps": [
-            6,
-            4,
-            4
-          ],
+          "actualReps": [6, 4, 4],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Lateral Raises",
           "targetWeight": 6,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 6,
-          "actualReps": [
-            10,
-            10,
-            8
-          ],
+          "actualReps": [10, 10, 8],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Tricep Pushdown",
           "targetWeight": 45,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 45,
-          "actualReps": [
-            8,
-            8,
-            8
-          ],
+          "actualReps": [8, 8, 8],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Machine Seated Row",
           "targetWeight": 102,
-          "targetReps": [
-            6,
-            6,
-            6
-          ],
+          "targetReps": [6, 6, 6],
           "actualWeight": 102,
-          "actualReps": [
-            6,
-            6,
-            6
-          ],
+          "actualReps": [6, 6, 6],
           "machineWeightMaxedOut": true
         },
         {
           "name": "Machine Seated Chest Press",
           "targetWeight": 84,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 84,
-          "actualReps": [
-            8,
-            8,
-            7
-          ],
+          "actualReps": [8, 8, 7],
           "machineWeightMaxedOut": true
         }
       ]
@@ -532,81 +357,41 @@
         {
           "name": "Leg Press",
           "targetWeight": 88,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 88,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Squat",
           "targetWeight": 50,
-          "targetReps": [
-            6,
-            6,
-            6
-          ],
+          "targetReps": [6, 6, 6],
           "actualWeight": 50,
-          "actualReps": [
-            6,
-            6,
-            6
-          ],
+          "actualReps": [6, 6, 6],
           "machineWeightMaxedOut": false
         },
         {
           "name": "RDL",
           "targetWeight": 40,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 40,
-          "actualReps": [
-            8,
-            8,
-            8
-          ],
+          "actualReps": [8, 8, 8],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Leg Curl",
           "targetWeight": 40,
-          "targetReps": [
-            12,
-            12,
-            12
-          ],
+          "targetReps": [12, 12, 12],
           "actualWeight": 40,
-          "actualReps": [
-            12,
-            12,
-            12
-          ],
+          "actualReps": [12, 12, 12],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Leg Extension",
           "targetWeight": 54,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 54,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         }
       ]
@@ -619,64 +404,32 @@
       "exercises": [
         {
           "name": "Chin-ups",
-          "targetReps": [
-            5,
-            5,
-            5
-          ],
-          "actualReps": [
-            3,
-            4,
-            3
-          ],
+          "targetReps": [5, 5, 5],
+          "actualReps": [3, 4, 3],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Machine Seated Row",
           "targetWeight": 102,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 102,
-          "actualReps": [
-            6,
-            6,
-            6
-          ],
+          "actualReps": [6, 6, 6],
           "machineWeightMaxedOut": true
         },
         {
           "name": "DB Curl",
           "targetWeight": 12,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 12,
-          "actualReps": [
-            6,
-            6,
-            6
-          ],
+          "actualReps": [6, 6, 6],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Bicep Curl",
           "targetWeight": 22,
-          "targetReps": [
-            12,
-            12,
-            12
-          ],
+          "targetReps": [12, 12, 12],
           "actualWeight": 22,
-          "actualReps": [
-            12,
-            12,
-            12
-          ],
+          "actualReps": [12, 12, 12],
           "machineWeightMaxedOut": false
         }
       ]
@@ -690,35 +443,17 @@
         {
           "name": "Bench Press",
           "targetWeight": 52.5,
-          "targetReps": [
-            5,
-            5,
-            5,
-            5
-          ],
+          "targetReps": [5, 5, 5, 5],
           "actualWeight": 52.5,
-          "actualReps": [
-            5,
-            5,
-            5,
-            5
-          ],
+          "actualReps": [5, 5, 5, 5],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Smith Shoulder Press",
           "targetWeight": 30,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 30,
-          "actualReps": [
-            8,
-            6,
-            6
-          ],
+          "actualReps": [8, 6, 6],
           "machineWeightMaxedOut": false
         }
       ]
@@ -732,83 +467,41 @@
         {
           "name": "Bench Press",
           "targetWeight": 50,
-          "targetReps": [
-            6,
-            6,
-            6,
-            6
-          ],
+          "targetReps": [6, 6, 6, 6],
           "actualWeight": 50,
-          "actualReps": [
-            6,
-            6,
-            6,
-            6
-          ],
+          "actualReps": [6, 6, 6, 6],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Incline DB Press",
           "targetWeight": 14,
-          "targetReps": [
-            9,
-            9,
-            9
-          ],
+          "targetReps": [9, 9, 9],
           "actualWeight": 14,
-          "actualReps": [
-            9,
-            9,
-            9
-          ],
+          "actualReps": [9, 9, 9],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Tricep Pushdown",
           "targetWeight": 45,
-          "targetReps": [
-            9,
-            9,
-            9
-          ],
+          "targetReps": [9, 9, 9],
           "actualWeight": 45,
-          "actualReps": [
-            9,
-            9,
-            9
-          ],
+          "actualReps": [9, 9, 9],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Machine Seated Row",
           "targetWeight": 109,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 109,
-          "actualReps": [
-            8,
-            8,
-            8
-          ],
+          "actualReps": [8, 8, 8],
           "machineWeightMaxedOut": true
         },
         {
           "name": "Machine Seated Chest Press",
           "targetWeight": 88,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 88,
-          "actualReps": [
-            8,
-            8,
-            8
-          ],
+          "actualReps": [8, 8, 8],
           "machineWeightMaxedOut": true
         }
       ]
@@ -822,81 +515,41 @@
         {
           "name": "Leg Press",
           "targetWeight": 115,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 115,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Squat",
           "targetWeight": 52.5,
-          "targetReps": [
-            6,
-            6,
-            6
-          ],
+          "targetReps": [6, 6, 6],
           "actualWeight": 52.5,
-          "actualReps": [
-            6,
-            6,
-            10
-          ],
+          "actualReps": [6, 6, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "RDL",
           "targetWeight": 45,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 45,
-          "actualReps": [
-            8,
-            8,
-            8
-          ],
+          "actualReps": [8, 8, 8],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Leg Curl",
           "targetWeight": 47,
-          "targetReps": [
-            12,
-            12,
-            12
-          ],
+          "targetReps": [12, 12, 12],
           "actualWeight": 47,
-          "actualReps": [
-            12,
-            12,
-            12
-          ],
+          "actualReps": [12, 12, 12],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Leg Extension",
           "targetWeight": 60,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 60,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         }
       ]
@@ -909,48 +562,24 @@
       "exercises": [
         {
           "name": "Chin-ups",
-          "targetReps": [
-            5,
-            5,
-            5
-          ],
-          "actualReps": [
-            4,
-            4,
-            4
-          ],
+          "targetReps": [5, 5, 5],
+          "actualReps": [4, 4, 4],
           "machineWeightMaxedOut": false
         },
         {
           "name": "DB Curl",
           "targetWeight": 10,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 10,
-          "actualReps": [
-            8,
-            8,
-            8
-          ],
+          "actualReps": [8, 8, 8],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Bicep Curl",
           "targetWeight": 25,
-          "targetReps": [
-            12,
-            12,
-            12
-          ],
+          "targetReps": [12, 12, 12],
           "actualWeight": 25,
-          "actualReps": [
-            12,
-            12,
-            12
-          ],
+          "actualReps": [12, 12, 12],
           "machineWeightMaxedOut": false
         }
       ]
@@ -964,37 +593,17 @@
         {
           "name": "Bench Press",
           "targetWeight": 55,
-          "targetReps": [
-            5,
-            5,
-            5,
-            5,
-            5
-          ],
+          "targetReps": [5, 5, 5, 5, 5],
           "actualWeight": 55,
-          "actualReps": [
-            5,
-            5,
-            5,
-            5,
-            5
-          ],
+          "actualReps": [5, 5, 5, 5, 5],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Smith Shoulder Press",
           "targetWeight": 32.5,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 32.5,
-          "actualReps": [
-            8,
-            8,
-            8
-          ],
+          "actualReps": [8, 8, 8],
           "machineWeightMaxedOut": false
         }
       ]
@@ -1008,99 +617,49 @@
         {
           "name": "Bench Press",
           "targetWeight": 55,
-          "targetReps": [
-            6,
-            6,
-            6,
-            6
-          ],
+          "targetReps": [6, 6, 6, 6],
           "actualWeight": 55,
-          "actualReps": [
-            6,
-            6,
-            6,
-            6
-          ],
+          "actualReps": [6, 6, 6, 6],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Incline DB Press",
           "targetWeight": 16,
-          "targetReps": [
-            9,
-            9,
-            9
-          ],
+          "targetReps": [9, 9, 9],
           "actualWeight": 16,
-          "actualReps": [
-            9,
-            9,
-            9
-          ],
+          "actualReps": [9, 9, 9],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Seated Shoulder Press",
           "targetWeight": 12,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 12,
-          "actualReps": [
-            8,
-            8,
-            8
-          ],
+          "actualReps": [8, 8, 8],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Lateral Raises",
           "targetWeight": 9,
-          "targetReps": [
-            12,
-            12,
-            12
-          ],
+          "targetReps": [12, 12, 12],
           "actualWeight": 9,
-          "actualReps": [
-            12,
-            12,
-            10
-          ],
+          "actualReps": [12, 12, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Machine Seated Row",
           "targetWeight": 109,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 109,
-          "actualReps": [
-            8,
-            8,
-            8
-          ],
+          "actualReps": [8, 8, 8],
           "machineWeightMaxedOut": true
         },
         {
           "name": "Machine Seated Chest Press",
           "targetWeight": 93,
-          "targetReps": [
-            9,
-            9,
-            9
-          ],
+          "targetReps": [9, 9, 9],
           "actualWeight": 93,
-          "actualReps": [
-            9,
-            9,
-            8
-          ],
+          "actualReps": [9, 9, 8],
           "machineWeightMaxedOut": true
         }
       ]
@@ -1114,81 +673,41 @@
         {
           "name": "Leg Press",
           "targetWeight": 133,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 133,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Squat",
           "targetWeight": 65,
-          "targetReps": [
-            6,
-            6,
-            6
-          ],
+          "targetReps": [6, 6, 6],
           "actualWeight": 65,
-          "actualReps": [
-            6,
-            6,
-            6
-          ],
+          "actualReps": [6, 6, 6],
           "machineWeightMaxedOut": false
         },
         {
           "name": "RDL",
           "targetWeight": 50,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 50,
-          "actualReps": [
-            8,
-            8,
-            8
-          ],
+          "actualReps": [8, 8, 8],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Leg Curl",
           "targetWeight": 50,
-          "targetReps": [
-            12,
-            12,
-            12
-          ],
+          "targetReps": [12, 12, 12],
           "actualWeight": 50,
-          "actualReps": [
-            12,
-            12,
-            12
-          ],
+          "actualReps": [12, 12, 12],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Leg Extension",
           "targetWeight": 61,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 61,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         }
       ]
@@ -1201,48 +720,24 @@
       "exercises": [
         {
           "name": "Chin-ups",
-          "targetReps": [
-            6,
-            6,
-            6
-          ],
-          "actualReps": [
-            6,
-            6,
-            5
-          ],
+          "targetReps": [6, 6, 6],
+          "actualReps": [6, 6, 5],
           "machineWeightMaxedOut": false
         },
         {
           "name": "DB Curl",
           "targetWeight": 10,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 10,
-          "actualReps": [
-            10,
-            9,
-            10
-          ],
+          "actualReps": [10, 9, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Bicep Curl",
           "targetWeight": 31,
-          "targetReps": [
-            12,
-            12,
-            12
-          ],
+          "targetReps": [12, 12, 12],
           "actualWeight": 31,
-          "actualReps": [
-            12,
-            12,
-            12
-          ],
+          "actualReps": [12, 12, 12],
           "machineWeightMaxedOut": false
         }
       ]
@@ -1256,37 +751,17 @@
         {
           "name": "Bench Press",
           "targetWeight": 57.5,
-          "targetReps": [
-            5,
-            5,
-            5,
-            5,
-            5
-          ],
+          "targetReps": [5, 5, 5, 5, 5],
           "actualWeight": 57.5,
-          "actualReps": [
-            5,
-            5,
-            5,
-            5,
-            5
-          ],
+          "actualReps": [5, 5, 5, 5, 5],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Smith Shoulder Press",
           "targetWeight": 32.5,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 32.5,
-          "actualReps": [
-            8,
-            8,
-            8
-          ],
+          "actualReps": [8, 8, 8],
           "machineWeightMaxedOut": false
         }
       ]
@@ -1300,99 +775,49 @@
         {
           "name": "Bench Press",
           "targetWeight": 57.5,
-          "targetReps": [
-            6,
-            6,
-            6,
-            6
-          ],
+          "targetReps": [6, 6, 6, 6],
           "actualWeight": 57.5,
-          "actualReps": [
-            6,
-            6,
-            6,
-            6
-          ],
+          "actualReps": [6, 6, 6, 6],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Incline DB Press",
           "targetWeight": 16,
-          "targetReps": [
-            12,
-            12,
-            12
-          ],
+          "targetReps": [12, 12, 12],
           "actualWeight": 16,
-          "actualReps": [
-            12,
-            12,
-            10
-          ],
+          "actualReps": [12, 12, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Seated Shoulder Press",
           "targetWeight": 14,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 14,
-          "actualReps": [
-            10,
-            9,
-            7
-          ],
+          "actualReps": [10, 9, 7],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Lateral Raises",
           "targetWeight": 9,
-          "targetReps": [
-            12,
-            12,
-            12
-          ],
+          "targetReps": [12, 12, 12],
           "actualWeight": 9,
-          "actualReps": [
-            12,
-            12,
-            12
-          ],
+          "actualReps": [12, 12, 12],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Machine Seated Row",
           "targetWeight": 109,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 109,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": true
         },
         {
           "name": "Machine Seated Chest Press",
           "targetWeight": 97,
-          "targetReps": [
-            9,
-            9,
-            9
-          ],
+          "targetReps": [9, 9, 9],
           "actualWeight": 97,
-          "actualReps": [
-            9,
-            9,
-            9
-          ],
+          "actualReps": [9, 9, 9],
           "machineWeightMaxedOut": true
         }
       ]
@@ -1406,81 +831,41 @@
         {
           "name": "Leg Press",
           "targetWeight": 140,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 140,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Squat",
           "targetWeight": 70,
-          "targetReps": [
-            6,
-            6,
-            6
-          ],
+          "targetReps": [6, 6, 6],
           "actualWeight": 70,
-          "actualReps": [
-            6,
-            6,
-            8
-          ],
+          "actualReps": [6, 6, 8],
           "machineWeightMaxedOut": false
         },
         {
           "name": "RDL",
           "targetWeight": 55,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 55,
-          "actualReps": [
-            8,
-            8,
-            8
-          ],
+          "actualReps": [8, 8, 8],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Leg Curl",
           "targetWeight": 54,
-          "targetReps": [
-            12,
-            12,
-            12
-          ],
+          "targetReps": [12, 12, 12],
           "actualWeight": 54,
-          "actualReps": [
-            12,
-            12,
-            12
-          ],
+          "actualReps": [12, 12, 12],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Leg Extension",
           "targetWeight": 63,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 63,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         }
       ]
@@ -1493,64 +878,32 @@
       "exercises": [
         {
           "name": "Chin-ups",
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
-          "actualReps": [
-            10,
-            7,
-            4
-          ],
+          "targetReps": [10, 10, 10],
+          "actualReps": [10, 7, 4],
           "machineWeightMaxedOut": false
         },
         {
           "name": "DB Curl",
           "targetWeight": 12,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 12,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Hammer Curl",
           "targetWeight": 14,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 14,
-          "actualReps": [
-            6,
-            5,
-            5
-          ],
+          "actualReps": [6, 5, 5],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Bicep Curl",
           "targetWeight": 38,
-          "targetReps": [
-            12,
-            12,
-            12
-          ],
+          "targetReps": [12, 12, 12],
           "actualWeight": 38,
-          "actualReps": [
-            12,
-            12,
-            12
-          ],
+          "actualReps": [12, 12, 12],
           "machineWeightMaxedOut": false
         }
       ]
@@ -1564,53 +917,25 @@
         {
           "name": "Bench Press",
           "targetWeight": 60,
-          "targetReps": [
-            5,
-            5,
-            5,
-            5,
-            5
-          ],
+          "targetReps": [5, 5, 5, 5, 5],
           "actualWeight": 60,
-          "actualReps": [
-            5,
-            5,
-            5,
-            5,
-            5
-          ],
+          "actualReps": [5, 5, 5, 5, 5],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Smith Shoulder Press",
           "targetWeight": 35,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 35,
-          "actualReps": [
-            9,
-            8,
-            8
-          ],
+          "actualReps": [9, 8, 8],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Tricep Pushdown",
           "targetWeight": 48,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 48,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         }
       ]
@@ -1624,82 +949,41 @@
         {
           "name": "Bench Press",
           "targetWeight": 60,
-          "targetReps": [
-            6,
-            6,
-            6,
-            6
-          ],
+          "targetReps": [6, 6, 6, 6],
           "actualWeight": 60,
-          "actualReps": [
-            6,
-            6,
-            6
-          ],
+          "actualReps": [6, 6, 6],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Incline DB Press",
           "targetWeight": 16,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 16,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Tricep Pushdown",
           "targetWeight": 50,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 50,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Machine Seated Row",
           "targetWeight": 109,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 109,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": true
         },
         {
           "name": "Machine Seated Chest Press",
           "targetWeight": 102,
-          "targetReps": [
-            9,
-            9,
-            9
-          ],
+          "targetReps": [9, 9, 9],
           "actualWeight": 102,
-          "actualReps": [
-            9,
-            9,
-            9
-          ],
+          "actualReps": [9, 9, 9],
           "machineWeightMaxedOut": true
         }
       ]
@@ -1713,80 +997,41 @@
         {
           "name": "Leg Press",
           "targetWeight": 152,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 152,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Squat",
           "targetWeight": 75,
-          "targetReps": [
-            6,
-            6,
-            6
-          ],
+          "targetReps": [6, 6, 6],
           "actualWeight": 75,
-          "actualReps": [
-            6,
-            6
-          ],
+          "actualReps": [6, 6],
           "machineWeightMaxedOut": false
         },
         {
           "name": "RDL",
           "targetWeight": 60,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 60,
-          "actualReps": [
-            8,
-            8,
-            8
-          ],
+          "actualReps": [8, 8, 8],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Leg Curl",
           "targetWeight": 61,
-          "targetReps": [
-            12,
-            12,
-            12
-          ],
+          "targetReps": [12, 12, 12],
           "actualWeight": 61,
-          "actualReps": [
-            12,
-            12,
-            12
-          ],
+          "actualReps": [12, 12, 12],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Leg Extension",
           "targetWeight": 72,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 72,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         }
       ]
@@ -1799,64 +1044,32 @@
       "exercises": [
         {
           "name": "Chin-ups",
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
-          "actualReps": [
-            10,
-            10,
-            6
-          ],
+          "targetReps": [10, 10, 10],
+          "actualReps": [10, 10, 6],
           "machineWeightMaxedOut": false
         },
         {
           "name": "DB Curl",
           "targetWeight": 12,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 12,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Hammer Curl",
           "targetWeight": 14,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 14,
-          "actualReps": [
-            8,
-            8,
-            8
-          ],
+          "actualReps": [8, 8, 8],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Bicep Curl",
           "targetWeight": 45,
-          "targetReps": [
-            12,
-            12,
-            12
-          ],
+          "targetReps": [12, 12, 12],
           "actualWeight": 45,
-          "actualReps": [
-            12,
-            12,
-            12
-          ],
+          "actualReps": [12, 12, 12],
           "machineWeightMaxedOut": false
         }
       ]
@@ -1870,70 +1083,34 @@
         {
           "name": "Bench Press",
           "targetWeight": 65,
-          "targetReps": [
-            5,
-            5,
-            5,
-            5,
-            5
-          ],
+          "targetReps": [5, 5, 5, 5, 5],
           "actualWeight": 65,
-          "actualReps": [
-            5,
-            5,
-            5,
-            5,
-            5
-          ],
+          "actualReps": [5, 5, 5, 5, 5],
           "notes": "Also hit 70x2 after",
           "machineWeightMaxedOut": false
         },
         {
           "name": "Smith Shoulder Press",
           "targetWeight": 40,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 40,
-          "actualReps": [
-            10,
-            10,
-            8
-          ],
+          "actualReps": [10, 10, 8],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Bicep Curl",
           "targetWeight": 49.9,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 49.9,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Tricep Pushdown",
           "targetWeight": 54.4,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 54.4,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         }
       ]
@@ -1947,117 +1124,57 @@
         {
           "name": "Bench Press",
           "targetWeight": 60,
-          "targetReps": [
-            6,
-            6,
-            6,
-            6
-          ],
+          "targetReps": [6, 6, 6, 6],
           "actualWeight": 60,
-          "actualReps": [
-            6,
-            6,
-            6,
-            6
-          ],
+          "actualReps": [6, 6, 6, 6],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Incline DB Press",
           "targetWeight": 16,
-          "targetReps": [
-            10,
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10, 10],
           "actualWeight": 16,
-          "actualReps": [
-            10,
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Seated Shoulder Press",
           "targetWeight": 14,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 14,
-          "actualReps": [
-            10,
-            8,
-            8
-          ],
+          "actualReps": [10, 8, 8],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Lateral Raises",
           "targetWeight": 9,
-          "targetReps": [
-            12,
-            12,
-            12
-          ],
+          "targetReps": [12, 12, 12],
           "actualWeight": 9,
-          "actualReps": [
-            12,
-            12,
-            12
-          ],
+          "actualReps": [12, 12, 12],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Tricep Pushdown",
           "targetWeight": 52,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 52,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Machine Seated Row",
           "targetWeight": 109,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 109,
-          "actualReps": [
-            8,
-            8,
-            8
-          ],
+          "actualReps": [8, 8, 8],
           "machineWeightMaxedOut": true
         },
         {
           "name": "Machine Seated Chest Press",
           "targetWeight": 106,
-          "targetReps": [
-            9,
-            9,
-            9
-          ],
+          "targetReps": [9, 9, 9],
           "actualWeight": 106,
-          "actualReps": [
-            9,
-            9,
-            9
-          ],
+          "actualReps": [9, 9, 9],
           "machineWeightMaxedOut": true
         }
       ]
@@ -2070,82 +1187,40 @@
       "exercises": [
         {
           "name": "Chin-ups",
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
-          "actualReps": [
-            10,
-            10,
-            8
-          ],
+          "targetReps": [10, 10, 10],
+          "actualReps": [10, 10, 8],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Machine Seated Row",
           "targetWeight": 109,
-          "targetReps": [
-            10,
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10, 10],
           "actualWeight": 109,
-          "actualReps": [
-            10,
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10, 10],
           "machineWeightMaxedOut": true
         },
         {
           "name": "DB Curl",
           "targetWeight": 12,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 12,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Hammer Curl",
           "targetWeight": 14,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 14,
-          "actualReps": [
-            8,
-            8,
-            8
-          ],
+          "actualReps": [8, 8, 8],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Bicep Curl",
           "targetWeight": 45.4,
-          "targetReps": [
-            12,
-            12,
-            12
-          ],
+          "targetReps": [12, 12, 12],
           "actualWeight": 45.4,
-          "actualReps": [
-            12,
-            12,
-            12
-          ],
+          "actualReps": [12, 12, 12],
           "machineWeightMaxedOut": false
         }
       ]
@@ -2159,85 +1234,41 @@
         {
           "name": "Bench Press",
           "targetWeight": 67.5,
-          "targetReps": [
-            5,
-            5,
-            5,
-            5,
-            5
-          ],
+          "targetReps": [5, 5, 5, 5, 5],
           "actualWeight": 67.5,
-          "actualReps": [
-            5,
-            5,
-            5,
-            5,
-            2
-          ],
+          "actualReps": [5, 5, 5, 5, 2],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Seated Shoulder Press",
           "targetWeight": 16,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 16,
-          "actualReps": [
-            10,
-            10,
-            8
-          ],
+          "actualReps": [10, 10, 8],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Smith Shoulder Press",
           "targetWeight": 40,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 40,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Tricep Pushdown",
           "targetWeight": 54.4,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 54.4,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Bicep Curl",
           "targetWeight": 49.9,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 49.9,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         }
       ]
@@ -2251,68 +1282,33 @@
         {
           "name": "Bench Press",
           "targetWeight": 62.5,
-          "targetReps": [
-            6,
-            6,
-            6,
-            6
-          ],
+          "targetReps": [6, 6, 6, 6],
           "actualWeight": 62.5,
-          "actualReps": [
-            6,
-            6,
-            6
-          ],
+          "actualReps": [6, 6, 6],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Incline DB Press",
           "targetWeight": 18,
-          "targetReps": [
-            10,
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10, 10],
           "actualWeight": 18,
-          "actualReps": [
-            10,
-            10,
-            8,
-            6
-          ],
+          "actualReps": [10, 10, 8, 6],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Lateral Raises",
           "targetWeight": 9,
-          "targetReps": [
-            12,
-            12,
-            12
-          ],
+          "targetReps": [12, 12, 12],
           "actualWeight": 9,
-          "actualReps": [
-            12,
-            12,
-            12
-          ],
+          "actualReps": [12, 12, 12],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Machine Seated Row",
           "targetWeight": 109,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 109,
-          "actualReps": [
-            8,
-            8,
-            8
-          ],
+          "actualReps": [8, 8, 8],
           "machineWeightMaxedOut": true
         }
       ]
@@ -2325,114 +1321,56 @@
       "exercises": [
         {
           "name": "Chin-ups",
-          "targetReps": [
-            10,
-            10,
-            9
-          ],
-          "actualReps": [
-            10,
-            10,
-            9
-          ],
+          "targetReps": [10, 10, 9],
+          "actualReps": [10, 10, 9],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Machine Seated Row",
           "targetWeight": 109,
-          "targetReps": [
-            10,
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10, 10],
           "actualWeight": 109,
-          "actualReps": [
-            10,
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10, 10],
           "machineWeightMaxedOut": true
         },
         {
           "name": "Lat Pull",
           "targetWeight": 65,
-          "targetReps": [
-            12,
-            12,
-            12
-          ],
+          "targetReps": [12, 12, 12],
           "actualWeight": 68,
-          "actualReps": [
-            12,
-            12,
-            10
-          ],
+          "actualReps": [12, 12, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "DB Curl",
           "targetWeight": 14,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 14,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Hammer Curl",
           "targetWeight": 14,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "actualWeight": 16,
-          "actualReps": [
-            8,
-            8,
-            8
-          ],
+          "actualReps": [8, 8, 8],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Bicep Curl",
           "targetWeight": 47.5,
-          "targetReps": [
-            12,
-            12,
-            12
-          ],
+          "targetReps": [12, 12, 12],
           "actualWeight": 49.9,
-          "actualReps": [
-            12,
-            10,
-            10
-          ],
+          "actualReps": [12, 10, 10],
           "machineWeightMaxedOut": false
         },
         {
           "name": "Cable Ab Curl",
           "targetWeight": 27.2,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "actualWeight": 27.2,
-          "actualReps": [
-            10,
-            10,
-            10
-          ],
+          "actualReps": [10, 10, 10],
           "machineWeightMaxedOut": false
         }
       ]
@@ -2447,111 +1385,60 @@
           "exerciseId": "mon-bench-press",
           "name": "Bench Press",
           "targetWeight": 62.5,
-          "targetReps": [
-            6,
-            6,
-            6
-          ],
+          "targetReps": [6, 6, 6],
           "machineWeightMaxedOut": false,
           "actualWeight": 62.5,
-          "actualReps": [
-            6,
-            6,
-            6,
-            6
-          ]
+          "actualReps": [6, 6, 6, 6]
         },
         {
           "exerciseId": "mon-incline-db-press",
           "name": "Incline DB Press",
-          "targetReps": [
-            10,
-            10,
-            8,
-            6
-          ],
+          "targetReps": [10, 10, 8, 6],
           "notes": "Reps adjusted due to missed targets",
           "targetWeight": 18,
           "machineWeightMaxedOut": false,
           "actualWeight": 18,
-          "actualReps": [
-            8,
-            8,
-            8,
-            6
-          ]
+          "actualReps": [8, 8, 8, 6]
         },
         {
           "exerciseId": "mon-cable-lateral-raises",
           "name": "Cable Lateral Raises",
-          "targetReps": [
-            12,
-            12,
-            13
-          ],
+          "targetReps": [12, 12, 13],
           "notes": "Added 1 rep to the last set",
           "targetWeight": 9,
           "machineWeightMaxedOut": false,
           "actualWeight": 9,
-          "actualReps": [
-            12,
-            12,
-            13
-          ]
+          "actualReps": [12, 12, 13]
         },
         {
           "exerciseId": "mon-cable-tricep-pushdown",
           "name": "Cable Tricep Pushdown",
           "targetWeight": 54.4,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "notes": "No record last week",
           "machineWeightMaxedOut": false,
           "actualWeight": 54.4,
-          "actualReps": [
-            10,
-            10,
-            10
-          ]
+          "actualReps": [10, 10, 10]
         },
         {
           "exerciseId": "mon-machine-seated-row",
           "name": "Machine Seated Row",
           "targetWeight": 109,
-          "targetReps": [
-            9,
-            8,
-            8
-          ],
+          "targetReps": [9, 8, 8],
           "notes": "Machine already at max weight",
           "machineWeightMaxedOut": true,
           "actualWeight": 109,
-          "actualReps": [
-            8,
-            8,
-            8
-          ]
+          "actualReps": [8, 8, 8]
         },
         {
           "exerciseId": "mon-machine-seated-chest-press",
           "name": "Machine Seated Chest Press",
           "targetWeight": 109,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "notes": "Machine already at max weight; No record last week",
           "machineWeightMaxedOut": true,
           "actualWeight": 109,
-          "actualReps": [
-            10,
-            10,
-            10
-          ]
+          "actualReps": [10, 10, 10]
         }
       ]
     },
@@ -2565,92 +1452,51 @@
           "exerciseId": "tue-leg-press",
           "name": "Leg Press",
           "targetWeight": 145,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "notes": "No record last week",
           "machineWeightMaxedOut": false,
           "actualWeight": 133.8,
-          "actualReps": [
-            10,
-            10,
-            10
-          ]
+          "actualReps": [10, 10, 10]
         },
         {
           "exerciseId": "tue-leg-press-calves",
           "name": "Leg Press Calves",
           "targetWeight": 106.6,
-          "targetReps": [
-            14,
-            14,
-            14,
-            20
-          ],
+          "targetReps": [14, 14, 14, 20],
           "notes": "No record last week",
           "machineWeightMaxedOut": false,
           "actualWeight": 106.6,
-          "actualReps": [
-            15,
-            15,
-            15
-          ]
+          "actualReps": [15, 15, 15]
         },
         {
           "exerciseId": "tue-rdl",
           "name": "RDL",
           "targetWeight": 62.5,
-          "targetReps": [
-            8,
-            8,
-            8
-          ],
+          "targetReps": [8, 8, 8],
           "notes": "No record last week",
           "machineWeightMaxedOut": false,
           "actualWeight": 65,
-          "actualReps": [
-            8,
-            8,
-            8
-          ]
+          "actualReps": [8, 8, 8]
         },
         {
           "exerciseId": "tue-squat",
           "name": "Squat",
           "targetWeight": 75,
-          "targetReps": [
-            6,
-            6,
-            6
-          ],
+          "targetReps": [6, 6, 6],
           "notes": "No record last week",
           "machineWeightMaxedOut": false,
           "actualWeight": 75,
-          "actualReps": [
-            6,
-            6,
-            6
-          ]
+          "actualReps": [6, 6, 6]
         },
         {
           "exerciseId": "tue-cable-crunch",
           "name": "Cable Crunch",
           "targetWeight": 27.2,
-          "targetReps": [
-            10,
-            10,
-            10
-          ],
+          "targetReps": [10, 10, 10],
           "notes": "No record last week",
           "machineWeightMaxedOut": false,
           "actualWeight": 54.4,
-          "actualReps": [
-            12,
-            12,
-            12
-          ]
+          "actualReps": [12, 12, 12]
         }
       ]
     }
@@ -2697,6 +1543,45 @@
       "weight": 77.1
     }
   ],
+  "goals": [
+    {
+      "id": "f3158b07-8512-4003-8018-96f44bcfb3af",
+      "createdAt": "2026-04-08T14:44:26.620Z",
+      "title": "Bench Press 1RM 70kg",
+      "type": "lifting",
+      "startDate": "2026-04-08",
+      "targetDate": "2026-05-08",
+      "targetValue": 70,
+      "exerciseName": "Bench Press",
+      "status": "in_progress"
+    },
+    {
+      "id": "2cf0d804-f2c7-42c8-ace1-4494111da511",
+      "createdAt": "2026-04-08T14:43:02.087Z",
+      "title": "Hit 3 sessions weekly",
+      "type": "consistency",
+      "startDate": "2026-04-08",
+      "targetDate": "2026-06-02",
+      "targetValue": 3,
+      "sessionsPerWeek": 3,
+      "notes": "Consistency goal for 8 weeks",
+      "status": "in_progress"
+    },
+    {
+      "id": "5769bada-510e-4eec-a465-614831b05790",
+      "createdAt": "2026-04-08T14:42:37.504Z",
+      "title": "Leg Press 155 kg",
+      "type": "lifting",
+      "startDate": "2026-04-08",
+      "targetDate": "2026-06-02",
+      "targetValue": 155,
+      "baselineValue": 133.8,
+      "exerciseName": "Leg Press",
+      "notes": "Progressive overload over 8 weeks",
+      "status": "in_progress"
+    }
+  ],
+  "dismissedRecommendationKeys": [],
   "plans": [
     {
       "weekStart": "2026-02-16",
@@ -2709,72 +1594,43 @@
               "name": "Bench Press",
               "targetWeight": 50,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                6,
-                6,
-                6,
-                6
-              ]
+              "targetReps": [6, 6, 6, 6]
             },
             {
               "name": "Incline DB Press",
               "targetWeight": 14,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             },
             {
               "name": "Seated Shoulder Press",
               "targetWeight": 14,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                6,
-                6,
-                6
-              ]
+              "targetReps": [6, 6, 6]
             },
             {
               "name": "Cable Lateral Raises",
               "targetWeight": 6,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Cable Tricep Pushdown",
               "targetWeight": 45,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             },
             {
               "name": "Machine Seated Row",
               "targetWeight": 102,
               "machineWeightMaxedOut": true,
-              "targetReps": [
-                6,
-                6,
-                6
-              ]
+              "targetReps": [6, 6, 6]
             },
             {
               "name": "Machine Seated Chest Press",
               "targetWeight": 84,
               "machineWeightMaxedOut": true,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             }
           ]
         },
@@ -2786,51 +1642,31 @@
               "name": "Leg Press",
               "targetWeight": 88,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Squat",
               "targetWeight": 50,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                6,
-                6,
-                6
-              ]
+              "targetReps": [6, 6, 6]
             },
             {
               "name": "RDL",
               "targetWeight": 40,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             },
             {
               "name": "Leg Curl",
               "targetWeight": 40,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                12,
-                12,
-                12
-              ]
+              "targetReps": [12, 12, 12]
             },
             {
               "name": "Leg Extension",
               "targetWeight": 54,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             }
           ]
         },
@@ -2841,41 +1677,25 @@
             {
               "name": "Chin-ups",
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                5,
-                5,
-                5
-              ]
+              "targetReps": [5, 5, 5]
             },
             {
               "name": "Machine Seated Row",
               "targetWeight": 102,
               "machineWeightMaxedOut": true,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             },
             {
               "name": "DB Curl",
               "targetWeight": 12,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             },
             {
               "name": "Cable Bicep Curl",
               "targetWeight": 22,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                12,
-                12,
-                12
-              ]
+              "targetReps": [12, 12, 12]
             }
           ]
         },
@@ -2887,22 +1707,13 @@
               "name": "Bench Press",
               "targetWeight": 52.5,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                5,
-                5,
-                5,
-                5
-              ]
+              "targetReps": [5, 5, 5, 5]
             },
             {
               "name": "Smith Shoulder Press",
               "targetWeight": 30,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             }
           ]
         }
@@ -2919,52 +1730,31 @@
               "name": "Bench Press",
               "targetWeight": 50,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                6,
-                6,
-                6,
-                6
-              ]
+              "targetReps": [6, 6, 6, 6]
             },
             {
               "name": "Incline DB Press",
               "targetWeight": 14,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                9,
-                9,
-                9
-              ]
+              "targetReps": [9, 9, 9]
             },
             {
               "name": "Cable Tricep Pushdown",
               "targetWeight": 45,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                9,
-                9,
-                9
-              ]
+              "targetReps": [9, 9, 9]
             },
             {
               "name": "Machine Seated Row",
               "targetWeight": 109,
               "machineWeightMaxedOut": true,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             },
             {
               "name": "Machine Seated Chest Press",
               "targetWeight": 88,
               "machineWeightMaxedOut": true,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             }
           ]
         },
@@ -2976,51 +1766,31 @@
               "name": "Leg Press",
               "targetWeight": 115,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Squat",
               "targetWeight": 52.5,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                6,
-                6,
-                6
-              ]
+              "targetReps": [6, 6, 6]
             },
             {
               "name": "RDL",
               "targetWeight": 45,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             },
             {
               "name": "Leg Curl",
               "targetWeight": 47,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                12,
-                12,
-                12
-              ]
+              "targetReps": [12, 12, 12]
             },
             {
               "name": "Leg Extension",
               "targetWeight": 60,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             }
           ]
         },
@@ -3031,31 +1801,19 @@
             {
               "name": "Chin-ups",
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                5,
-                5,
-                5
-              ]
+              "targetReps": [5, 5, 5]
             },
             {
               "name": "DB Curl",
               "targetWeight": 10,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             },
             {
               "name": "Cable Bicep Curl",
               "targetWeight": 25,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                12,
-                12,
-                12
-              ]
+              "targetReps": [12, 12, 12]
             }
           ]
         },
@@ -3067,23 +1825,13 @@
               "name": "Bench Press",
               "targetWeight": 55,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                5,
-                5,
-                5,
-                5,
-                5
-              ]
+              "targetReps": [5, 5, 5, 5, 5]
             },
             {
               "name": "Smith Shoulder Press",
               "targetWeight": 32.5,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             }
           ]
         }
@@ -3100,62 +1848,37 @@
               "name": "Bench Press",
               "targetWeight": 55,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                6,
-                6,
-                6,
-                6
-              ]
+              "targetReps": [6, 6, 6, 6]
             },
             {
               "name": "Incline DB Press",
               "targetWeight": 16,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                9,
-                9,
-                9
-              ]
+              "targetReps": [9, 9, 9]
             },
             {
               "name": "Seated Shoulder Press",
               "targetWeight": 12,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             },
             {
               "name": "Cable Lateral Raises",
               "targetWeight": 9,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                12,
-                12,
-                12
-              ]
+              "targetReps": [12, 12, 12]
             },
             {
               "name": "Machine Seated Row",
               "targetWeight": 109,
               "machineWeightMaxedOut": true,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             },
             {
               "name": "Machine Seated Chest Press",
               "targetWeight": 93,
               "machineWeightMaxedOut": true,
-              "targetReps": [
-                9,
-                9,
-                9
-              ]
+              "targetReps": [9, 9, 9]
             }
           ]
         },
@@ -3167,51 +1890,31 @@
               "name": "Leg Press",
               "targetWeight": 133,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Squat",
               "targetWeight": 65,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                6,
-                6,
-                6
-              ]
+              "targetReps": [6, 6, 6]
             },
             {
               "name": "RDL",
               "targetWeight": 50,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             },
             {
               "name": "Leg Curl",
               "targetWeight": 50,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                12,
-                12,
-                12
-              ]
+              "targetReps": [12, 12, 12]
             },
             {
               "name": "Leg Extension",
               "targetWeight": 61,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             }
           ]
         },
@@ -3222,31 +1925,19 @@
             {
               "name": "Chin-ups",
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                6,
-                6,
-                6
-              ]
+              "targetReps": [6, 6, 6]
             },
             {
               "name": "DB Curl",
               "targetWeight": 10,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Cable Bicep Curl",
               "targetWeight": 31,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                12,
-                12,
-                12
-              ]
+              "targetReps": [12, 12, 12]
             }
           ]
         },
@@ -3258,23 +1949,13 @@
               "name": "Bench Press",
               "targetWeight": 57.5,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                5,
-                5,
-                5,
-                5,
-                5
-              ]
+              "targetReps": [5, 5, 5, 5, 5]
             },
             {
               "name": "Smith Shoulder Press",
               "targetWeight": 32.5,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             }
           ]
         }
@@ -3291,62 +1972,37 @@
               "name": "Bench Press",
               "targetWeight": 57.5,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                6,
-                6,
-                6,
-                6
-              ]
+              "targetReps": [6, 6, 6, 6]
             },
             {
               "name": "Incline DB Press",
               "targetWeight": 16,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                12,
-                12,
-                12
-              ]
+              "targetReps": [12, 12, 12]
             },
             {
               "name": "Seated Shoulder Press",
               "targetWeight": 14,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Cable Lateral Raises",
               "targetWeight": 9,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                12,
-                12,
-                12
-              ]
+              "targetReps": [12, 12, 12]
             },
             {
               "name": "Machine Seated Row",
               "targetWeight": 109,
               "machineWeightMaxedOut": true,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Machine Seated Chest Press",
               "targetWeight": 97,
               "machineWeightMaxedOut": true,
-              "targetReps": [
-                9,
-                9,
-                9
-              ]
+              "targetReps": [9, 9, 9]
             }
           ]
         },
@@ -3358,51 +2014,31 @@
               "name": "Leg Press",
               "targetWeight": 140,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Squat",
               "targetWeight": 70,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                6,
-                6,
-                6
-              ]
+              "targetReps": [6, 6, 6]
             },
             {
               "name": "RDL",
               "targetWeight": 55,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             },
             {
               "name": "Leg Curl",
               "targetWeight": 54,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                12,
-                12,
-                12
-              ]
+              "targetReps": [12, 12, 12]
             },
             {
               "name": "Leg Extension",
               "targetWeight": 63,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             }
           ]
         },
@@ -3413,41 +2049,25 @@
             {
               "name": "Chin-ups",
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "DB Curl",
               "targetWeight": 12,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Hammer Curl",
               "targetWeight": 14,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             },
             {
               "name": "Cable Bicep Curl",
               "targetWeight": 38,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                12,
-                12,
-                12
-              ]
+              "targetReps": [12, 12, 12]
             }
           ]
         },
@@ -3459,33 +2079,19 @@
               "name": "Bench Press",
               "targetWeight": 60,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                5,
-                5,
-                5,
-                5,
-                5
-              ]
+              "targetReps": [5, 5, 5, 5, 5]
             },
             {
               "name": "Smith Shoulder Press",
               "targetWeight": 35,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Cable Tricep Pushdown",
               "targetWeight": 48,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             }
           ]
         }
@@ -3502,52 +2108,31 @@
               "name": "Bench Press",
               "targetWeight": 60,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                6,
-                6,
-                6,
-                6
-              ]
+              "targetReps": [6, 6, 6, 6]
             },
             {
               "name": "Incline DB Press",
               "targetWeight": 16,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Cable Tricep Pushdown",
               "targetWeight": 50,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Machine Seated Row",
               "targetWeight": 109,
               "machineWeightMaxedOut": true,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Machine Seated Chest Press",
               "targetWeight": 102,
               "machineWeightMaxedOut": true,
-              "targetReps": [
-                9,
-                9,
-                9
-              ]
+              "targetReps": [9, 9, 9]
             }
           ]
         },
@@ -3559,51 +2144,31 @@
               "name": "Leg Press",
               "targetWeight": 152,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Squat",
               "targetWeight": 75,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                6,
-                6,
-                6
-              ]
+              "targetReps": [6, 6, 6]
             },
             {
               "name": "RDL",
               "targetWeight": 60,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             },
             {
               "name": "Leg Curl",
               "targetWeight": 61,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                12,
-                12,
-                12
-              ]
+              "targetReps": [12, 12, 12]
             },
             {
               "name": "Leg Extension",
               "targetWeight": 72,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             }
           ]
         },
@@ -3614,41 +2179,25 @@
             {
               "name": "Chin-ups",
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "DB Curl",
               "targetWeight": 12,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Hammer Curl",
               "targetWeight": 14,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             },
             {
               "name": "Cable Bicep Curl",
               "targetWeight": 45,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                12,
-                12,
-                12
-              ]
+              "targetReps": [12, 12, 12]
             }
           ]
         },
@@ -3660,44 +2209,26 @@
               "name": "Bench Press",
               "targetWeight": 65,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                5,
-                5,
-                5,
-                5,
-                5
-              ],
+              "targetReps": [5, 5, 5, 5, 5],
               "notes": "Also hit 70x2 after"
             },
             {
               "name": "Smith Shoulder Press",
               "targetWeight": 40,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Cable Bicep Curl",
               "targetWeight": 49.9,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Cable Tricep Pushdown",
               "targetWeight": 54.4,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             }
           ]
         }
@@ -3714,73 +2245,43 @@
               "name": "Bench Press",
               "targetWeight": 60,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                6,
-                6,
-                6,
-                6
-              ]
+              "targetReps": [6, 6, 6, 6]
             },
             {
               "name": "Incline DB Press",
               "targetWeight": 16,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10, 10]
             },
             {
               "name": "Seated Shoulder Press",
               "targetWeight": 14,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Cable Lateral Raises",
               "targetWeight": 9,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                12,
-                12,
-                12
-              ]
+              "targetReps": [12, 12, 12]
             },
             {
               "name": "Cable Tricep Pushdown",
               "targetWeight": 52,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Machine Seated Row",
               "targetWeight": 109,
               "machineWeightMaxedOut": true,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             },
             {
               "name": "Machine Seated Chest Press",
               "targetWeight": 106,
               "machineWeightMaxedOut": true,
-              "targetReps": [
-                9,
-                9,
-                9
-              ]
+              "targetReps": [9, 9, 9]
             }
           ]
         },
@@ -3791,52 +2292,31 @@
             {
               "name": "Chin-ups",
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Machine Seated Row",
               "targetWeight": 109,
               "machineWeightMaxedOut": true,
-              "targetReps": [
-                10,
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10, 10]
             },
             {
               "name": "DB Curl",
               "targetWeight": 12,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Hammer Curl",
               "targetWeight": 14,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                8,
-                8,
-                8
-              ]
+              "targetReps": [8, 8, 8]
             },
             {
               "name": "Cable Bicep Curl",
               "targetWeight": 45.4,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                12,
-                12,
-                12
-              ]
+              "targetReps": [12, 12, 12]
             }
           ]
         },
@@ -3848,53 +2328,31 @@
               "name": "Bench Press",
               "targetWeight": 67.5,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                5,
-                5,
-                5,
-                5,
-                5
-              ]
+              "targetReps": [5, 5, 5, 5, 5]
             },
             {
               "name": "Seated Shoulder Press",
               "targetWeight": 16,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Smith Shoulder Press",
               "targetWeight": 40,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Cable Tricep Pushdown",
               "targetWeight": 54.4,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             },
             {
               "name": "Cable Bicep Curl",
               "targetWeight": 49.9,
               "machineWeightMaxedOut": false,
-              "targetReps": [
-                10,
-                10,
-                10
-              ]
+              "targetReps": [10, 10, 10]
             }
           ]
         }
@@ -3911,12 +2369,7 @@
               "exerciseId": "mon-bench-press",
               "name": "Bench Press",
               "targetWeight": 62.5,
-              "targetReps": [
-                6,
-                6,
-                6,
-                6
-              ],
+              "targetReps": [6, 6, 6, 6],
               "notes": "Small jump since 60 kg felt good",
               "machineWeightMaxedOut": false
             },
@@ -3924,12 +2377,7 @@
               "exerciseId": "mon-incline-db-press",
               "name": "Incline DB Press",
               "targetWeight": 18,
-              "targetReps": [
-                10,
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10, 10],
               "notes": "Time to level up from the 16s",
               "machineWeightMaxedOut": false
             },
@@ -3937,11 +2385,7 @@
               "exerciseId": "mon-seated-shoulder-press",
               "name": "Seated Shoulder Press",
               "targetWeight": 14,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "notes": "Clean up the reps from last week",
               "machineWeightMaxedOut": false
             },
@@ -3949,22 +2393,14 @@
               "exerciseId": "mon-cable-lateral-raises",
               "name": "Cable Lateral Raises",
               "targetWeight": 9,
-              "targetReps": [
-                12,
-                12,
-                12
-              ],
+              "targetReps": [12, 12, 12],
               "machineWeightMaxedOut": false
             },
             {
               "exerciseId": "mon-cable-tricep-pushdown",
               "name": "Cable Tricep Pushdown",
               "targetWeight": 54.4,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "notes": "Matching your Friday win",
               "machineWeightMaxedOut": false
             },
@@ -3972,22 +2408,14 @@
               "exerciseId": "mon-machine-seated-row",
               "name": "Machine Seated Row",
               "targetWeight": 109,
-              "targetReps": [
-                8,
-                8,
-                8
-              ],
+              "targetReps": [8, 8, 8],
               "machineWeightMaxedOut": true
             },
             {
               "exerciseId": "mon-machine-seated-chest-press",
               "name": "Machine Seated Chest Press",
               "targetWeight": 109,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "notes": "Adding 1 rep per set",
               "machineWeightMaxedOut": true
             }
@@ -4002,78 +2430,49 @@
               "exerciseId": "tue-leg-press",
               "name": "Leg Press",
               "targetWeight": 145,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "machineWeightMaxedOut": false
             },
             {
               "exerciseId": "tue-leg-press-calves",
               "name": "Leg Press Calves",
               "targetWeight": 106.6,
-              "targetReps": [
-                14,
-                14,
-                14,
-                20
-              ],
+              "targetReps": [14, 14, 14, 20],
               "machineWeightMaxedOut": false
             },
             {
               "exerciseId": "tue-rdl",
               "name": "RDL",
               "targetWeight": 62.5,
-              "targetReps": [
-                8,
-                8,
-                8
-              ],
+              "targetReps": [8, 8, 8],
               "machineWeightMaxedOut": false
             },
             {
               "exerciseId": "tue-squat",
               "name": "Squat",
               "targetWeight": 75,
-              "targetReps": [
-                6,
-                6,
-                6
-              ],
+              "targetReps": [6, 6, 6],
               "machineWeightMaxedOut": false
             },
             {
               "exerciseId": "tue-leg-curl",
               "name": "Leg Curl",
               "targetWeight": 63,
-              "targetReps": [
-                12,
-                12,
-                12
-              ],
+              "targetReps": [12, 12, 12],
               "machineWeightMaxedOut": false
             },
             {
               "exerciseId": "tue-leg-extension",
               "name": "Leg Extension",
               "targetWeight": 75,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "machineWeightMaxedOut": false
             },
             {
               "exerciseId": "tue-cable-crunch",
               "name": "Cable Crunch",
               "targetWeight": 27.2,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "machineWeightMaxedOut": false
             }
           ]
@@ -4085,11 +2484,7 @@
             {
               "exerciseId": "wed-chin-ups",
               "name": "Chin-ups",
-              "targetReps": [
-                10,
-                10,
-                9
-              ],
+              "targetReps": [10, 10, 9],
               "notes": "Pushing for one more rep on the last set",
               "machineWeightMaxedOut": false
             },
@@ -4097,12 +2492,7 @@
               "exerciseId": "wed-machine-seated-row",
               "name": "Machine Seated Row",
               "targetWeight": 111,
-              "targetReps": [
-                10,
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10, 10],
               "notes": "Small 2 kg bump",
               "machineWeightMaxedOut": true
             },
@@ -4110,11 +2500,7 @@
               "exerciseId": "wed-lat-pull",
               "name": "Lat Pull",
               "targetWeight": 65,
-              "targetReps": [
-                12,
-                12,
-                12
-              ],
+              "targetReps": [12, 12, 12],
               "notes": "Micro-increase",
               "machineWeightMaxedOut": false
             },
@@ -4122,11 +2508,7 @@
               "exerciseId": "wed-db-curl",
               "name": "DB Curl",
               "targetWeight": 14,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "notes": "Moving away from the 12s",
               "machineWeightMaxedOut": false
             },
@@ -4134,22 +2516,14 @@
               "exerciseId": "wed-hammer-curl",
               "name": "Hammer Curl",
               "targetWeight": 14,
-              "targetReps": [
-                8,
-                8,
-                8
-              ],
+              "targetReps": [8, 8, 8],
               "machineWeightMaxedOut": false
             },
             {
               "exerciseId": "wed-cable-bicep-curl",
               "name": "Cable Bicep Curl",
               "targetWeight": 47.5,
-              "targetReps": [
-                12,
-                12,
-                12
-              ],
+              "targetReps": [12, 12, 12],
               "machineWeightMaxedOut": false
             }
           ]
@@ -4162,13 +2536,7 @@
               "exerciseId": "fri-bench-press",
               "name": "Bench Press",
               "targetWeight": 67.5,
-              "targetReps": [
-                5,
-                5,
-                5,
-                5,
-                5
-              ],
+              "targetReps": [5, 5, 5, 5, 5],
               "notes": "Goal: get 5 reps on that final set",
               "machineWeightMaxedOut": false
             },
@@ -4176,66 +2544,42 @@
               "exerciseId": "fri-leg-press",
               "name": "Leg Press",
               "targetWeight": 152.1,
-              "targetReps": [
-                8,
-                8,
-                8
-              ],
+              "targetReps": [8, 8, 8],
               "machineWeightMaxedOut": false
             },
             {
               "exerciseId": "fri-machine-seated-row",
               "name": "Machine Seated Row",
               "targetWeight": 109,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "machineWeightMaxedOut": true
             },
             {
               "exerciseId": "fri-machine-seated-row-single-arm",
               "name": "Machine Seated Row - Single Arm",
               "targetWeight": 25,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "machineWeightMaxedOut": false
             },
             {
               "exerciseId": "fri-seated-shoulder-press",
               "name": "Seated Shoulder Press",
               "targetWeight": 16,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "machineWeightMaxedOut": false
             },
             {
               "exerciseId": "fri-cable-bicep-curl",
               "name": "Cable Bicep Curl",
               "targetWeight": 52,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "machineWeightMaxedOut": false
             },
             {
               "exerciseId": "fri-cable-tricep-pushdown",
               "name": "Cable Tricep Pushdown",
               "targetWeight": 56.5,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "notes": "Small bump since you're moving 54.4 kg well",
               "machineWeightMaxedOut": false
             },
@@ -4243,11 +2587,7 @@
               "exerciseId": "fri-smith-shoulder-press",
               "name": "Smith Shoulder Press",
               "targetWeight": 42.5,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "notes": "Small increase",
               "machineWeightMaxedOut": false
             }
@@ -4266,22 +2606,13 @@
               "exerciseId": "mon-bench-press",
               "name": "Bench Press",
               "targetWeight": 62.5,
-              "targetReps": [
-                6,
-                6,
-                6
-              ],
+              "targetReps": [6, 6, 6],
               "machineWeightMaxedOut": false
             },
             {
               "exerciseId": "mon-incline-db-press",
               "name": "Incline DB Press",
-              "targetReps": [
-                10,
-                10,
-                8,
-                6
-              ],
+              "targetReps": [10, 10, 8, 6],
               "notes": "Reps adjusted due to missed targets",
               "targetWeight": 18,
               "machineWeightMaxedOut": false
@@ -4290,22 +2621,14 @@
               "exerciseId": "mon-seated-shoulder-press",
               "name": "Seated Shoulder Press",
               "targetWeight": 14,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "notes": "No record last week",
               "machineWeightMaxedOut": false
             },
             {
               "exerciseId": "mon-cable-lateral-raises",
               "name": "Cable Lateral Raises",
-              "targetReps": [
-                12,
-                12,
-                13
-              ],
+              "targetReps": [12, 12, 13],
               "notes": "Added 1 rep to the last set",
               "targetWeight": 9,
               "machineWeightMaxedOut": false
@@ -4314,11 +2637,7 @@
               "exerciseId": "mon-cable-tricep-pushdown",
               "name": "Cable Tricep Pushdown",
               "targetWeight": 54.4,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "notes": "No record last week",
               "machineWeightMaxedOut": false
             },
@@ -4326,11 +2645,7 @@
               "exerciseId": "mon-machine-seated-row",
               "name": "Machine Seated Row",
               "targetWeight": 109,
-              "targetReps": [
-                9,
-                8,
-                8
-              ],
+              "targetReps": [9, 8, 8],
               "notes": "Machine already at max weight",
               "machineWeightMaxedOut": true
             },
@@ -4338,11 +2653,7 @@
               "exerciseId": "mon-machine-seated-chest-press",
               "name": "Machine Seated Chest Press",
               "targetWeight": 109,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "notes": "Machine already at max weight; No record last week",
               "machineWeightMaxedOut": true
             }
@@ -4356,11 +2667,7 @@
               "exerciseId": "tue-leg-press",
               "name": "Leg Press",
               "targetWeight": 145,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "notes": "No record last week",
               "machineWeightMaxedOut": false
             },
@@ -4368,12 +2675,7 @@
               "exerciseId": "tue-leg-press-calves",
               "name": "Leg Press Calves",
               "targetWeight": 106.6,
-              "targetReps": [
-                14,
-                14,
-                14,
-                20
-              ],
+              "targetReps": [14, 14, 14, 20],
               "notes": "No record last week",
               "machineWeightMaxedOut": false
             },
@@ -4381,11 +2683,7 @@
               "exerciseId": "tue-rdl",
               "name": "RDL",
               "targetWeight": 62.5,
-              "targetReps": [
-                8,
-                8,
-                8
-              ],
+              "targetReps": [8, 8, 8],
               "notes": "No record last week",
               "machineWeightMaxedOut": false
             },
@@ -4393,11 +2691,7 @@
               "exerciseId": "tue-squat",
               "name": "Squat",
               "targetWeight": 75,
-              "targetReps": [
-                6,
-                6,
-                6
-              ],
+              "targetReps": [6, 6, 6],
               "notes": "No record last week",
               "machineWeightMaxedOut": false
             },
@@ -4405,11 +2699,7 @@
               "exerciseId": "tue-leg-curl",
               "name": "Leg Curl",
               "targetWeight": 63,
-              "targetReps": [
-                12,
-                12,
-                12
-              ],
+              "targetReps": [12, 12, 12],
               "notes": "No record last week",
               "machineWeightMaxedOut": false
             },
@@ -4417,11 +2707,7 @@
               "exerciseId": "tue-leg-extension",
               "name": "Leg Extension",
               "targetWeight": 75,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "notes": "No record last week",
               "machineWeightMaxedOut": false
             },
@@ -4429,11 +2715,7 @@
               "exerciseId": "tue-cable-crunch",
               "name": "Cable Crunch",
               "targetWeight": 27.2,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "notes": "No record last week",
               "machineWeightMaxedOut": false
             }
@@ -4446,23 +2728,14 @@
             {
               "exerciseId": "wed-chin-ups",
               "name": "Chin-ups",
-              "targetReps": [
-                10,
-                10,
-                9
-              ],
+              "targetReps": [10, 10, 9],
               "machineWeightMaxedOut": false
             },
             {
               "exerciseId": "wed-machine-seated-row",
               "name": "Machine Seated Row",
               "targetWeight": 109,
-              "targetReps": [
-                11,
-                10,
-                10,
-                10
-              ],
+              "targetReps": [11, 10, 10, 10],
               "notes": "Machine already at max weight",
               "machineWeightMaxedOut": true
             },
@@ -4470,11 +2743,7 @@
               "exerciseId": "wed-lat-pull",
               "name": "Lat Pull",
               "targetWeight": 68,
-              "targetReps": [
-                12,
-                12,
-                12
-              ],
+              "targetReps": [12, 12, 12],
               "notes": "Reps adjusted due to missed targets",
               "machineWeightMaxedOut": false
             },
@@ -4482,33 +2751,21 @@
               "exerciseId": "wed-db-curl",
               "name": "DB Curl",
               "targetWeight": 14,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "machineWeightMaxedOut": false
             },
             {
               "exerciseId": "wed-hammer-curl",
               "name": "Hammer Curl",
               "targetWeight": 16,
-              "targetReps": [
-                8,
-                8,
-                8
-              ],
+              "targetReps": [8, 8, 8],
               "machineWeightMaxedOut": false
             },
             {
               "exerciseId": "wed-cable-bicep-curl",
               "name": "Cable Bicep Curl",
               "targetWeight": 49.9,
-              "targetReps": [
-                12,
-                12,
-                12
-              ],
+              "targetReps": [12, 12, 12],
               "machineWeightMaxedOut": false
             }
           ]
@@ -4521,13 +2778,7 @@
               "exerciseId": "fri-bench-press",
               "name": "Bench Press",
               "targetWeight": 67.5,
-              "targetReps": [
-                5,
-                5,
-                5,
-                5,
-                5
-              ],
+              "targetReps": [5, 5, 5, 5, 5],
               "notes": "No record last week",
               "machineWeightMaxedOut": false
             },
@@ -4535,11 +2786,7 @@
               "exerciseId": "fri-leg-press",
               "name": "Leg Press",
               "targetWeight": 152.1,
-              "targetReps": [
-                8,
-                8,
-                8
-              ],
+              "targetReps": [8, 8, 8],
               "notes": "No record last week",
               "machineWeightMaxedOut": false
             },
@@ -4547,11 +2794,7 @@
               "exerciseId": "fri-machine-seated-row",
               "name": "Machine Seated Row",
               "targetWeight": 109,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "notes": "Machine already at max weight; No record last week",
               "machineWeightMaxedOut": true
             },
@@ -4559,11 +2802,7 @@
               "exerciseId": "fri-machine-seated-row-single-arm",
               "name": "Machine Seated Row - Single Arm",
               "targetWeight": 25,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "notes": "No record last week",
               "machineWeightMaxedOut": false
             },
@@ -4571,11 +2810,7 @@
               "exerciseId": "fri-seated-shoulder-press",
               "name": "Seated Shoulder Press",
               "targetWeight": 16,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "notes": "No record last week",
               "machineWeightMaxedOut": false
             },
@@ -4583,11 +2818,7 @@
               "exerciseId": "fri-cable-bicep-curl",
               "name": "Cable Bicep Curl",
               "targetWeight": 52,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "notes": "No record last week",
               "machineWeightMaxedOut": false
             },
@@ -4595,11 +2826,7 @@
               "exerciseId": "fri-cable-tricep-pushdown",
               "name": "Cable Tricep Pushdown",
               "targetWeight": 56.5,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "notes": "No record last week",
               "machineWeightMaxedOut": false
             },
@@ -4607,11 +2834,7 @@
               "exerciseId": "fri-smith-shoulder-press",
               "name": "Smith Shoulder Press",
               "targetWeight": 42.5,
-              "targetReps": [
-                10,
-                10,
-                10
-              ],
+              "targetReps": [10, 10, 10],
               "notes": "No record last week",
               "machineWeightMaxedOut": false
             }

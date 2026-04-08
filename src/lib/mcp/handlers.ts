@@ -1,9 +1,16 @@
-import type { BodyweightEntry, ExerciseLog, WeeklyPlan, WeeklySummary } from "$lib/types";
+import type {
+  BodyweightEntry,
+  ExerciseLog,
+  GoalWithProgress,
+  WeeklyPlan,
+  WeeklySummary,
+} from "$lib/types";
 import {
   getExerciseHistory,
   getExerciseLogsForWeek,
   getWeightHistory,
 } from "$lib/services/exerciseService";
+import { getGoalsWithProgress } from "$lib/services/goalsService";
 import { getCurrentWeekPlan, getPlan } from "$lib/services/planService";
 import { getWeekStart } from "$lib/utils/dates";
 import { getSummaryProvider } from "$lib/services/summaryService";
@@ -31,6 +38,18 @@ interface PlanArgs {
 
 interface WeekSummaryArgs {
   weekStart?: string;
+}
+
+interface GoalProgressArgs {
+  id: string;
+}
+
+function parseGoalProgressArgs(args: Record<string, unknown>): GoalProgressArgs {
+  const { id } = args;
+  if (typeof id !== "string" || !id.trim()) {
+    throw new Error("id is required");
+  }
+  return { id };
 }
 
 async function getExerciseHistoryTool(
@@ -84,6 +103,29 @@ async function getWeekSummaryTool(
   return { data: summary };
 }
 
+async function getGoalsTool(): Promise<McpToolCallResult<GoalWithProgress[]>> {
+  const goals = await getGoalsWithProgress();
+  return {
+    data: goals.filter((goal) => goal.status === "in_progress"),
+  };
+}
+
+async function getGoalProgressTool(
+  args: GoalProgressArgs,
+): Promise<McpToolCallResult<GoalWithProgress>> {
+  if (!args.id || typeof args.id !== "string") {
+    throw new Error("id is required");
+  }
+
+  const goals = await getGoalsWithProgress();
+  const goal = goals.find((item) => item.id === args.id);
+  if (!goal) {
+    throw new Error(`Goal not found: ${args.id}`);
+  }
+
+  return { data: goal };
+}
+
 type ToolHandler = (args: Record<string, unknown>) => Promise<McpToolCallResult>;
 
 const handlers: Record<string, ToolHandler> = {
@@ -91,6 +133,8 @@ const handlers: Record<string, ToolHandler> = {
   get_bodyweight_history: (args) => getBodyweightHistoryTool(args as BodyweightHistoryArgs),
   get_plan: (args) => getPlanTool(args as PlanArgs),
   get_week_summary: (args) => getWeekSummaryTool(args as WeekSummaryArgs),
+  get_goals: () => getGoalsTool(),
+  get_goal_progress: (args) => getGoalProgressTool(parseGoalProgressArgs(args)),
 };
 
 export function listMcpTools() {

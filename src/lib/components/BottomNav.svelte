@@ -3,6 +3,7 @@
 
 	const tabs = [
 		{ href: '/', label: 'Plan', icon: '📋' },
+		{ href: '/goals', label: 'Goals', icon: '🎯' },
 		{ href: '/history', label: 'History', icon: '📊' }
 	] as const;
 </script>

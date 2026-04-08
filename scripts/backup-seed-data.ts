@@ -17,6 +17,9 @@ import type {
   BodyweightEntity,
   ExerciseLog,
   ExerciseLogEntity,
+  Goal,
+  GoalEntity,
+  GoalRecommendationStateEntity,
   PlanEntity,
   WeeklyPlan,
 } from "../src/lib/types/index.js";
@@ -35,6 +38,8 @@ type SeedBackupData = {
   currentPlan: WeeklyPlan;
   historyLogs: ExerciseLog[];
   weightLog: BodyweightEntry[];
+  goals: Goal[];
+  dismissedRecommendationKeys: string[];
   plans: WeeklyPlan[];
   pendingNextPlans: PendingNextPlan[];
 };
@@ -69,7 +74,7 @@ function compareTrainingDays(a: string, b: string): number {
 
 async function getTableClient(
   connectionString: string,
-  tableName: "Plans" | "ExerciseLogs" | "BodyWeight",
+  tableName: "Plans" | "ExerciseLogs" | "BodyWeight" | "Goals" | "GoalState",
 ): Promise<TableClient> {
   return TableClient.fromConnectionString(connectionString, tableName, {
     allowInsecureConnection: shouldAllowInsecureConnection(connectionString),
@@ -145,6 +150,35 @@ async function readWeightLog(connectionString: string): Promise<BodyweightEntry[
   return entries;
 }
 
+async function readGoals(connectionString: string): Promise<Goal[]> {
+  const goalsClient = await getTableClient(connectionString, "Goals");
+  const entities = goalsClient.listEntities<GoalEntity>({
+    queryOptions: { filter: `PartitionKey eq '${DEFAULT_PK}'` },
+  });
+
+  const goals: Goal[] = [];
+  for await (const entity of entities) {
+    goals.push(JSON.parse(entity.data) as Goal);
+  }
+
+  goals.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  return goals;
+}
+
+async function readDismissedRecommendationKeys(connectionString: string): Promise<string[]> {
+  const goalStateClient = await getTableClient(connectionString, "GoalState");
+  const entities = goalStateClient.listEntities<GoalRecommendationStateEntity>({
+    queryOptions: { filter: `PartitionKey eq '${DEFAULT_PK}'` },
+  });
+
+  const keys: string[] = [];
+  for await (const entity of entities) {
+    keys.push(entity.rowKey);
+  }
+
+  return keys.sort((a, b) => a.localeCompare(b));
+}
+
 function pickCurrentPlan(plans: WeeklyPlan[]): WeeklyPlan {
   if (plans.length === 0) {
     throw new Error("No plan rows found in Plans table.");
@@ -154,7 +188,11 @@ function pickCurrentPlan(plans: WeeklyPlan[]): WeeklyPlan {
   const exactMatch = plans.find((plan) => plan.weekStart === thisWeekStart);
   if (exactMatch) return exactMatch;
 
-  return plans[plans.length - 1];
+  const latest = plans.at(-1);
+  if (!latest) {
+    throw new Error("No plan rows found in Plans table.");
+  }
+  return latest;
 }
 
 function getTimestampLabel(date: Date = new Date()): string {
@@ -189,13 +227,19 @@ async function backupSeedData(): Promise<void> {
   }
 
   const { plans, pendingNextPlans } = await readPlans(connectionString);
-  const historyLogs = await readExerciseLogs(connectionString);
-  const weightLog = await readWeightLog(connectionString);
+  const [historyLogs, weightLog, goals, dismissedRecommendationKeys] = await Promise.all([
+    readExerciseLogs(connectionString),
+    readWeightLog(connectionString),
+    readGoals(connectionString),
+    readDismissedRecommendationKeys(connectionString),
+  ]);
 
   const backup: SeedBackupData = {
     currentPlan: pickCurrentPlan(plans),
     historyLogs,
     weightLog,
+    goals,
+    dismissedRecommendationKeys,
     plans,
     pendingNextPlans,
   };
@@ -209,6 +253,8 @@ async function backupSeedData(): Promise<void> {
   console.log(`  Pending drafts: ${pendingNextPlans.length}`);
   console.log(`  Exercise logs: ${historyLogs.length}`);
   console.log(`  Weight entries: ${weightLog.length}`);
+  console.log(`  Goals: ${goals.length}`);
+  console.log(`  Dismissed recommendations: ${dismissedRecommendationKeys.length}`);
   console.log(`  Current plan week: ${backup.currentPlan.weekStart}`);
 }
 
