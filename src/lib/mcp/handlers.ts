@@ -44,6 +44,14 @@ interface GoalProgressArgs {
   id: string;
 }
 
+function parseGoalProgressArgs(args: Record<string, unknown>): GoalProgressArgs {
+  const { id } = args;
+  if (typeof id !== "string" || !id.trim()) {
+    throw new Error("id is required");
+  }
+  return { id };
+}
+
 async function getExerciseHistoryTool(
   args: ExerciseHistoryArgs,
 ): Promise<McpToolCallResult<ExerciseLog[]>> {
@@ -126,7 +134,7 @@ const handlers: Record<string, ToolHandler> = {
   get_plan: (args) => getPlanTool(args as PlanArgs),
   get_week_summary: (args) => getWeekSummaryTool(args as WeekSummaryArgs),
   get_goals: () => getGoalsTool(),
-  get_goal_progress: (args) => getGoalProgressTool(args as GoalProgressArgs),
+  get_goal_progress: (args) => getGoalProgressTool(parseGoalProgressArgs(args)),
 };
 
 export function listMcpTools() {

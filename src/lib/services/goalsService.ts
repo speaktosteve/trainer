@@ -1,4 +1,3 @@
-import { randomUUID } from "node:crypto";
 import type { TableClient } from "@azure/data-tables";
 import type {
   BodyweightEntry,
@@ -31,6 +30,14 @@ type GoalRecommendationOptions = {
   count?: number;
   excludeKeys?: string[];
 };
+
+function createId(): string {
+  if (typeof globalThis.crypto?.randomUUID === "function") {
+    return globalThis.crypto.randomUUID();
+  }
+
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+}
 
 async function getGoalsClient(): Promise<TableClient> {
   return getTableClient("Goals");
@@ -308,7 +315,7 @@ function toGoal(input: GoalInput): Goal {
   validateGoalInput(input);
   const now = new Date().toISOString();
   return {
-    id: input.id ?? randomUUID(),
+    id: input.id ?? createId(),
     createdAt: input.createdAt ?? now,
     title: input.title.trim(),
     type: input.type,
