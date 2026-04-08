@@ -95,6 +95,12 @@
             "name": "Leg Extension",
             "targetWeight": 75,
             "targetReps": [10, 10, 10]
+          },
+          {
+            "exerciseId": "tue-cable-crunch",
+            "name": "Cable Crunch",
+            "targetWeight": 27.2,
+            "targetReps": [10, 10, 10]
           }
         ]
       },

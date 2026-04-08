@@ -148,6 +148,9 @@ async function seed() {
     });
   }
   for (const [ws, plan] of weekPlans) {
+    if (ws === currentPlan.weekStart) {
+      continue;
+    }
     await plansClient.upsertEntity(
       {
         partitionKey: DEFAULT_PK,
