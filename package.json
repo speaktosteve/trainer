@@ -15,7 +15,9 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json && eslint .",
-    "seed": "vp exec tsx scripts/seed.ts"
+    "seed": "vp exec tsx scripts/seed.ts",
+    "seed:backup": "vp exec tsx scripts/backup-seed-data.ts",
+    "seed:backup:timestamp": "vp exec tsx scripts/backup-seed-data.ts --timestamp"
   },
   "dependencies": {
     "@azure/data-tables": "^13.3.2",

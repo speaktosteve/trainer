@@ -36,6 +36,8 @@ jobs:
       - name: Build and Report Bundle Size
         # This action automatically finds your build folder (dist)
         # and leaves a PR comment with the size changes.
+        # NOTE: build-script must be the npm script name only because the action runs
+        # npm run <build-script> internally.
         uses: preactjs/compressed-size-action@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}

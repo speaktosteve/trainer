@@ -39,6 +39,16 @@
 	function formatReps(reps: number[]): string {
 		return reps.join(', ');
 	}
+
+	function addSet() {
+		const nextRep = actualReps.length > 0 ? actualReps[actualReps.length - 1] : 0;
+		repsOverride = [...actualReps, nextRep];
+	}
+
+	function removeSet() {
+		if (actualReps.length <= 1) return;
+		repsOverride = actualReps.slice(0, -1);
+	}
 </script>
 
 <div
@@ -120,7 +130,7 @@
 			</div>
 			<div>
 				<span class="text-xs text-base-content/60">Reps per set</span>
-				<div class="mt-1 flex gap-2">
+				<div class="mt-1 flex items-center gap-1">
 					{#each actualReps as rep, i (i)}
 						<input
 							type="number"
@@ -130,9 +140,27 @@
 								newReps[i] = Number(e.currentTarget.value);
 								repsOverride = newReps;
 							}}
-							class="input input-bordered input-sm w-14 text-center"
+							class="input input-bordered input-sm w-12 text-center"
 						/>
 					{/each}
+					<button
+						type="button"
+						class="btn btn-ghost btn-sm"
+						onclick={addSet}
+						title="Add set"
+					>
+						+
+					</button>
+					{#if actualReps.length > 1}
+						<button
+							type="button"
+							class="btn btn-ghost btn-sm"
+							onclick={removeSet}
+							title="Remove set"
+						>
+							−
+						</button>
+					{/if}
 				</div>
 			</div>
 			<button

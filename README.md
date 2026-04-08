@@ -147,15 +147,17 @@ vp run seed
 
 ## Scripts
 
-| Command         | Description                               |
-| --------------- | ----------------------------------------- |
-| `vp dev`        | Start dev server                          |
-| `vp build`      | Production build                          |
-| `vp preview`    | Preview production build                  |
-| `vp test --run` | Run unit tests                            |
-| `vp test`       | Run tests in watch mode                   |
-| `vp run check`  | Type-check with svelte-check              |
-| `vp run seed`   | Seed Azure Table Storage with sample data |
+| Command                        | Description                                              |
+| ------------------------------ | -------------------------------------------------------- |
+| `vp dev`                       | Start dev server                                         |
+| `vp build`                     | Production build                                         |
+| `vp preview`                   | Preview production build                                 |
+| `vp test --run`                | Run unit tests                                           |
+| `vp test`                      | Run tests in watch mode                                  |
+| `vp run check`                 | Type-check with svelte-check                             |
+| `vp run seed`                  | Seed Azure Table Storage with sample data                |
+| `vp run seed:backup`           | Export current storage state to `scripts/seed-data.json` |
+| `vp run seed:backup:timestamp` | Export current storage state to timestamped seed file    |
 
 ## Project Structure
 
@@ -175,7 +177,8 @@ src/
 ├── app.css
 └── app.d.ts
 scripts/
-└── seed.ts             # Database seed script (6 weeks of sample data)
+├── seed.ts             # Database seed script (6 weeks of sample data)
+└── backup-seed-data.ts # Export live storage data into seed-data.json
 tests/
 ├── __mocks__/          # Env mocks for test isolation
 ├── mcp/                # MCP handler and route tests

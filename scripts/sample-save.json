@@ -1,0 +1,257 @@
+{
+  "method": "POST",
+  "plan": {
+    "weekStart": "2026-04-06",
+    "sessions": [
+      {
+        "day": "monday",
+        "label": "Push",
+        "exercises": [
+          {
+            "exerciseId": "mon-bench-press",
+            "name": "Bench Press",
+            "targetWeight": 62.5,
+            "targetReps": [6, 6, 6, 6],
+            "notes": "Continuing at 62.5kg as all reps were hit.",
+            "machineWeightMaxedOut": false
+          },
+          {
+            "exerciseId": "mon-incline-db-press",
+            "name": "Incline DB Press",
+            "targetWeight": 18,
+            "targetReps": [10, 10, 9, 8],
+            "notes": "Reduced reps due to missed targets.",
+            "machineWeightMaxedOut": false
+          },
+          {
+            "exerciseId": "mon-seated-shoulder-press",
+            "name": "Seated Shoulder Press",
+            "targetWeight": 14,
+            "targetReps": [10, 10, 10],
+            "notes": "No record last week",
+            "machineWeightMaxedOut": false
+          },
+          {
+            "exerciseId": "mon-cable-lateral-raises",
+            "name": "Cable Lateral Raises",
+            "targetWeight": null,
+            "targetReps": [13, 12, 12],
+            "notes": "Added 1 rep to the first set as all were hit.",
+            "machineWeightMaxedOut": false
+          },
+          {
+            "exerciseId": "mon-cable-tricep-pushdown",
+            "name": "Cable Tricep Pushdown",
+            "targetWeight": 54.4,
+            "targetReps": [10, 10, 10],
+            "notes": "No record last week",
+            "machineWeightMaxedOut": false
+          },
+          {
+            "exerciseId": "mon-machine-seated-row",
+            "name": "Machine Seated Row",
+            "targetWeight": 109,
+            "targetReps": [9, 8, 8],
+            "notes": "Machine already at max weight",
+            "machineWeightMaxedOut": true
+          }
+        ]
+      },
+      {
+        "day": "tuesday",
+        "label": "Lower",
+        "exercises": [
+          {
+            "exerciseId": "tue-leg-press",
+            "name": "Leg Press",
+            "targetWeight": 145,
+            "targetReps": [10, 10, 10],
+            "notes": "No record last week",
+            "machineWeightMaxedOut": false
+          },
+          {
+            "exerciseId": "tue-leg-press-calves",
+            "name": "Leg Press Calves",
+            "targetWeight": 106.6,
+            "targetReps": [14, 14, 14, 20],
+            "notes": "No record last week",
+            "machineWeightMaxedOut": false
+          },
+          {
+            "exerciseId": "tue-rdl",
+            "name": "RDL",
+            "targetWeight": 62.5,
+            "targetReps": [8, 8, 8],
+            "notes": "No record last week",
+            "machineWeightMaxedOut": false
+          },
+          {
+            "exerciseId": "tue-squat",
+            "name": "Squat",
+            "targetWeight": 75,
+            "targetReps": [6, 6, 6],
+            "notes": "No record last week",
+            "machineWeightMaxedOut": false
+          },
+          {
+            "exerciseId": "tue-leg-curl",
+            "name": "Leg Curl",
+            "targetWeight": 63,
+            "targetReps": [12, 12, 12],
+            "notes": "No record last week",
+            "machineWeightMaxedOut": false
+          },
+          {
+            "exerciseId": "tue-leg-extension",
+            "name": "Leg Extension",
+            "targetWeight": 75,
+            "targetReps": [10, 10, 10],
+            "notes": "No record last week",
+            "machineWeightMaxedOut": false
+          }
+        ]
+      },
+      {
+        "day": "wednesday",
+        "label": "Pull",
+        "exercises": [
+          {
+            "exerciseId": "wed-chin-ups",
+            "name": "Chin-ups",
+            "targetWeight": null,
+            "targetReps": [10, 10, 10],
+            "notes": "Added 1 rep to the last set.",
+            "machineWeightMaxedOut": false
+          },
+          {
+            "exerciseId": "wed-machine-seated-row",
+            "name": "Machine Seated Row",
+            "targetWeight": 109,
+            "targetReps": [11, 10, 10, 10],
+            "notes": "Machine already at max weight",
+            "machineWeightMaxedOut": true
+          },
+          {
+            "exerciseId": "wed-lat-pull",
+            "name": "Lat Pull",
+            "targetWeight": 68,
+            "targetReps": [12, 12, 12],
+            "notes": "Increased weight for consistency.",
+            "machineWeightMaxedOut": false
+          },
+          {
+            "exerciseId": "wed-db-curl",
+            "name": "DB Curl",
+            "targetWeight": 14,
+            "targetReps": [10, 10, 10],
+            "notes": "No record last week.",
+            "machineWeightMaxedOut": false
+          },
+          {
+            "exerciseId": "wed-hammer-curl",
+            "name": "Hammer Curl",
+            "targetWeight": 16,
+            "targetReps": [8, 8, 8],
+            "notes": "No record last week.",
+            "machineWeightMaxedOut": false
+          },
+          {
+            "exerciseId": "wed-cable-bicep-curl",
+            "name": "Cable Bicep Curl",
+            "targetWeight": 49.9,
+            "targetReps": [12, 12, 10],
+            "notes": "No record last week.",
+            "machineWeightMaxedOut": false
+          }
+        ]
+      },
+      {
+        "day": "friday",
+        "label": "Full Body",
+        "exercises": [
+          {
+            "exerciseId": "fri-bench-press",
+            "name": "Bench Press",
+            "targetWeight": 67.5,
+            "targetReps": [5, 5, 5, 5, 5],
+            "notes": "No record last week",
+            "machineWeightMaxedOut": false
+          },
+          {
+            "exerciseId": "fri-leg-press",
+            "name": "Leg Press",
+            "targetWeight": 152.1,
+            "targetReps": [8, 8, 8],
+            "notes": "No record last week",
+            "machineWeightMaxedOut": false
+          },
+          {
+            "exerciseId": "fri-machine-seated-row",
+            "name": "Machine Seated Row",
+            "targetWeight": 109,
+            "targetReps": [10, 10, 10],
+            "notes": "Machine already at max weight; No record last week",
+            "machineWeightMaxedOut": true
+          },
+          {
+            "exerciseId": "fri-machine-seated-row-single-arm",
+            "name": "Machine Seated Row - Single Arm",
+            "targetWeight": 25,
+            "targetReps": [10, 10, 10],
+            "notes": "No record last week",
+            "machineWeightMaxedOut": false
+          },
+          {
+            "exerciseId": "fri-seated-shoulder-press",
+            "name": "Seated Shoulder Press",
+            "targetWeight": 16,
+            "targetReps": [10, 10, 10],
+            "notes": "No record last week",
+            "machineWeightMaxedOut": false
+          },
+          {
+            "exerciseId": "fri-cable-bicep-curl",
+            "name": "Cable Bicep Curl",
+            "targetWeight": 52,
+            "targetReps": [10, 10, 10],
+            "notes": "No record last week",
+            "machineWeightMaxedOut": false
+          },
+          {
+            "exerciseId": "fri-cable-tricep-pushdown",
+            "name": "Cable Tricep Pushdown",
+            "targetWeight": 56.5,
+            "targetReps": [10, 10, 10],
+            "notes": "No record last week",
+            "machineWeightMaxedOut": false
+          },
+          {
+            "exerciseId": "fri-smith-shoulder-press",
+            "name": "Smith Shoulder Press",
+            "targetWeight": 42.5,
+            "targetReps": [10, 10, 10],
+            "notes": "No record last week",
+            "machineWeightMaxedOut": false
+          }
+        ]
+      }
+    ],
+    "summary": {
+      "headline": "Focus on Consistency and Recovery",
+      "lines": [
+        "🔒 Bench Press remains at 62.5kg for 6 reps.",
+        "⚠️ Incline DB Press reduced to 10,10,9,8 reps at 18kg.",
+        "📈 Lat Pull increased to 68kg for 12 reps.",
+        "🔒 Machine Seated Row maxed out at 109kg across sessions.",
+        "🔒 Chin-ups progress to 10 reps for all sets.",
+        {
+          "icon": "🔒",
+          "label": "Auto-correct",
+          "detail": "18 exercises auto-corrected to enforced progression rules"
+        }
+      ],
+      "weekStart": "2026-04-06",
+      "text": "undefined undefined · undefined undefined · undefined undefined · undefined undefined · undefined undefined · 🔒 18 exercises auto-corrected to enforced progression rules"
+    }
+  }
+}
