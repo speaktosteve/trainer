@@ -87,3 +87,50 @@ export interface BodyweightEntity {
   rowKey: string; // date
   weight: number;
 }
+
+// ── Goals ───────────────────────────────────────────────────────────
+export type GoalType = "lifting" | "bodyweight" | "consistency";
+
+export type GoalStatus = "in_progress" | "completed" | "paused" | "missed";
+
+export interface Goal {
+  id: string;
+  title: string;
+  type: GoalType;
+  startDate: string;
+  targetDate: string;
+  targetValue: number;
+  /** Baseline used for progress percentage calculations. */
+  baselineValue?: number;
+  /** Exercise name for lifting goals, e.g. "Bench Press". */
+  exerciseName?: string;
+  /** Sessions per week target for consistency goals. */
+  sessionsPerWeek?: number;
+  notes?: string;
+  status: GoalStatus;
+  createdAt: string;
+}
+
+export interface GoalProgressPoint {
+  date: string;
+  value: number;
+}
+
+export interface GoalWithProgress extends Goal {
+  currentValue: number;
+  progressPercent: number;
+  progressPoints: GoalProgressPoint[];
+  isOnTrack: boolean;
+}
+
+export interface GoalEntity {
+  partitionKey: string;
+  rowKey: string; // goal id
+  data: string; // JSON-serialised Goal
+}
+
+export interface GoalRecommendationStateEntity {
+  partitionKey: string;
+  rowKey: string; // recommendation key
+  dismissedAt: string;
+}

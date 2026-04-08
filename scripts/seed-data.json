@@ -2697,6 +2697,45 @@
       "weight": 77.1
     }
   ],
+  "goals": [
+    {
+      "id": "f3158b07-8512-4003-8018-96f44bcfb3af",
+      "createdAt": "2026-04-08T14:44:26.620Z",
+      "title": "Bench Press 1RM 70kg",
+      "type": "lifting",
+      "startDate": "2026-04-08",
+      "targetDate": "2026-05-08",
+      "targetValue": 70,
+      "exerciseName": "Bench Press",
+      "status": "in_progress"
+    },
+    {
+      "id": "2cf0d804-f2c7-42c8-ace1-4494111da511",
+      "createdAt": "2026-04-08T14:43:02.087Z",
+      "title": "Hit 3 sessions weekly",
+      "type": "consistency",
+      "startDate": "2026-04-08",
+      "targetDate": "2026-06-02",
+      "targetValue": 3,
+      "sessionsPerWeek": 3,
+      "notes": "Consistency goal for 8 weeks",
+      "status": "in_progress"
+    },
+    {
+      "id": "5769bada-510e-4eec-a465-614831b05790",
+      "createdAt": "2026-04-08T14:42:37.504Z",
+      "title": "Leg Press 155 kg",
+      "type": "lifting",
+      "startDate": "2026-04-08",
+      "targetDate": "2026-06-02",
+      "targetValue": 155,
+      "baselineValue": 133.8,
+      "exerciseName": "Leg Press",
+      "notes": "Progressive overload over 8 weeks",
+      "status": "in_progress"
+    }
+  ],
+  "dismissedRecommendationKeys": [],
   "plans": [
     {
       "weekStart": "2026-02-16",

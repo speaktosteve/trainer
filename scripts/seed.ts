@@ -10,7 +10,7 @@
 import { TableClient, TableServiceClient } from "@azure/data-tables";
 import * as dotenv from "dotenv";
 import seedData from "./seed-data.json";
-import type { WeeklyPlan, ExerciseLog, BodyweightEntry } from "../src/lib/types/index.js";
+import type { WeeklyPlan, ExerciseLog, BodyweightEntry, Goal } from "../src/lib/types/index.js";
 
 dotenv.config();
 
@@ -86,6 +86,8 @@ type SeedData = {
   currentPlan: WeeklyPlan;
   historyLogs: ExerciseLog[];
   weightLog: BodyweightEntry[];
+  goals?: Goal[];
+  dismissedRecommendationKeys?: string[];
   plans?: WeeklyPlan[];
   pendingNextPlans?: Array<{ sourceWeek: string; plan: WeeklyPlan }>;
 };
@@ -94,6 +96,8 @@ const {
   currentPlan,
   historyLogs,
   weightLog,
+  goals,
+  dismissedRecommendationKeys,
   plans: allPlans,
   pendingNextPlans,
 } = seedData as SeedData;
@@ -116,15 +120,74 @@ function applyMachineWeightDefaultsToLogs(logs: ExerciseLog[]): void {
   }
 }
 
+function addDays(isoDate: string, days: number): string {
+  const date = new Date(`${isoDate}T00:00:00`);
+  date.setDate(date.getDate() + days);
+  return date.toISOString().slice(0, 10);
+}
+
+function getBestTargetWeight(plan: WeeklyPlan, exerciseName: string): number | undefined {
+  const weights = plan.sessions
+    .flatMap((session) => session.exercises)
+    .filter((exercise) => exercise.name === exerciseName)
+    .map((exercise) => exercise.targetWeight)
+    .filter((weight): weight is number => weight !== undefined);
+
+  if (weights.length === 0) return undefined;
+  return Math.max(...weights);
+}
+
+function buildDefaultGoals(plan: WeeklyPlan, weights: BodyweightEntry[]): Goal[] {
+  const startDate = plan.weekStart;
+  const createdAt = `${startDate}T07:00:00.000Z`;
+  const bestBench = getBestTargetWeight(plan, "Bench Press") ?? 67.5;
+  const latestWeight = weights.at(-1)?.weight ?? 77;
+
+  return [
+    {
+      id: "goal-bench-next-block",
+      title: `Bench Press ${Math.ceil(bestBench + 2.5)} kg`,
+      type: "lifting",
+      exerciseName: "Bench Press",
+      baselineValue: bestBench,
+      targetValue: Math.ceil(bestBench + 2.5),
+      startDate,
+      targetDate: addDays(startDate, 56),
+      notes: "Strength push over the next training block",
+      status: "in_progress",
+      createdAt,
+    },
+    {
+      id: "goal-weight-trend",
+      title: `Bodyweight ${Number((latestWeight + 0.8).toFixed(1))} kg`,
+      type: "bodyweight",
+      baselineValue: latestWeight,
+      targetValue: Number((latestWeight + 0.8).toFixed(1)),
+      startDate,
+      targetDate: addDays(startDate, 84),
+      notes: "Steady gain goal over 12 weeks",
+      status: "in_progress",
+      createdAt,
+    },
+    {
+      id: "goal-consistency-3x8",
+      title: "3 sessions/week for 8 weeks",
+      type: "consistency",
+      sessionsPerWeek: 3,
+      targetValue: 3,
+      startDate,
+      targetDate: addDays(startDate, 56),
+      notes: "Focus on consistency and recovery rhythm",
+      status: "in_progress",
+      createdAt,
+    },
+  ];
+}
+
 applyMachineWeightDefaults(currentPlan);
 applyMachineWeightDefaultsToLogs(historyLogs);
 
-// ── Run seed ─────────────────────────────────────────────────────────
-async function seed() {
-  console.log("🌱 Seeding database...\n");
-
-  // Plans
-  const plansClient = await ensureTable("Plans");
+async function seedPlans(plansClient: TableClient): Promise<void> {
   await plansClient.upsertEntity(
     {
       partitionKey: DEFAULT_PK,
@@ -151,41 +214,7 @@ async function seed() {
       }
     }
   } else {
-    // Backward compatibility: synthesize plan rows from historical logs when explicit plan list is absent.
-    const weekPlans = new Map<string, WeeklyPlan>();
-    for (const log of historyLogs) {
-      if (!weekPlans.has(log.weekStart)) {
-        weekPlans.set(log.weekStart, { weekStart: log.weekStart, sessions: [] });
-      }
-      const weekPlan = weekPlans.get(log.weekStart);
-      if (!weekPlan) continue;
-      weekPlan.sessions.push({
-        day: log.day,
-        label: log.label,
-        exercises: log.exercises.map((ex) => ({
-          name: ex.name,
-          targetWeight: ex.targetWeight,
-          machineWeightMaxedOut: ex.machineWeightMaxedOut,
-          targetReps: ex.targetReps,
-          notes: ex.notes,
-        })),
-        sessionNotes: log.sessionNotes,
-      });
-    }
-    for (const [ws, plan] of weekPlans) {
-      if (ws === currentPlan.weekStart) {
-        continue;
-      }
-      await plansClient.upsertEntity(
-        {
-          partitionKey: DEFAULT_PK,
-          rowKey: ws,
-          data: JSON.stringify(plan),
-        },
-        "Replace",
-      );
-      console.log(`✅ Plan: ${ws}`);
-    }
+    await seedSynthesizedPlans(plansClient);
   }
 
   if (pendingNextPlans && pendingNextPlans.length > 0) {
@@ -201,9 +230,48 @@ async function seed() {
       console.log(`✅ Pending next plan: ${draft.sourceWeek}`);
     }
   }
+}
 
-  // Exercise logs
-  const logsClient = await ensureTable("ExerciseLogs");
+async function seedSynthesizedPlans(plansClient: TableClient): Promise<void> {
+  // Backward compatibility: synthesize plan rows from historical logs when explicit plan list is absent.
+  const weekPlans = new Map<string, WeeklyPlan>();
+  for (const log of historyLogs) {
+    if (!weekPlans.has(log.weekStart)) {
+      weekPlans.set(log.weekStart, { weekStart: log.weekStart, sessions: [] });
+    }
+    const weekPlan = weekPlans.get(log.weekStart);
+    if (!weekPlan) continue;
+    weekPlan.sessions.push({
+      day: log.day,
+      label: log.label,
+      exercises: log.exercises.map((ex) => ({
+        name: ex.name,
+        targetWeight: ex.targetWeight,
+        machineWeightMaxedOut: ex.machineWeightMaxedOut,
+        targetReps: ex.targetReps,
+        notes: ex.notes,
+      })),
+      sessionNotes: log.sessionNotes,
+    });
+  }
+
+  for (const [ws, plan] of weekPlans) {
+    if (ws === currentPlan.weekStart) {
+      continue;
+    }
+    await plansClient.upsertEntity(
+      {
+        partitionKey: DEFAULT_PK,
+        rowKey: ws,
+        data: JSON.stringify(plan),
+      },
+      "Replace",
+    );
+    console.log(`✅ Plan: ${ws}`);
+  }
+}
+
+async function seedExerciseLogs(logsClient: TableClient): Promise<void> {
   for (const log of historyLogs) {
     const ts = new Date(
       log.completedDate + "T" + String(Math.floor(Math.random() * 24)).padStart(2, "0") + ":00:00Z",
@@ -218,9 +286,9 @@ async function seed() {
     );
   }
   console.log(`✅ Exercise logs: ${historyLogs.length} sessions`);
+}
 
-  // Bodyweight
-  const weightClient = await ensureTable("BodyWeight");
+async function seedBodyweight(weightClient: TableClient): Promise<void> {
   for (const entry of weightLog) {
     await weightClient.upsertEntity(
       {
@@ -232,6 +300,53 @@ async function seed() {
     );
   }
   console.log(`✅ Bodyweight entries: ${weightLog.length}`);
+}
+
+async function seedGoals(goalsClient: TableClient): Promise<void> {
+  const goalsToSeed = goals && goals.length > 0 ? goals : buildDefaultGoals(currentPlan, weightLog);
+  for (const goal of goalsToSeed) {
+    await goalsClient.upsertEntity(
+      {
+        partitionKey: DEFAULT_PK,
+        rowKey: goal.id,
+        data: JSON.stringify(goal),
+      },
+      "Replace",
+    );
+  }
+  console.log(`✅ Goals: ${goalsToSeed.length}`);
+}
+
+async function seedDismissedRecommendations(goalStateClient: TableClient): Promise<void> {
+  const keysToSeed = dismissedRecommendationKeys ?? [];
+  for (const key of keysToSeed) {
+    await goalStateClient.upsertEntity(
+      {
+        partitionKey: DEFAULT_PK,
+        rowKey: key,
+        dismissedAt: new Date().toISOString(),
+      },
+      "Replace",
+    );
+  }
+  console.log(`✅ Dismissed recommendations: ${keysToSeed.length}`);
+}
+
+// ── Run seed ─────────────────────────────────────────────────────────
+async function seed() {
+  console.log("🌱 Seeding database...\n");
+
+  const plansClient = await ensureTable("Plans");
+  const logsClient = await ensureTable("ExerciseLogs");
+  const weightClient = await ensureTable("BodyWeight");
+  const goalsClient = await ensureTable("Goals");
+  const goalStateClient = await ensureTable("GoalState");
+
+  await seedPlans(plansClient);
+  await seedExerciseLogs(logsClient);
+  await seedBodyweight(weightClient);
+  await seedGoals(goalsClient);
+  await seedDismissedRecommendations(goalStateClient);
 
   console.log("\n🎉 Seed complete!");
 }
