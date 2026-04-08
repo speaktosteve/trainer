@@ -22,6 +22,7 @@ if (!connStr) {
 const connectionString = connStr;
 
 const DEFAULT_PK = "default";
+const PENDING_NEXT_PLAN_PREFIX = "pending:";
 
 function shouldAllowInsecureConnection(conn: string): boolean {
   const normalized = conn.toLowerCase();
@@ -85,9 +86,17 @@ type SeedData = {
   currentPlan: WeeklyPlan;
   historyLogs: ExerciseLog[];
   weightLog: BodyweightEntry[];
+  plans?: WeeklyPlan[];
+  pendingNextPlans?: Array<{ sourceWeek: string; plan: WeeklyPlan }>;
 };
 
-const { currentPlan, historyLogs, weightLog } = seedData as SeedData;
+const {
+  currentPlan,
+  historyLogs,
+  weightLog,
+  plans: allPlans,
+  pendingNextPlans,
+} = seedData as SeedData;
 
 const MAXED_MACHINE_EXERCISES = new Set(["Machine Seated Row", "Machine Seated Chest Press"]);
 
@@ -126,40 +135,71 @@ async function seed() {
   );
   console.log(`✅ Plan: ${currentPlan.weekStart}`);
 
-  // Also create plan entries for each historical week
-  const weekPlans = new Map<string, WeeklyPlan>();
-  for (const log of historyLogs) {
-    if (!weekPlans.has(log.weekStart)) {
-      weekPlans.set(log.weekStart, { weekStart: log.weekStart, sessions: [] });
+  if (allPlans && allPlans.length > 0) {
+    const sortedPlans = [...allPlans].sort((a, b) => a.weekStart.localeCompare(b.weekStart));
+    for (const plan of sortedPlans) {
+      await plansClient.upsertEntity(
+        {
+          partitionKey: DEFAULT_PK,
+          rowKey: plan.weekStart,
+          data: JSON.stringify(plan),
+        },
+        "Replace",
+      );
+      if (plan.weekStart !== currentPlan.weekStart) {
+        console.log(`✅ Plan: ${plan.weekStart}`);
+      }
     }
-    const weekPlan = weekPlans.get(log.weekStart);
-    if (!weekPlan) continue;
-    weekPlan.sessions.push({
-      day: log.day,
-      label: log.label,
-      exercises: log.exercises.map((ex) => ({
-        name: ex.name,
-        targetWeight: ex.targetWeight,
-        machineWeightMaxedOut: ex.machineWeightMaxedOut,
-        targetReps: ex.targetReps,
-        notes: ex.notes,
-      })),
-      sessionNotes: log.sessionNotes,
-    });
+  } else {
+    // Backward compatibility: synthesize plan rows from historical logs when explicit plan list is absent.
+    const weekPlans = new Map<string, WeeklyPlan>();
+    for (const log of historyLogs) {
+      if (!weekPlans.has(log.weekStart)) {
+        weekPlans.set(log.weekStart, { weekStart: log.weekStart, sessions: [] });
+      }
+      const weekPlan = weekPlans.get(log.weekStart);
+      if (!weekPlan) continue;
+      weekPlan.sessions.push({
+        day: log.day,
+        label: log.label,
+        exercises: log.exercises.map((ex) => ({
+          name: ex.name,
+          targetWeight: ex.targetWeight,
+          machineWeightMaxedOut: ex.machineWeightMaxedOut,
+          targetReps: ex.targetReps,
+          notes: ex.notes,
+        })),
+        sessionNotes: log.sessionNotes,
+      });
+    }
+    for (const [ws, plan] of weekPlans) {
+      if (ws === currentPlan.weekStart) {
+        continue;
+      }
+      await plansClient.upsertEntity(
+        {
+          partitionKey: DEFAULT_PK,
+          rowKey: ws,
+          data: JSON.stringify(plan),
+        },
+        "Replace",
+      );
+      console.log(`✅ Plan: ${ws}`);
+    }
   }
-  for (const [ws, plan] of weekPlans) {
-    if (ws === currentPlan.weekStart) {
-      continue;
+
+  if (pendingNextPlans && pendingNextPlans.length > 0) {
+    for (const draft of pendingNextPlans) {
+      await plansClient.upsertEntity(
+        {
+          partitionKey: DEFAULT_PK,
+          rowKey: `${PENDING_NEXT_PLAN_PREFIX}${draft.sourceWeek}`,
+          data: JSON.stringify(draft),
+        },
+        "Replace",
+      );
+      console.log(`✅ Pending next plan: ${draft.sourceWeek}`);
     }
-    await plansClient.upsertEntity(
-      {
-        partitionKey: DEFAULT_PK,
-        rowKey: ws,
-        data: JSON.stringify(plan),
-      },
-      "Replace",
-    );
-    console.log(`✅ Plan: ${ws}`);
   }
 
   // Exercise logs
