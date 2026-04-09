@@ -134,14 +134,15 @@
   }
 
   async function saveGoal() {
-    if (!formTitle || !formTargetValue || !formTargetDate) return;
+    const resolvedTargetValue = formType === "consistency" ? formSessionsPerWeek : formTargetValue;
+    if (!formTitle || !resolvedTargetValue || !formTargetDate) return;
 
     saving = true;
 
     const payload = {
       title: formTitle,
       type: formType,
-      targetValue: formTargetValue,
+      targetValue: resolvedTargetValue,
       targetDate: formTargetDate,
       startDate: new Date().toISOString().slice(0, 10),
       exerciseName: formType === "lifting" ? formExerciseName : undefined,
@@ -270,27 +271,22 @@
         </label>
       {/if}
 
-      <label class="block">
-        <span class="text-xs text-base-content/60">Target value {formType === "consistency" ? "(sessions/week)" : "(kg)"}</span>
-        <input
-          class="input input-bordered input-sm mt-1 w-full"
-          type="number"
-          step={formType === "consistency" ? "1" : "0.1"}
-          bind:value={formTargetValue}
-        />
-      </label>
-
-      <label class="block">
-        <span class="text-xs text-base-content/60">Target date</span>
-        <input class="input input-bordered input-sm mt-1 w-full" type="date" bind:value={formTargetDate} />
-      </label>
-
       {#if formType === "consistency"}
         <label class="block">
           <span class="text-xs text-base-content/60">Sessions per week</span>
           <input class="input input-bordered input-sm mt-1 w-full" type="number" min="1" bind:value={formSessionsPerWeek} />
         </label>
+      {:else}
+        <label class="block">
+          <span class="text-xs text-base-content/60">Target value (kg)</span>
+          <input class="input input-bordered input-sm mt-1 w-full" type="number" step="0.1" bind:value={formTargetValue} />
+        </label>
       {/if}
+
+      <label class="block">
+        <span class="text-xs text-base-content/60">Target date</span>
+        <input class="input input-bordered input-sm mt-1 w-full" type="date" bind:value={formTargetDate} />
+      </label>
 
       <label class="block md:col-span-2">
         <span class="text-xs text-base-content/60">Notes (optional)</span>
