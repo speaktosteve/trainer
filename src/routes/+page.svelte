@@ -13,6 +13,7 @@
 	// Next-plan flow
 	let nextPlan = $state<WeeklyPlan | null>(null);
 	let showEditor = $state(false);
+	let editingCurrentPlan = $state(false);
 	let generating = $state(false);
 	let generateError = $state<string | null>(null);
 
@@ -125,6 +126,57 @@
 		}
 	}
 
+	async function addExerciseToDay(day: string, exercise: ExerciseEntry): Promise<string | null> {
+		if (!plan) return 'No active plan loaded';
+
+		const updatedPlan: WeeklyPlan = {
+			...plan,
+			sessions: plan.sessions.map((session) =>
+				session.day === day
+					? { ...session, exercises: [...session.exercises, exercise] }
+					: session
+			)
+		};
+
+		const res = await fetch('/data/plans', {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(updatedPlan)
+		});
+
+		if (!res.ok) {
+			let message = 'Failed to add exercise';
+			try {
+				const data = await res.json();
+				message = data.error ?? message;
+			} catch {
+				// Keep fallback message if error response is not JSON
+			}
+			return message;
+		}
+
+		plan = updatedPlan;
+		return null;
+	}
+
+	function cancelCurrentPlanEdit() {
+		editingCurrentPlan = false;
+	}
+
+	async function saveCurrentPlan(edited: WeeklyPlan) {
+		const res = await fetch('/data/plans', {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(edited)
+		});
+
+		if (res.ok) {
+			plan = edited;
+			summary = edited.summary ?? null;
+			editingCurrentPlan = false;
+		}
+	}
+
 	async function discardNextPlan() {
 		if (!plan) return;
 		const params = new URLSearchParams({ sourceWeek: plan.weekStart });
@@ -141,7 +193,17 @@
 	<title>This Week's Plan — Trainer</title>
 </svelte:head>
 
-{#if showEditor && nextPlan}
+{#if editingCurrentPlan && plan}
+	<PlanEditor
+		plan={plan}
+		title="Edit This Week's Plan"
+		description="Adjust or add exercises for the current week."
+		saveLabel="Save This Week"
+		discardLabel="Cancel"
+		onSave={saveCurrentPlan}
+		onDiscard={cancelCurrentPlanEdit}
+	/>
+{:else if showEditor && nextPlan}
 	<PlanEditor
 		plan={nextPlan}
 		previousResults={completedExercises}
@@ -152,9 +214,11 @@
 	<div class="mb-4 flex items-center justify-between">
 		<h1 class="text-xl font-bold text-base-content md:text-2xl">This Week's Plan</h1>
 		{#if plan}
-			<span class="badge badge-primary">
-				w/c {plan.weekStart}
-			</span>
+			<div>
+				<span class="badge badge-primary">
+					w/c {plan.weekStart}
+				</span>
+			</div>
 		{/if}
 	</div>
 
@@ -175,6 +239,7 @@
 					completedExercises={completedExercises[session.day] ?? {}}
 					onExerciseComplete={handleExerciseComplete}
 					onExerciseUndo={handleExerciseUndo}
+					onAddNew={addExerciseToDay}
 				/>
 			{/each}
 		</div>

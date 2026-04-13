@@ -1,6 +1,7 @@
 import { json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { getCurrentWeekPlan, savePlan } from "$lib/services/planService";
+import { addPlanExercisesToCatalog } from "$lib/services/exerciseService";
 import type { WeeklyPlan } from "$lib/types";
 
 export const GET: RequestHandler = async () => {
@@ -16,6 +17,7 @@ export const POST: RequestHandler = async ({ request }) => {
     return json({ error: "Invalid plan: weekStart and sessions are required" }, { status: 400 });
   }
   await savePlan(plan);
+  await addPlanExercisesToCatalog(plan);
   return json(plan, { status: 201 });
 };
 
@@ -26,5 +28,6 @@ export const PUT: RequestHandler = async ({ request }) => {
     return json({ error: "Invalid plan: weekStart and sessions are required" }, { status: 400 });
   }
   await savePlan(plan);
+  await addPlanExercisesToCatalog(plan);
   return json(plan);
 };

@@ -15,6 +15,8 @@ import { getWeekStart } from "../src/lib/utils/dates.js";
 import type {
   BodyweightEntry,
   BodyweightEntity,
+  ExerciseCatalogEntity,
+  ExerciseCatalogItem,
   ExerciseLog,
   ExerciseLogEntity,
   Goal,
@@ -39,6 +41,7 @@ type SeedBackupData = {
   historyLogs: ExerciseLog[];
   weightLog: BodyweightEntry[];
   goals: Goal[];
+  exerciseCatalog: ExerciseCatalogItem[];
   dismissedRecommendationKeys: string[];
   plans: WeeklyPlan[];
   pendingNextPlans: PendingNextPlan[];
@@ -74,11 +77,25 @@ function compareTrainingDays(a: string, b: string): number {
 
 async function getTableClient(
   connectionString: string,
-  tableName: "Plans" | "ExerciseLogs" | "BodyWeight" | "Goals" | "GoalState",
+  tableName: "Plans" | "ExerciseLogs" | "BodyWeight" | "Goals" | "GoalState" | "ExerciseCatalog",
 ): Promise<TableClient> {
   return TableClient.fromConnectionString(connectionString, tableName, {
     allowInsecureConnection: shouldAllowInsecureConnection(connectionString),
   });
+}
+
+async function readExerciseCatalog(connectionString: string): Promise<ExerciseCatalogItem[]> {
+  const catalogClient = await getTableClient(connectionString, "ExerciseCatalog");
+  const entities = catalogClient.listEntities<ExerciseCatalogEntity>({
+    queryOptions: { filter: `PartitionKey eq '${DEFAULT_PK}'` },
+  });
+
+  const items: ExerciseCatalogItem[] = [];
+  for await (const entity of entities) {
+    items.push({ name: entity.name, createdAt: entity.createdAt });
+  }
+
+  return items.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 async function readPlans(connectionString: string): Promise<{
@@ -227,18 +244,21 @@ async function backupSeedData(): Promise<void> {
   }
 
   const { plans, pendingNextPlans } = await readPlans(connectionString);
-  const [historyLogs, weightLog, goals, dismissedRecommendationKeys] = await Promise.all([
-    readExerciseLogs(connectionString),
-    readWeightLog(connectionString),
-    readGoals(connectionString),
-    readDismissedRecommendationKeys(connectionString),
-  ]);
+  const [historyLogs, weightLog, goals, exerciseCatalog, dismissedRecommendationKeys] =
+    await Promise.all([
+      readExerciseLogs(connectionString),
+      readWeightLog(connectionString),
+      readGoals(connectionString),
+      readExerciseCatalog(connectionString),
+      readDismissedRecommendationKeys(connectionString),
+    ]);
 
   const backup: SeedBackupData = {
     currentPlan: pickCurrentPlan(plans),
     historyLogs,
     weightLog,
     goals,
+    exerciseCatalog,
     dismissedRecommendationKeys,
     plans,
     pendingNextPlans,
@@ -254,6 +274,7 @@ async function backupSeedData(): Promise<void> {
   console.log(`  Exercise logs: ${historyLogs.length}`);
   console.log(`  Weight entries: ${weightLog.length}`);
   console.log(`  Goals: ${goals.length}`);
+  console.log(`  Exercise catalog entries: ${exerciseCatalog.length}`);
   console.log(`  Dismissed recommendations: ${dismissedRecommendationKeys.length}`);
   console.log(`  Current plan week: ${backup.currentPlan.weekStart}`);
 }

@@ -10,7 +10,13 @@
 import { TableClient, TableServiceClient } from "@azure/data-tables";
 import * as dotenv from "dotenv";
 import seedData from "./seed-data.json";
-import type { WeeklyPlan, ExerciseLog, BodyweightEntry, Goal } from "../src/lib/types/index.js";
+import type {
+  WeeklyPlan,
+  ExerciseLog,
+  BodyweightEntry,
+  Goal,
+  ExerciseCatalogItem,
+} from "../src/lib/types/index.js";
 
 dotenv.config();
 
@@ -87,6 +93,7 @@ type SeedData = {
   historyLogs: ExerciseLog[];
   weightLog: BodyweightEntry[];
   goals?: Goal[];
+  exerciseCatalog?: ExerciseCatalogItem[];
   dismissedRecommendationKeys?: string[];
   plans?: WeeklyPlan[];
   pendingNextPlans?: Array<{ sourceWeek: string; plan: WeeklyPlan }>;
@@ -97,6 +104,7 @@ const {
   historyLogs,
   weightLog,
   goals,
+  exerciseCatalog,
   dismissedRecommendationKeys,
   plans: allPlans,
   pendingNextPlans,
@@ -317,6 +325,70 @@ async function seedGoals(goalsClient: TableClient): Promise<void> {
   console.log(`✅ Goals: ${goalsToSeed.length}`);
 }
 
+function collectPlanExerciseNames(plan: WeeklyPlan): string[] {
+  return plan.sessions.flatMap((session) => session.exercises.map((exercise) => exercise.name));
+}
+
+function addNamesToSet(names: Set<string>, values: string[]): void {
+  for (const value of values) {
+    const trimmed = value.trim();
+    if (trimmed) names.add(trimmed);
+  }
+}
+
+function getCatalogNamesFromSeedData(): Set<string> {
+  const names = new Set<string>();
+  if (!exerciseCatalog || exerciseCatalog.length === 0) return names;
+
+  addNamesToSet(
+    names,
+    exerciseCatalog.map((item) => item.name),
+  );
+  return names;
+}
+
+function getCatalogNamesFromPlansAndLogs(): Set<string> {
+  const names = new Set<string>();
+  const plansToProcess = allPlans && allPlans.length > 0 ? allPlans : [currentPlan];
+
+  for (const plan of plansToProcess) {
+    addNamesToSet(names, collectPlanExerciseNames(plan));
+  }
+
+  for (const log of historyLogs) {
+    addNamesToSet(
+      names,
+      log.exercises.map((exercise) => exercise.name),
+    );
+  }
+
+  return names;
+}
+
+function getCatalogNamesToSeed(): Set<string> {
+  const fromSeed = getCatalogNamesFromSeedData();
+  if (fromSeed.size > 0) return fromSeed;
+  return getCatalogNamesFromPlansAndLogs();
+}
+
+async function seedExerciseCatalog(catalogClient: TableClient): Promise<void> {
+  const names = getCatalogNamesToSeed();
+
+  for (const name of names) {
+    await catalogClient.upsertEntity(
+      {
+        partitionKey: DEFAULT_PK,
+        rowKey: name.toLowerCase(),
+        name,
+        createdAt: new Date().toISOString(),
+      },
+      "Replace",
+    );
+  }
+
+  console.log(`✅ Exercise catalog entries: ${names.size}`);
+}
+
 async function seedDismissedRecommendations(goalStateClient: TableClient): Promise<void> {
   const keysToSeed = dismissedRecommendationKeys ?? [];
   for (const key of keysToSeed) {
@@ -341,11 +413,13 @@ async function seed() {
   const weightClient = await ensureTable("BodyWeight");
   const goalsClient = await ensureTable("Goals");
   const goalStateClient = await ensureTable("GoalState");
+  const catalogClient = await ensureTable("ExerciseCatalog");
 
   await seedPlans(plansClient);
   await seedExerciseLogs(logsClient);
   await seedBodyweight(weightClient);
   await seedGoals(goalsClient);
+  await seedExerciseCatalog(catalogClient);
   await seedDismissedRecommendations(goalStateClient);
 
   console.log("\n🎉 Seed complete!");

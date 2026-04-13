@@ -1,5 +1,14 @@
 import type { TableClient } from "@azure/data-tables";
-import type { ExerciseLog, ExerciseLogEntity, BodyweightEntry, BodyweightEntity } from "$lib/types";
+import type {
+  ExerciseLog,
+  ExerciseLogEntity,
+  BodyweightEntry,
+  BodyweightEntity,
+  ExerciseCatalogEntity,
+  ExerciseCatalogItem,
+  WeeklyPlan,
+  PlanEntity,
+} from "$lib/types";
 import { getTableClient, DEFAULT_PK } from "./tableStorage";
 import { reverseTimestamp } from "$lib/utils/dates";
 
@@ -7,6 +16,131 @@ import { reverseTimestamp } from "$lib/utils/dates";
 
 async function getExerciseClient(): Promise<TableClient> {
   return getTableClient("ExerciseLogs");
+}
+
+async function getCatalogClient(): Promise<TableClient> {
+  return getTableClient("ExerciseCatalog");
+}
+
+function normalizeExerciseKey(name: string): string {
+  return name.trim().toLowerCase();
+}
+
+function collectExerciseNamesFromPlan(plan: WeeklyPlan): string[] {
+  return plan.sessions
+    .flatMap((session) => session.exercises)
+    .map((exercise) => exercise.name)
+    .filter((name) => name.trim().length > 0);
+}
+
+async function upsertExerciseNames(names: string[]): Promise<void> {
+  const uniqueNames = Array.from(new Set(names.map((name) => name.trim()).filter(Boolean)));
+  if (uniqueNames.length === 0) return;
+
+  const client = await getCatalogClient();
+  const now = new Date().toISOString();
+
+  for (const name of uniqueNames) {
+    const entity: ExerciseCatalogEntity = {
+      partitionKey: DEFAULT_PK,
+      rowKey: normalizeExerciseKey(name),
+      name,
+      createdAt: now,
+    };
+    await client.upsertEntity(entity, "Merge");
+  }
+}
+
+async function listCatalogEntities(): Promise<ExerciseCatalogEntity[]> {
+  const client = await getCatalogClient();
+  const entities = client.listEntities<ExerciseCatalogEntity>({
+    queryOptions: { filter: `PartitionKey eq '${DEFAULT_PK}'` },
+  });
+
+  const results: ExerciseCatalogEntity[] = [];
+  for await (const entity of entities) {
+    results.push(entity);
+  }
+
+  return results;
+}
+
+async function collectExerciseNamesFromPlansTable(): Promise<string[]> {
+  const plansClient = await getTableClient("Plans");
+  const entities = plansClient.listEntities<PlanEntity>({
+    queryOptions: { filter: `PartitionKey eq '${DEFAULT_PK}'` },
+  });
+
+  const names: string[] = [];
+  for await (const entity of entities) {
+    if (!entity.data) continue;
+    const parsed = JSON.parse(entity.data) as WeeklyPlan | { sourceWeek: string; plan: WeeklyPlan };
+    if ("plan" in parsed) {
+      names.push(...collectExerciseNamesFromPlan(parsed.plan));
+    } else {
+      names.push(...collectExerciseNamesFromPlan(parsed));
+    }
+  }
+  return names;
+}
+
+async function collectExerciseNamesFromLogsTable(): Promise<string[]> {
+  const logsClient = await getExerciseClient();
+  const entities = logsClient.listEntities<ExerciseLogEntity>({
+    queryOptions: { filter: `PartitionKey eq '${DEFAULT_PK}'` },
+  });
+
+  const names: string[] = [];
+  for await (const entity of entities) {
+    const log = JSON.parse(entity.data) as ExerciseLog;
+    names.push(...log.exercises.map((exercise) => exercise.name));
+  }
+  return names;
+}
+
+async function backfillExerciseCatalog(): Promise<void> {
+  const [catalogEntities, planNames, logNames] = await Promise.all([
+    listCatalogEntities(),
+    collectExerciseNamesFromPlansTable(),
+    collectExerciseNamesFromLogsTable(),
+  ]);
+
+  const existingKeys = new Set(catalogEntities.map((entity) => entity.rowKey));
+  const discovered = Array.from(
+    new Set([...planNames, ...logNames].map((name) => name.trim()).filter(Boolean)),
+  );
+  const missing = discovered.filter((name) => !existingKeys.has(normalizeExerciseKey(name)));
+
+  await upsertExerciseNames(missing);
+}
+
+export async function addExerciseToCatalog(name: string): Promise<ExerciseCatalogItem> {
+  const trimmed = name.trim();
+  if (!trimmed) {
+    throw new Error("Exercise name is required");
+  }
+
+  await upsertExerciseNames([trimmed]);
+  return {
+    name: trimmed,
+    createdAt: new Date().toISOString(),
+  };
+}
+
+export async function getExerciseCatalog(): Promise<ExerciseCatalogItem[]> {
+  await backfillExerciseCatalog();
+  const entities = await listCatalogEntities();
+
+  return entities
+    .map(
+      (entity) =>
+        ({ name: entity.name, createdAt: entity.createdAt }) satisfies ExerciseCatalogItem,
+    )
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+export async function addPlanExercisesToCatalog(plan: WeeklyPlan): Promise<void> {
+  await upsertExerciseNames(collectExerciseNamesFromPlan(plan));
 }
 
 /**
@@ -37,6 +171,7 @@ export async function logExercise(log: ExerciseLog): Promise<void> {
     rowKey,
     data: JSON.stringify(merged),
   };
+  await upsertExerciseNames(merged.exercises.map((exercise) => exercise.name));
   await client.upsertEntity(entity, "Replace");
 }
 

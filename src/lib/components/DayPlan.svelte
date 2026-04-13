@@ -7,16 +7,25 @@
 		weekStart,
 		completedExercises = {},
 		onExerciseComplete,
-		onExerciseUndo
+		onExerciseUndo,
+		onAddNew
 	}: {
 		session: PlannedSession;
 		weekStart: string;
 		completedExercises?: Record<string, ExerciseEntry>;
 		onExerciseComplete?: (log: ExerciseLog) => void;
 		onExerciseUndo?: (day: string, exerciseName: string) => void;
+		onAddNew?: (day: string, exercise: ExerciseEntry) => Promise<string | null>;
 	} = $props();
 
 	let expanded = $state(false);
+	let showAddForm = $state(false);
+	let addName = $state('');
+	let addWeight = $state('');
+	let addReps = $state('8,8,8');
+	let addNotes = $state('');
+	let addError = $state<string | null>(null);
+	let addSaving = $state(false);
 
 	const dayLabels: Record<string, string> = {
 		monday: 'Monday',
@@ -46,6 +55,73 @@
 				sessionNotes: session.sessionNotes
 			});
 		}
+	}
+
+	function parseReps(value: string): number[] {
+		return value
+			.split(',')
+			.map((part) => Number.parseInt(part.trim(), 10))
+			.filter((n) => Number.isFinite(n) && n > 0);
+	}
+
+	function resetAddForm() {
+		addName = '';
+		addWeight = '';
+		addReps = '8,8,8';
+		addNotes = '';
+		addError = null;
+		addSaving = false;
+	}
+
+	async function submitAddExercise() {
+		if (!onAddNew) return;
+
+		const name = addName.trim();
+		if (!name) {
+			addError = 'Exercise name is required';
+			return;
+		}
+
+		const exists = session.exercises.some((ex) => ex.name.toLowerCase() === name.toLowerCase());
+		if (exists) {
+			addError = 'That exercise already exists for this day';
+			return;
+		}
+
+		const targetReps = parseReps(addReps);
+		if (targetReps.length === 0) {
+			addError = 'Enter reps as comma-separated positive numbers, e.g. 8,8,8';
+			return;
+		}
+
+		const weightText = addWeight.trim();
+		let targetWeight: number | undefined;
+		if (weightText) {
+			const parsed = Number(weightText);
+			if (!Number.isFinite(parsed) || parsed < 0) {
+				addError = 'Weight must be a valid non-negative number';
+				return;
+			}
+			targetWeight = parsed;
+		}
+
+		addError = null;
+		addSaving = true;
+		const error = await onAddNew(session.day, {
+			name,
+			targetReps,
+			targetWeight,
+			notes: addNotes.trim() || undefined
+		});
+		addSaving = false;
+
+		if (error) {
+			addError = error;
+			return;
+		}
+
+		showAddForm = false;
+		resetAddForm();
 	}
 </script>
 
@@ -87,6 +163,76 @@
 					onUndo={onExerciseUndo ? () => onExerciseUndo(session.day, exercise.name) : undefined}
 				/>
 			{/each}
+
+			{#if onAddNew}
+				<div class="pt-1">
+					{#if showAddForm}
+						<div class="rounded-lg border border-base-300 bg-base-200/50 p-3">
+							<div class="grid gap-2 md:grid-cols-2">
+								<label class="form-control">
+									<span class="label-text text-xs">Exercise name</span>
+									<input
+										class="input input-bordered input-sm"
+										bind:value={addName}
+										placeholder="e.g. Incline DB Press"
+									/>
+								</label>
+								<label class="form-control">
+									<span class="label-text text-xs">Target weight (kg)</span>
+									<input
+										class="input input-bordered input-sm"
+										bind:value={addWeight}
+										placeholder="optional"
+										type="number"
+										step="0.5"
+										min="0"
+									/>
+								</label>
+								<label class="form-control">
+									<span class="label-text text-xs">Target reps</span>
+									<input
+										class="input input-bordered input-sm"
+										bind:value={addReps}
+										placeholder="8,8,8"
+									/>
+								</label>
+								<label class="form-control md:col-span-2">
+									<span class="label-text text-xs">Notes</span>
+									<input
+										class="input input-bordered input-sm"
+										bind:value={addNotes}
+										placeholder="optional"
+									/>
+								</label>
+							</div>
+
+							{#if addError}
+								<p class="mt-2 text-xs text-error">{addError}</p>
+							{/if}
+
+							<div class="mt-3 flex items-center gap-2">
+								<button class="btn btn-primary btn-sm" disabled={addSaving} onclick={submitAddExercise}>
+									{#if addSaving}
+										<span class="loading loading-spinner loading-xs"></span>
+										Saving...
+									{:else}
+										Add Exercise
+									{/if}
+								</button>
+								<button
+									class="btn btn-ghost btn-sm"
+									onclick={() => {
+										showAddForm = false;
+										resetAddForm();
+									}}
+								>Cancel</button>
+							</div>
+						</div>
+					{:else}
+						<button class="btn btn-outline btn-sm" onclick={() => (showAddForm = true)}>Add New</button>
+					{/if}
+				</div>
+			{/if}
 		</div>
 	{/if}
 </div>

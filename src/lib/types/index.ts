@@ -82,6 +82,18 @@ export interface ExerciseLogEntity {
   data: string; // JSON-serialised ExerciseLog
 }
 
+export interface ExerciseCatalogItem {
+  name: string;
+  createdAt: string;
+}
+
+export interface ExerciseCatalogEntity {
+  partitionKey: string;
+  rowKey: string; // normalized exercise name
+  name: string;
+  createdAt: string;
+}
+
 export interface BodyweightEntity {
   partitionKey: string;
   rowKey: string; // date
