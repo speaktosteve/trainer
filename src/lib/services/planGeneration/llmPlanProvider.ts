@@ -91,6 +91,7 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
           parsed.summary.lines?.map((l) => `${l.icon} ${l.detail}`).join(" · ") ??
           parsed.summary.headline;
       }
+      this.enforceGeneratedStructure(parsed, sourcePlan);
       // Carry forward targetWeight from source plan if the LLM dropped it
       this.backfillWeights(parsed, sourcePlan);
       this.backfillMachineFlags(parsed, sourcePlan);
@@ -145,6 +146,59 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
     }
   }
 
+  private enforceGeneratedStructure(generated: WeeklyPlan, source: WeeklyPlan): void {
+    const mergedSessions: WeeklyPlan["sessions"] = source.sessions.map((sourceSession) => {
+      const generatedSession = generated.sessions.find(
+        (session) => session.day === sourceSession.day,
+      );
+
+      if (!generatedSession) {
+        return {
+          day: sourceSession.day,
+          label: sourceSession.label,
+          sessionNotes: sourceSession.sessionNotes,
+          exercises: sourceSession.exercises.map((exercise) =>
+            this.cloneExerciseForCarryForward(exercise),
+          ),
+        };
+      }
+
+      const mergedExercises = sourceSession.exercises.map((sourceExercise) => {
+        const matchedExercise = generatedSession.exercises.find((exercise) =>
+          this.matchesSourceExercise(exercise, sourceExercise),
+        );
+        return matchedExercise ?? this.cloneExerciseForCarryForward(sourceExercise);
+      });
+
+      return {
+        day: sourceSession.day,
+        label: generatedSession.label || sourceSession.label,
+        sessionNotes: generatedSession.sessionNotes ?? sourceSession.sessionNotes,
+        exercises: mergedExercises,
+      };
+    });
+
+    generated.sessions = mergedSessions;
+  }
+
+  private matchesSourceExercise(generated: ExerciseEntry, source: ExerciseEntry): boolean {
+    if (generated.exerciseId && source.exerciseId) {
+      return generated.exerciseId === source.exerciseId;
+    }
+    return normalizeExerciseName(generated.name) === normalizeExerciseName(source.name);
+  }
+
+  private cloneExerciseForCarryForward(source: ExerciseEntry): ExerciseEntry {
+    return {
+      exerciseId: source.exerciseId,
+      name: source.name,
+      targetWeight: source.targetWeight,
+      machineWeightMaxedOut: source.machineWeightMaxedOut,
+      targetReps: [...source.targetReps],
+      notes: source.notes,
+    };
+  }
+
   private enforceGeneratedConstraints(
     generated: WeeklyPlan,
     source: WeeklyPlan,
@@ -163,10 +217,10 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
 
         const hasCompletion = this.hasCompletion(sourceRef, completionLookups);
 
-        if (!hasCompletion) {
-          this.applyNoRecordConstraint(ex, sourceRef.exercise);
-        } else {
+        if (hasCompletion) {
           this.clearNoRecordNote(ex);
+        } else {
+          this.applyNoRecordConstraint(ex, sourceRef.exercise);
         }
 
         this.applyMachineMaxConstraint(

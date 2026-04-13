@@ -61,13 +61,16 @@ describe("exerciseService", () => {
 
   describe("logExercise", () => {
     it("upserts an exercise log entity", async () => {
-      const mockClient = createMockTableClient();
-      vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+      const logClient = createMockTableClient();
+      const catalogClient = createMockTableClient();
+      vi.mocked(getTableClient).mockImplementation(async (tableName: string) =>
+        tableName === "ExerciseCatalog" ? (catalogClient as any) : (logClient as any),
+      );
 
       await logExercise(mockLog);
-      expect(mockClient.upsertEntity).toHaveBeenCalledTimes(1);
+      expect(logClient.upsertEntity).toHaveBeenCalledTimes(1);
 
-      const calledEntity = mockClient.upsertEntity.mock.calls[0][0];
+      const calledEntity = logClient.upsertEntity.mock.calls[0][0];
       expect(calledEntity.partitionKey).toBe("default");
       expect(JSON.parse(calledEntity.data)).toEqual(mockLog);
     });
@@ -91,13 +94,16 @@ describe("exerciseService", () => {
         data: JSON.stringify(existingLog),
       };
 
-      const mockClient = createMockTableClient();
-      mockClient.getEntity.mockResolvedValue(existingEntity);
-      vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+      const logClient = createMockTableClient();
+      const catalogClient = createMockTableClient();
+      logClient.getEntity.mockResolvedValue(existingEntity);
+      vi.mocked(getTableClient).mockImplementation(async (tableName: string) =>
+        tableName === "ExerciseCatalog" ? (catalogClient as any) : (logClient as any),
+      );
 
       await logExercise(mockLog);
 
-      const savedData = JSON.parse(mockClient.upsertEntity.mock.calls[0][0].data) as ExerciseLog;
+      const savedData = JSON.parse(logClient.upsertEntity.mock.calls[0][0].data) as ExerciseLog;
       // Should have updated the Bench Press entry with the new data
       expect(savedData.exercises).toHaveLength(1);
       expect(savedData.exercises[0].actualWeight).toBe(62.5);
@@ -124,13 +130,16 @@ describe("exerciseService", () => {
         ],
       };
 
-      const mockClient = createMockTableClient();
-      mockClient.getEntity.mockResolvedValue(existingEntity);
-      vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+      const logClient = createMockTableClient();
+      const catalogClient = createMockTableClient();
+      logClient.getEntity.mockResolvedValue(existingEntity);
+      vi.mocked(getTableClient).mockImplementation(async (tableName: string) =>
+        tableName === "ExerciseCatalog" ? (catalogClient as any) : (logClient as any),
+      );
 
       await logExercise(newExerciseLog);
 
-      const savedData = JSON.parse(mockClient.upsertEntity.mock.calls[0][0].data) as ExerciseLog;
+      const savedData = JSON.parse(logClient.upsertEntity.mock.calls[0][0].data) as ExerciseLog;
       expect(savedData.exercises).toHaveLength(2);
       const names = savedData.exercises.map((e) => e.name);
       expect(names).toContain("Bench Press");

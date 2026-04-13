@@ -1034,4 +1034,86 @@ describe("LLMPlanProvider", () => {
     expect(correctionLine?.icon).toBe("🔒");
     expect(result.summary?.text).toContain("🔒");
   });
+
+  it("restores source exercises when LLM returns an empty uncompleted day", async () => {
+    const sourcePlan: WeeklyPlan = {
+      weekStart: "2026-03-30",
+      sessions: [
+        {
+          day: "monday",
+          label: "Push",
+          exercises: [
+            {
+              name: "Bench Press",
+              targetWeight: 62.5,
+              targetReps: [6, 6, 6, 6],
+            },
+          ],
+        },
+        {
+          day: "wednesday",
+          label: "Lower",
+          exercises: [
+            {
+              name: "Squat",
+              targetWeight: 80,
+              targetReps: [5, 5, 5],
+            },
+          ],
+        },
+      ],
+    };
+
+    const completedLogs = [
+      makeLog("monday", [
+        {
+          name: "Bench Press",
+          targetWeight: 62.5,
+          targetReps: [6, 6, 6, 6],
+          actualWeight: 62.5,
+          actualReps: [6, 6, 6, 6],
+        },
+      ]),
+    ];
+
+    const llmPayload: WeeklyPlan = {
+      weekStart: "2026-04-06",
+      sessions: [
+        {
+          day: "monday",
+          label: "Push",
+          exercises: [
+            {
+              name: "Bench Press",
+              targetWeight: 65,
+              targetReps: [6, 6, 6, 6],
+            },
+          ],
+        },
+        {
+          day: "wednesday",
+          label: "Lower",
+          exercises: [],
+        },
+      ],
+    };
+
+    const mockCreate = vi.fn().mockResolvedValue({
+      choices: [{ message: { content: JSON.stringify(llmPayload) } }],
+    });
+    vi.mocked(getOpenAIClient).mockReturnValue({
+      chat: { completions: { create: mockCreate } },
+    } as any);
+
+    const provider = new LLMPlanProvider();
+    const result = await provider.generateNextPlan(sourcePlan, completedLogs, []);
+    const lowerSession = result.sessions.find((session) => session.day === "wednesday");
+
+    expect(lowerSession).toBeDefined();
+    expect(lowerSession?.exercises).toHaveLength(1);
+    expect(lowerSession?.exercises[0].name).toBe("Squat");
+    expect(lowerSession?.exercises[0].targetWeight).toBe(80);
+    expect(lowerSession?.exercises[0].targetReps).toEqual([5, 5, 5]);
+    expect(lowerSession?.exercises[0].notes).toBe("No record last week");
+  });
 });

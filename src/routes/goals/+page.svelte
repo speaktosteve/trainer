@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import GoalProgressChart from "$lib/components/GoalProgressChart.svelte";
-  import type { GoalType, GoalWithProgress } from "$lib/types";
+  import type { ExerciseCatalogItem, GoalType, GoalWithProgress } from "$lib/types";
 
   type Recommendation = {
     title: string;
@@ -24,6 +24,7 @@
   let formTitle = $state("");
   let formType = $state<GoalType>("lifting");
   let formExerciseName = $state("Bench Press");
+  let exerciseCatalog = $state<ExerciseCatalogItem[]>([]);
   let formTargetValue = $state<number | undefined>(undefined);
   let formTargetDate = $state(new Date(new Date().setDate(new Date().getDate() + 56)).toISOString().slice(0, 10));
   let formSessionsPerWeek = $state<number | undefined>(3);
@@ -78,6 +79,19 @@
       excludedRecommendationKeys = [];
     }
     generating = false;
+  }
+
+  async function loadExerciseCatalog() {
+    const res = await fetch("/data/exercises/catalog");
+    if (!res.ok) return;
+
+    exerciseCatalog = await res.json();
+    if (exerciseCatalog.length > 0) {
+      const selectedIsValid = exerciseCatalog.some((item) => item.name === formExerciseName);
+      if (!formExerciseName || !selectedIsValid) {
+        formExerciseName = exerciseCatalog[0].name;
+      }
+    }
   }
 
   async function addRecommendation(rec: Recommendation) {
@@ -183,7 +197,7 @@
   }
 
   onMount(async () => {
-    await Promise.all([loadGoals(), loadRecommendations()]);
+    await Promise.all([loadGoals(), loadRecommendations(), loadExerciseCatalog()]);
     loading = false;
   });
 </script>
@@ -267,7 +281,19 @@
       {#if formType === "lifting"}
         <label class="block">
           <span class="text-xs text-base-content/60">Exercise</span>
-          <input class="input input-bordered input-sm mt-1 w-full" bind:value={formExerciseName} />
+          <select
+            class="select select-bordered select-sm mt-1 w-full"
+            bind:value={formExerciseName}
+            disabled={exerciseCatalog.length === 0}
+          >
+            {#if exerciseCatalog.length === 0}
+              <option value="">No exercises available</option>
+            {:else}
+              {#each exerciseCatalog as exercise (exercise.name)}
+                <option value={exercise.name}>{exercise.name}</option>
+              {/each}
+            {/if}
+          </select>
         </label>
       {/if}
 
