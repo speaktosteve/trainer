@@ -1,13 +1,16 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { ExerciseLog, BodyweightEntry } from '$lib/types';
+	import type { ExerciseLog, BodyweightEntry, WeeklySummary } from '$lib/types';
 	import WeightChart from '$lib/components/WeightChart.svelte';
 	import ExerciseProgressChart from '$lib/components/ExerciseProgressChart.svelte';
+	import SummaryBanner from '$lib/components/SummaryBanner.svelte';
 
 	type Tab = 'exercises' | 'weight';
 	let activeTab = $state<Tab>('exercises');
 	let exerciseLogs = $state<ExerciseLog[]>([]);
 	let weightEntries = $state<BodyweightEntry[]>([]);
+	let historySummary = $state<WeeklySummary | null>(null);
+	let loadingSummary = $state(true);
 	let loading = $state(true);
 
 	// Weight entry form
@@ -17,13 +20,16 @@
 	let expandedExercise = $state<string | null>(null);
 
 	onMount(async () => {
-		const [exRes, wtRes] = await Promise.all([
+		const [exRes, wtRes, summaryRes] = await Promise.all([
 			fetch('/data/exercises?limit=50'),
-			fetch('/data/weight')
+			fetch('/data/weight'),
+			fetch('/data/history/summary')
 		]);
 
 		if (exRes.ok) exerciseLogs = await exRes.json();
 		if (wtRes.ok) weightEntries = await wtRes.json();
+		if (summaryRes.ok) historySummary = await summaryRes.json();
+		loadingSummary = false;
 		loading = false;
 	});
 
@@ -184,6 +190,12 @@
 		</button>
 	{/if}
 </div>
+
+{#if loadingSummary}
+	<div class="mb-4 h-20 animate-pulse rounded-xl bg-base-300"></div>
+{:else}
+	<SummaryBanner summary={historySummary} showNarrativeSentence={true} />
+{/if}
 
 <!-- Tab Toggle -->
 <div role="tablist" class="tabs tabs-box mb-4">

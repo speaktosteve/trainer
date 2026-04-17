@@ -246,3 +246,174 @@ export const llmSummaryProvider: SummaryProvider = new LLMSummaryProvider();
 export function getSummaryProvider(): SummaryProvider {
   return isLLMConfigured() ? llmSummaryProvider : summaryProvider;
 }
+
+export async function generateHistoryFocusSummary(
+  currentWeekStart: string,
+  logs: ExerciseLog[],
+  weightHistory: BodyweightEntry[],
+): Promise<WeeklySummary> {
+  const weekLabel = `${currentWeekStart} (covering previous 8 weeks)`;
+
+  if (!isLLMConfigured()) {
+    return buildHistoryFallbackSummary(weekLabel, logs, weightHistory);
+  }
+
+  try {
+    const client = getOpenAIClient();
+    const deployment = getDeploymentName();
+    const prompt = buildHistoryPrompt(weekLabel, logs, weightHistory);
+
+    const response = await client.chat.completions.create({
+      model: deployment,
+      messages: [
+        {
+          role: "system",
+          content: `You are a strength coach analyzing 8 weeks of training history.
+Return ONLY valid JSON with this schema:
+{ "headline": string, "lines": [{ "icon": string, "label": string, "detail": string }] }
+
+Rules:
+- Keep headline <= 10 words.
+- Return 3-5 lines total.
+- Include at least one progress line and one focus-area line.
+- Focus areas should be concrete and actionable.
+- Keep each detail <= 20 words.
+- Use these icons where appropriate: 📈 progress, 🎯 focus, ⚖️ bodyweight, 🔁 consistency.
+- Never invent data that is not present in the prompt.`,
+        },
+        { role: "user", content: prompt },
+      ],
+      temperature: 0.4,
+      max_tokens: 400,
+    });
+
+    const content = response.choices[0]?.message?.content?.trim();
+    if (!content) throw new Error("Empty LLM response");
+
+    const parsed = JSON.parse(content) as { headline: string; lines: SummaryLine[] };
+    const lines = (parsed.lines ?? []).slice(0, 5);
+    const text = lines.map((line) => `${line.icon} ${line.detail}`).join(" · ");
+
+    return {
+      weekStart: currentWeekStart,
+      headline: parsed.headline,
+      lines,
+      text,
+    };
+  } catch (err) {
+    console.error("LLM history summary failed, using fallback:", err);
+    return buildHistoryFallbackSummary(weekLabel, logs, weightHistory);
+  }
+}
+
+function buildHistoryPrompt(
+  weekLabel: string,
+  logs: ExerciseLog[],
+  weightHistory: BodyweightEntry[],
+): string {
+  const parts: string[] = [`Analysis window: ${weekLabel}`, `Session logs: ${logs.length}`];
+
+  if (logs.length > 0) {
+    const byWeek = new Map<string, number>();
+    for (const log of logs) {
+      byWeek.set(log.weekStart, (byWeek.get(log.weekStart) ?? 0) + 1);
+    }
+    parts.push(
+      `Sessions by week: ${[...byWeek.entries()]
+        .sort((a, b) => a[0].localeCompare(b[0]))
+        .map(([week, count]) => `${week}: ${count}`)
+        .join(", ")}`,
+    );
+
+    const recentLogs = [...logs].sort((a, b) => a.weekStart.localeCompare(b.weekStart)).slice(-24);
+    parts.push("Recent exercise snapshots:");
+    for (const log of recentLogs) {
+      const exercises = log.exercises
+        .map((ex) => {
+          const reps = (ex.actualReps ?? ex.targetReps).join(",");
+          const weight = ex.actualWeight ?? ex.targetWeight;
+          const weightLabel = weight ? `@ ${weight}kg` : "bodyweight";
+          return `${ex.name} ${weightLabel} x ${reps}`;
+        })
+        .join("; ");
+      parts.push(`- ${log.weekStart} ${log.day}: ${exercises}`);
+    }
+  }
+
+  if (weightHistory.length > 0) {
+    const recentWeight = [...weightHistory]
+      .sort((a, b) => a.date.localeCompare(b.date))
+      .slice(-12)
+      .map((entry) => `${entry.date}: ${entry.weight}kg`)
+      .join(", ");
+    parts.push(`Weight trend points: ${recentWeight}`);
+  }
+
+  return parts.join("\n");
+}
+
+function buildHistoryFallbackSummary(
+  weekLabel: string,
+  logs: ExerciseLog[],
+  weightHistory: BodyweightEntry[],
+): WeeklySummary {
+  const byWeek = new Map<string, number>();
+  const exerciseMentions = new Map<string, number>();
+
+  for (const log of logs) {
+    byWeek.set(log.weekStart, (byWeek.get(log.weekStart) ?? 0) + 1);
+    for (const ex of log.exercises) {
+      exerciseMentions.set(ex.name, (exerciseMentions.get(ex.name) ?? 0) + 1);
+    }
+  }
+
+  const weekCounts = [...byWeek.values()];
+  const avgSessions =
+    weekCounts.length > 0
+      ? (weekCounts.reduce((sum, count) => sum + count, 0) / weekCounts.length).toFixed(1)
+      : "0.0";
+
+  const topExercise = [...exerciseMentions.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+  const lines: SummaryLine[] = [
+    {
+      icon: "🔁",
+      label: "Consistency",
+      detail: `${logs.length} sessions logged across the last 8 completed weeks (${avgSessions}/week avg).`,
+    },
+  ];
+
+  if (topExercise) {
+    lines.push({
+      icon: "📈",
+      label: "Progress",
+      detail: `${topExercise} appears most often, suggesting steady progression potential.`,
+    });
+  }
+
+  if (weightHistory.length >= 2) {
+    const sorted = [...weightHistory].sort((a, b) => a.date.localeCompare(b.date));
+    const first = sorted[0]?.weight ?? sorted.at(-1)?.weight ?? 0;
+    const last = sorted.at(-1)?.weight ?? first;
+    const diff = last - first;
+    lines.push({
+      icon: "⚖️",
+      label: "Bodyweight",
+      detail: `Bodyweight changed by ${diff > 0 ? "+" : ""}${diff.toFixed(1)} kg over the same period.`,
+    });
+  }
+
+  lines.push({
+    icon: "🎯",
+    label: "Focus",
+    detail:
+      "Prioritize at-risk lifts with repeat misses and keep session frequency steady week to week.",
+  });
+
+  const trimmed = lines.slice(0, 5);
+  return {
+    weekStart: weekLabel,
+    headline: "8-week trend and focus review",
+    lines: trimmed,
+    text: trimmed.map((line) => `${line.icon} ${line.detail}`).join(" · "),
+  };
+}

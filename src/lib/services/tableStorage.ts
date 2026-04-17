@@ -7,7 +7,8 @@ export type TableName =
   | "BodyWeight"
   | "Goals"
   | "GoalState"
-  | "ExerciseCatalog";
+  | "ExerciseCatalog"
+  | "HistorySummaries";
 
 let serviceClient: TableServiceClient | null = null;
 const tableClients = new Map<TableName, TableClient>();

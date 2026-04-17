@@ -1,8 +1,29 @@
 <script lang="ts">
 	import type { WeeklySummary } from '$lib/types';
 
-	let { summary }: { summary: WeeklySummary | null } = $props();
+	let {
+		summary,
+		showNarrativeSentence = false
+	}: {
+		summary: WeeklySummary | null;
+		showNarrativeSentence?: boolean;
+	} = $props();
 	let open = $state(false);
+
+	function buildNarrativeSentence(summary: WeeklySummary): string {
+		if (summary.lines.length === 0) return summary.text;
+		const details = summary.lines
+			.map((line) => line.detail.trim())
+			.filter((detail) => detail.length > 0)
+			.map((detail) => detail.replace(/[.!?]+$/g, ''));
+
+		if (details.length === 0) return summary.text;
+		if (details.length === 1) return `Overall, ${details[0].toLowerCase()}.`;
+
+		const leading = details.slice(0, -1).map((detail) => detail.toLowerCase()).join(', ');
+		const ending = details.at(-1)?.toLowerCase() ?? '';
+		return `Overall, ${leading}, and ${ending}.`;
+	}
 </script>
 
 {#if summary}
@@ -15,6 +36,9 @@
 			<p class="text-sm font-semibold">{summary.headline}</p>
 			<span class="text-xs transition-transform {open ? 'rotate-180' : ''}">▼</span>
 		</div>
+		{#if showNarrativeSentence}
+			<p class="mt-2 text-xs leading-snug text-primary-content/85">{buildNarrativeSentence(summary)}</p>
+		{/if}
 		{#if open && summary.lines.length > 0}
 			<div class="mt-2 space-y-1">
 				{#each summary.lines as line (`${line.label}-${line.detail}`)}
