@@ -268,15 +268,29 @@ export async function generateHistoryFocusSummary(
       messages: [
         {
           role: "system",
-          content: `You are a strength coach analyzing 8 weeks of training history.
-Return ONLY valid JSON with this schema:
-{ "headline": string, "lines": [{ "icon": string, "label": string, "detail": string }] }
+          content: `Role: You are an expert Strength & Conditioning Coach and Data Analyst.
+Task: Analyze the provided training history and bodyweight log to extract actionable insights and define clear "next steps."
 
-Rules:
+Analysis Requirements:
+1. Trend Analysis: Identify progress trends in compound movements (e.g., Bench Press, Squat, RDL). Note weight increases and volume changes.
+2. Volume & Frequency: Evaluate the consistency of the training sessions.
+3. Relative Strength: Compare strength gains against bodyweight fluctuations.
+4. Volume Landmarks: Identify if exercises are stalling or if rep quality suggests a need for a de-load.
+
+Constraint:
+- Strict Length: The entire response must be a single paragraph and MUST NOT exceed 5 sentences.
+
+Output Format:
+Provide the analysis in a single, cohesive paragraph. It should flow logically from what has happened (the data) to what should happen next (the strategy). Focus on a professional, high-level coaching narrative.
+
+Response wrapper requirement:
+Return ONLY valid JSON with this schema:
+{ "headline": string, "summaryParagraph": string, "lines": [{ "icon": string, "label": string, "detail": string }] }
+
+Additional rules:
 - Keep headline <= 10 words.
 - Return 3-5 lines total.
 - Include at least one progress line and one focus-area line.
-- Focus areas should be concrete and actionable.
 - Keep each detail <= 20 words.
 - Use these icons where appropriate: 📈 progress, 🎯 focus, ⚖️ bodyweight, 🔁 consistency.
 - Never invent data that is not present in the prompt.`,
@@ -290,9 +304,15 @@ Rules:
     const content = response.choices[0]?.message?.content?.trim();
     if (!content) throw new Error("Empty LLM response");
 
-    const parsed = JSON.parse(content) as { headline: string; lines: SummaryLine[] };
+    const parsed = JSON.parse(content) as {
+      headline: string;
+      summaryParagraph?: string;
+      lines: SummaryLine[];
+    };
     const lines = (parsed.lines ?? []).slice(0, 5);
-    const text = lines.map((line) => `${line.icon} ${line.detail}`).join(" · ");
+    const text =
+      parsed.summaryParagraph?.trim() ||
+      lines.map((line) => `${line.icon} ${line.detail}`).join(" · ");
 
     return {
       weekStart: currentWeekStart,

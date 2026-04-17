@@ -11,6 +11,9 @@
 	let open = $state(false);
 
 	function buildNarrativeSentence(summary: WeeklySummary): string {
+		const providedText = summary.text?.trim();
+		if (providedText) return providedText;
+
 		if (summary.lines.length === 0) return summary.text;
 		const details = summary.lines
 			.map((line) => line.detail.trim())
