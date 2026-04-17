@@ -476,6 +476,47 @@ function normalizeRecommendations(
   ).slice(0, options.count ?? 4);
 }
 
+function parseGoalRecommendations(content: string): GoalRecommendation[] {
+  const trimmed = content.trim();
+
+  const withoutCodeFence = trimmed
+    .replace(/^```(?:json)?\s*/i, "")
+    .replace(/\s*```$/i, "")
+    .trim();
+
+  const parseCandidates = [withoutCodeFence];
+  const arrayStart = withoutCodeFence.indexOf("[");
+  const arrayEnd = withoutCodeFence.lastIndexOf("]");
+
+  if (arrayStart >= 0 && arrayEnd > arrayStart) {
+    parseCandidates.push(withoutCodeFence.slice(arrayStart, arrayEnd + 1));
+  }
+
+  for (const candidate of parseCandidates) {
+    try {
+      const parsed = JSON.parse(candidate) as
+        | GoalRecommendation[]
+        | { recommendations?: GoalRecommendation[]; goals?: GoalRecommendation[] };
+
+      if (Array.isArray(parsed)) {
+        return parsed;
+      }
+
+      if (Array.isArray(parsed.recommendations)) {
+        return parsed.recommendations;
+      }
+
+      if (Array.isArray(parsed.goals)) {
+        return parsed.goals;
+      }
+    } catch {
+      // Try next candidate
+    }
+  }
+
+  throw new SyntaxError("Unable to parse goal recommendations JSON payload");
+}
+
 async function getLLMRecommendations(
   logs: ExerciseLog[],
   weights: BodyweightEntry[],
@@ -523,7 +564,7 @@ async function getLLMRecommendations(
   const content = response.choices[0]?.message?.content?.trim();
   if (!content) throw new Error("Empty LLM response");
 
-  const parsed = JSON.parse(content) as GoalRecommendation[];
+  const parsed = parseGoalRecommendations(content);
   return normalizeRecommendations(parsed, options);
 }
 

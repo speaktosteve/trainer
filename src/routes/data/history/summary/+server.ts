@@ -1,12 +1,11 @@
 import { json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
-import {
-  getExerciseHistory,
-  getExerciseLogsForWeek,
-  getWeightHistory,
-} from "$lib/services/exerciseService";
+import { getExerciseHistory, getWeightHistory } from "$lib/services/exerciseService";
 import { generateHistoryFocusSummary } from "$lib/services/summaryService";
-import { getHistorySummary, saveHistorySummary } from "$lib/services/historySummaryService";
+import {
+  getHistorySummary,
+  saveHistorySummaryWithSignature,
+} from "$lib/services/historySummaryService";
 import { getWeekStart } from "$lib/utils/dates";
 
 function shiftDays(isoDate: string, days: number): string {
@@ -18,28 +17,42 @@ function shiftDays(isoDate: string, days: number): string {
 export const GET: RequestHandler = async () => {
   const currentWeekStart = getWeekStart();
 
-  const existing = await getHistorySummary(currentWeekStart);
-  if (existing) {
-    return json(existing);
-  }
-
-  const lastCompletedWeekStart = shiftDays(currentWeekStart, -7);
-  const lastCompletedWeekLogs = await getExerciseLogsForWeek(lastCompletedWeekStart);
-
-  if (lastCompletedWeekLogs.length === 0) {
-    return json(null);
-  }
-
-  const periodStart = shiftDays(lastCompletedWeekStart, -49);
-  const periodEnd = shiftDays(lastCompletedWeekStart, 6);
+  const periodStart = shiftDays(currentWeekStart, -49);
+  const periodEnd = shiftDays(currentWeekStart, 6);
 
   const [logs, weightHistory] = await Promise.all([
     getExerciseHistory({ fromDate: periodStart, toDate: periodEnd, limit: 800 }),
     getWeightHistory({ fromDate: periodStart, toDate: periodEnd }),
   ]);
 
+  if (logs.length === 0) {
+    return json(null);
+  }
+
+  const signature = buildHistorySignature(logs);
+
+  const existing = await getHistorySummary(currentWeekStart);
+  if (existing?.signature === signature) {
+    return json(existing.summary);
+  }
+
   const summary = await generateHistoryFocusSummary(currentWeekStart, logs, weightHistory);
-  await saveHistorySummary(currentWeekStart, summary);
+  await saveHistorySummaryWithSignature(currentWeekStart, summary, signature);
 
   return json(summary);
 };
+
+function buildHistorySignature(logs: Awaited<ReturnType<typeof getExerciseHistory>>): string {
+  return logs
+    .map((log) => {
+      const exercises = log.exercises
+        .map(
+          (exercise) =>
+            `${exercise.name}:${(exercise.actualReps ?? exercise.targetReps).join("-")}`,
+        )
+        .join("|");
+      return `${log.weekStart}:${log.day}:${log.completedDate}:${exercises}`;
+    })
+    .sort()
+    .join(";");
+}
