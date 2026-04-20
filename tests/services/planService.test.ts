@@ -7,6 +7,10 @@ vi.mock("$lib/services/tableStorage", () => ({
   DEFAULT_PK: "default",
 }));
 
+vi.mock("$lib/services/exerciseService", () => ({
+  getExerciseLogsForWeek: vi.fn(),
+}));
+
 vi.mock("$lib/utils/dates", async () => {
   const actual = await vi.importActual<typeof import("$lib/utils/dates")>("$lib/utils/dates");
   return {
@@ -25,6 +29,7 @@ import {
   savePlan,
 } from "$lib/services/planService";
 import { getTableClient } from "$lib/services/tableStorage";
+import { getExerciseLogsForWeek } from "$lib/services/exerciseService";
 
 const mockPlan: WeeklyPlan = {
   weekStart: "2026-03-30",
@@ -81,10 +86,118 @@ describe("planService", () => {
       };
       const mockClient = createMockTableClient([entity]);
       vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+      vi.mocked(getExerciseLogsForWeek).mockResolvedValue([]);
 
       const result = await getCurrentWeekPlan();
       expect(result).toEqual(mockPlan);
       expect(mockClient.getEntity).toHaveBeenCalledWith("default", "2026-03-30");
+    });
+
+    it("returns next week's saved plan when current week is fully completed", async () => {
+      const nextPlan: WeeklyPlan = {
+        weekStart: "2026-04-06",
+        sessions: [
+          {
+            day: "monday",
+            label: "Push",
+            exercises: [{ name: "Bench Press", targetWeight: 65, targetReps: [6, 6, 6, 6] }],
+          },
+        ],
+      };
+      const entities: PlanEntity[] = [
+        {
+          partitionKey: "default",
+          rowKey: "2026-03-30",
+          data: JSON.stringify(mockPlan),
+        },
+        {
+          partitionKey: "default",
+          rowKey: "2026-04-06",
+          data: JSON.stringify(nextPlan),
+        },
+      ];
+      const mockClient = createMockTableClient(entities);
+      vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+      vi.mocked(getExerciseLogsForWeek).mockResolvedValue([
+        {
+          day: "monday",
+          label: "Push",
+          completedDate: "2026-03-30",
+          weekStart: "2026-03-30",
+          exercises: [
+            {
+              name: "Bench Press",
+              targetWeight: 62.5,
+              targetReps: [6, 6, 6, 6],
+              actualReps: [6, 6, 6, 6],
+            },
+          ],
+        },
+      ]);
+
+      const result = await getCurrentWeekPlan();
+
+      expect(result).toEqual(nextPlan);
+    });
+
+    it("keeps current week's plan when it is not fully completed", async () => {
+      const nextPlan: WeeklyPlan = {
+        weekStart: "2026-04-06",
+        sessions: [
+          {
+            day: "monday",
+            label: "Push",
+            exercises: [{ name: "Bench Press", targetWeight: 65, targetReps: [6, 6, 6, 6] }],
+          },
+        ],
+      };
+      const currentPlan: WeeklyPlan = {
+        weekStart: "2026-03-30",
+        sessions: [
+          {
+            day: "monday",
+            label: "Push",
+            exercises: [
+              { name: "Bench Press", targetWeight: 62.5, targetReps: [6, 6, 6, 6] },
+              { name: "Incline Press", targetWeight: 20, targetReps: [10, 10, 10] },
+            ],
+          },
+        ],
+      };
+      const entities: PlanEntity[] = [
+        {
+          partitionKey: "default",
+          rowKey: "2026-03-30",
+          data: JSON.stringify(currentPlan),
+        },
+        {
+          partitionKey: "default",
+          rowKey: "2026-04-06",
+          data: JSON.stringify(nextPlan),
+        },
+      ];
+      const mockClient = createMockTableClient(entities);
+      vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+      vi.mocked(getExerciseLogsForWeek).mockResolvedValue([
+        {
+          day: "monday",
+          label: "Push",
+          completedDate: "2026-03-30",
+          weekStart: "2026-03-30",
+          exercises: [
+            {
+              name: "Bench Press",
+              targetWeight: 62.5,
+              targetReps: [6, 6, 6, 6],
+              actualReps: [6, 6, 6, 6],
+            },
+          ],
+        },
+      ]);
+
+      const result = await getCurrentWeekPlan();
+
+      expect(result).toEqual(currentPlan);
     });
 
     it("falls back to most recent plan when no plan for current week", async () => {
@@ -96,6 +209,7 @@ describe("planService", () => {
       };
       const mockClient = createMockTableClient([entity]);
       vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+      vi.mocked(getExerciseLogsForWeek).mockResolvedValue([]);
 
       const result = await getCurrentWeekPlan();
       expect(result).toEqual(recentPlan);
@@ -104,6 +218,7 @@ describe("planService", () => {
     it("returns null when no plans exist at all", async () => {
       const mockClient = createMockTableClient([]);
       vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+      vi.mocked(getExerciseLogsForWeek).mockResolvedValue([]);
 
       const result = await getCurrentWeekPlan();
       expect(result).toBeNull();

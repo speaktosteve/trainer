@@ -17,6 +17,10 @@
 	let generating = $state(false);
 	let generateError = $state<string | null>(null);
 
+	function normalizeDayKey(day: string): string {
+		return day.trim().toLowerCase();
+	}
+
 	onMount(async () => {
 		const planRes = await fetch('/data/plans');
 
@@ -27,11 +31,11 @@
 
 		// Load completed exercises for this week
 		if (plan) {
-			const logsRes = await fetch(`/data/exercises?from=${plan.weekStart}`);
+			const logsRes = await fetch(`/data/exercises?weekStart=${plan.weekStart}`);
 			if (logsRes.ok) {
 				const logs: ExerciseLog[] = await logsRes.json();
 				for (const log of logs) {
-					const key = log.day;
+					const key = normalizeDayKey(log.day);
 					if (!completedExercises[key]) completedExercises[key] = {};
 					for (const ex of log.exercises) {
 						completedExercises[key][ex.name] = ex;
@@ -57,7 +61,7 @@
 		});
 
 		if (res.ok) {
-			const key = log.day;
+			const key = normalizeDayKey(log.day);
 			if (!completedExercises[key]) completedExercises[key] = {};
 			for (const ex of log.exercises) {
 				completedExercises[key][ex.name] = ex;
@@ -71,8 +75,9 @@
 		const res = await fetch(`/data/exercises?${params}`, { method: 'DELETE' });
 
 		if (res.ok) {
-			if (completedExercises[day]) {
-				delete completedExercises[day][exerciseName];
+			const dayKey = normalizeDayKey(day);
+			if (completedExercises[dayKey]) {
+				delete completedExercises[dayKey][exerciseName];
 			}
 		}
 	}
@@ -236,7 +241,7 @@
 				<DayPlan
 					{session}
 					weekStart={plan.weekStart}
-					completedExercises={completedExercises[session.day] ?? {}}
+					completedExercises={completedExercises[normalizeDayKey(session.day)] ?? {}}
 					onExerciseComplete={handleExerciseComplete}
 					onExerciseUndo={handleExerciseUndo}
 					onAddNew={addExerciseToDay}

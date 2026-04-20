@@ -1,6 +1,7 @@
 import type { TableClient } from "@azure/data-tables";
 import type { WeeklyPlan, PlanEntity } from "$lib/types";
 import { getTableClient, DEFAULT_PK } from "./tableStorage";
+import { getExerciseLogsForWeek } from "./exerciseService";
 import { getWeekStart } from "$lib/utils/dates";
 
 const PENDING_NEXT_PLAN_PREFIX = "pending:";
@@ -31,8 +32,42 @@ function getPreviousWeekStart(weekStart: string): string {
 export async function getCurrentWeekPlan(): Promise<WeeklyPlan | null> {
   const weekStart = getWeekStart();
   const plan = await getPlan(weekStart);
-  if (plan) return plan;
+  if (plan) {
+    const completedLogs = await getExerciseLogsForWeek(weekStart);
+    if (isPlanComplete(plan, completedLogs)) {
+      const nextWeekPlan = await getPlan(getNextWeekStart(weekStart));
+      if (nextWeekPlan) {
+        return nextWeekPlan;
+      }
+    }
+    return plan;
+  }
   return getMostRecentPlan(weekStart);
+}
+
+function getNextWeekStart(weekStart: string): string {
+  const next = new Date(weekStart);
+  next.setDate(next.getDate() + 7);
+  return next.toISOString().slice(0, 10);
+}
+
+function isPlanComplete(
+  plan: WeeklyPlan,
+  logs: Awaited<ReturnType<typeof getExerciseLogsForWeek>>,
+): boolean {
+  const plannedExercises = plan.sessions.flatMap((session) =>
+    session.exercises.map((exercise) => `${session.day}|${exercise.name}`),
+  );
+
+  if (plannedExercises.length === 0) {
+    return false;
+  }
+
+  const completedExercises = new Set(
+    logs.flatMap((log) => log.exercises.map((exercise) => `${log.day}|${exercise.name}`)),
+  );
+
+  return plannedExercises.every((exerciseKey) => completedExercises.has(exerciseKey));
 }
 
 async function getMostRecentPlan(beforeWeekStart: string): Promise<WeeklyPlan | null> {
