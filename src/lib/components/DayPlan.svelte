@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import type { PlannedSession, ExerciseEntry, ExerciseLog } from '$lib/types';
 	import ExerciseCard from './ExerciseCard.svelte';
 
@@ -20,7 +21,12 @@
 
 	let expanded = $state(false);
 	let showAddForm = $state(false);
-	let addName = $state('');
+	let catalogNames = $state<string[]>([]);
+	let catalogLoading = $state(false);
+	let catalogError = $state<string | null>(null);
+	let addMode = $state<'existing' | 'new'>('existing');
+	let selectedCatalogName = $state('');
+	let addCustomName = $state('');
 	let addWeight = $state('');
 	let addReps = $state('8,8,8');
 	let addNotes = $state('');
@@ -65,7 +71,9 @@
 	}
 
 	function resetAddForm() {
-		addName = '';
+		addMode = 'existing';
+		selectedCatalogName = catalogNames[0] ?? '';
+		addCustomName = '';
 		addWeight = '';
 		addReps = '8,8,8';
 		addNotes = '';
@@ -73,10 +81,36 @@
 		addSaving = false;
 	}
 
+	async function loadExerciseCatalog() {
+		catalogLoading = true;
+		catalogError = null;
+		try {
+			const res = await fetch('/data/exercises/catalog');
+			if (!res.ok) {
+				catalogError = 'Unable to load exercise list';
+				return;
+			}
+
+			const items = (await res.json()) as Array<{ name: string }>;
+			catalogNames = items.map((item) => item.name);
+			if (!selectedCatalogName || !catalogNames.includes(selectedCatalogName)) {
+				selectedCatalogName = catalogNames[0] ?? '';
+			}
+		} finally {
+			catalogLoading = false;
+		}
+	}
+
+	function openAddForm() {
+		showAddForm = true;
+		resetAddForm();
+		void loadExerciseCatalog();
+	}
+
 	async function submitAddExercise() {
 		if (!onAddNew) return;
 
-		const name = addName.trim();
+		const name = addMode === 'new' ? addCustomName.trim() : selectedCatalogName.trim();
 		if (!name) {
 			addError = 'Exercise name is required';
 			return;
@@ -120,9 +154,17 @@
 			return;
 		}
 
+		if (addMode === 'new' && !catalogNames.includes(name)) {
+			catalogNames = [...catalogNames, name].sort((a, b) => a.localeCompare(b));
+		}
+
 		showAddForm = false;
 		resetAddForm();
 	}
+
+	onMount(() => {
+		resetAddForm();
+	});
 </script>
 
 <div class="card card-border bg-base-100 shadow-sm">
@@ -168,15 +210,53 @@
 				<div class="pt-1">
 					{#if showAddForm}
 						<div class="rounded-lg border border-base-300 bg-base-200/50 p-3">
+							{#if catalogError}
+								<p class="mb-2 text-xs text-error">{catalogError}</p>
+							{/if}
+							<div class="mb-2 flex flex-wrap gap-2 text-xs">
+								<button
+									type="button"
+									class={`btn btn-xs ${addMode === 'existing' ? 'btn-primary' : 'btn-ghost'}`}
+									onclick={() => (addMode = 'existing')}
+								>
+									Choose existing
+								</button>
+								<button
+									type="button"
+									class={`btn btn-xs ${addMode === 'new' ? 'btn-primary' : 'btn-ghost'}`}
+									onclick={() => (addMode = 'new')}
+								>
+									Add new
+								</button>
+							</div>
 							<div class="grid gap-2 md:grid-cols-2">
-								<label class="form-control">
-									<span class="label-text text-xs">Exercise name</span>
-									<input
-										class="input input-bordered input-sm"
-										bind:value={addName}
-										placeholder="e.g. Incline DB Press"
-									/>
-								</label>
+								{#if addMode === 'existing'}
+									<label class="form-control">
+										<span class="label-text text-xs">Exercise name</span>
+										<select
+											class="select select-bordered select-sm"
+											disabled={catalogLoading || catalogNames.length === 0}
+											bind:value={selectedCatalogName}
+										>
+											{#if catalogNames.length === 0}
+												<option value="">No exercises yet</option>
+											{:else}
+												{#each catalogNames as catalogName (catalogName)}
+													<option value={catalogName}>{catalogName}</option>
+												{/each}
+											{/if}
+										</select>
+									</label>
+								{:else}
+									<label class="form-control">
+										<span class="label-text text-xs">New exercise name</span>
+										<input
+											class="input input-bordered input-sm"
+											bind:value={addCustomName}
+											placeholder="e.g. Incline DB Press"
+										/>
+									</label>
+								{/if}
 								<label class="form-control">
 									<span class="label-text text-xs">Target weight (kg)</span>
 									<input
@@ -229,7 +309,7 @@
 							</div>
 						</div>
 					{:else}
-						<button class="btn btn-outline btn-sm" onclick={() => (showAddForm = true)}>Add New</button>
+						<button class="btn btn-outline btn-sm" onclick={openAddForm}>Add New</button>
 					{/if}
 				</div>
 			{/if}

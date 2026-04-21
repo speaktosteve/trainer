@@ -12,6 +12,8 @@
 
 A mobile-first web app for tracking and planning gym sessions. Built with SvelteKit, TypeScript, and Tailwind CSS, backed by Azure Table Storage.
 
+All vibes, no typing.
+
 ## Features
 
 - **Plan screen** — View your weekly training plan, mark exercises complete with actual weight/reps
