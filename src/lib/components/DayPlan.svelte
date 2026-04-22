@@ -72,7 +72,7 @@
 
 	function resetAddForm() {
 		addMode = 'existing';
-		selectedCatalogName = catalogNames[0] ?? '';
+		selectedCatalogName = String(catalogNames[0] ?? '');
 		addCustomName = '';
 		addWeight = '';
 		addReps = '8,8,8';
@@ -94,7 +94,7 @@
 			const items = (await res.json()) as Array<{ name: string }>;
 			catalogNames = items.map((item) => item.name);
 			if (!selectedCatalogName || !catalogNames.includes(selectedCatalogName)) {
-				selectedCatalogName = catalogNames[0] ?? '';
+				selectedCatalogName = String(catalogNames[0] ?? '');
 			}
 		} finally {
 			catalogLoading = false;
@@ -110,7 +110,8 @@
 	async function submitAddExercise() {
 		if (!onAddNew) return;
 
-		const name = addMode === 'new' ? addCustomName.trim() : selectedCatalogName.trim();
+		const candidateName = addMode === 'new' ? addCustomName : selectedCatalogName;
+		const name = `${candidateName ?? ''}`.trim();
 		if (!name) {
 			addError = 'Exercise name is required';
 			return;
@@ -128,7 +129,7 @@
 			return;
 		}
 
-		const weightText = addWeight.trim();
+		const weightText = `${addWeight ?? ''}`.trim();
 		let targetWeight: number | undefined;
 		if (weightText) {
 			const parsed = Number(weightText);
@@ -145,7 +146,7 @@
 			name,
 			targetReps,
 			targetWeight,
-			notes: addNotes.trim() || undefined
+			notes: `${addNotes ?? ''}`.trim() || undefined
 		});
 		addSaving = false;
 
