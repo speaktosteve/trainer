@@ -47,7 +47,8 @@ export class LLMPlanProvider implements PlanGenerationProvider {
             content: `You are an expert strength & conditioning coach. Given the current training plan and recent performance data, generate next week's plan with intelligent progressive overload.
 
 Rules:
-- If the lifter hit all target reps, suggest a sensible progression for next week.
+- If the lifter hit all target reps on a weighted, non-machine-maxed exercise, you MUST increase targetWeight for next week.
+- For weighted, non-machine-maxed exercises, keep targetReps unchanged from the current plan. Progress via load, not reps.
 - If they missed reps, keep progression conservative (hold load and/or adjust reps) and add a brief rationale.
 - For bodyweight exercises, add 1 rep to the weakest set if all reps were hit.
 - Keep the same session structure (days, labels) unless there's a clear reason to change.
@@ -223,6 +224,12 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
           this.applyNoRecordConstraint(ex, sourceRef.exercise);
         }
 
+        this.applyWeightedProgressionConstraint(
+          ex,
+          sourceRef.exercise,
+          this.resolvePerformance(sourceRef, performanceLookups),
+        );
+
         this.applyMachineMaxConstraint(
           ex,
           sourceRef.exercise,
@@ -383,11 +390,9 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
 
     for (const log of completedLogs) {
       for (const ex of log.exercises) {
-        if ((ex.actualReps?.length ?? 0) > 0) {
-          byLegacy.add(buildLegacyExerciseKey(log.day, ex.name));
-          if (ex.exerciseId) {
-            byId.add(ex.exerciseId);
-          }
+        byLegacy.add(buildLegacyExerciseKey(log.day, ex.name));
+        if (ex.exerciseId) {
+          byId.add(ex.exerciseId);
         }
       }
     }
@@ -482,6 +487,33 @@ For bodyweight exercises, omit "targetWeight". Always include "name" and "target
       target.notes === "No record last week"
         ? "Machine already at max weight; No record last week"
         : "Machine already at max weight";
+  }
+
+  private applyWeightedProgressionConstraint(
+    target: ExerciseEntry,
+    sourceExercise: ExerciseEntry,
+    performance: { weight?: number; reps: number[] } | undefined,
+  ): void {
+    if (sourceExercise.targetWeight === undefined || sourceExercise.machineWeightMaxedOut) {
+      return;
+    }
+
+    if (!performance || performance.reps.length === 0) {
+      return;
+    }
+
+    target.targetReps = [...sourceExercise.targetReps];
+
+    const hitAllReps = didMeetSetTargets(sourceExercise.targetReps, performance.reps);
+    if (hitAllReps) {
+      const increment = sourceExercise.targetWeight < 20 ? 1 : 2.5;
+      target.targetWeight = sourceExercise.targetWeight + increment;
+      target.notes = `Progressed from ${sourceExercise.targetWeight} kg`;
+      return;
+    }
+
+    target.targetWeight = sourceExercise.targetWeight;
+    target.notes = `Retry — last week hit ${performance.reps.join(", ")} reps`;
   }
 
   private buildPrompt(

@@ -1,20 +1,17 @@
 import { describe, it, expect, vi, beforeEach } from "vite-plus/test";
-import {
-  SmartCopyProvider,
-  LLMPlanProvider,
-  getPlanGenerator,
-  planGenerator,
-  llmPlanGenerator,
-} from "$lib/services/planGenerationService";
 import type { WeeklyPlan, ExerciseLog } from "$lib/types";
 
-vi.mock("$lib/services/openaiClient", () => ({
+const openAiClientMock = vi.hoisted(() => ({
   getOpenAIClient: vi.fn(),
   getDeploymentName: vi.fn(() => "gpt-4o-mini"),
   isLLMConfigured: vi.fn(() => false),
 }));
 
-import { getOpenAIClient, isLLMConfigured } from "$lib/services/openaiClient";
+vi.mock("$lib/services/openaiClient", () => openAiClientMock);
+
+const { SmartCopyProvider, LLMPlanProvider, getPlanGenerator, planGenerator, llmPlanGenerator } =
+  await import("$lib/services/planGenerationService");
+const { getOpenAIClient, isLLMConfigured } = await import("$lib/services/openaiClient");
 
 const basePlan: WeeklyPlan = {
   weekStart: "2026-03-30",
@@ -668,7 +665,71 @@ describe("LLMPlanProvider", () => {
     expect(ex.notes).toBe("No record last week");
   });
 
-  it("removes stale no-record notes when completion exists", async () => {
+  it("does not apply no-record note when an exercise is logged without actual reps", async () => {
+    const sourcePlan: WeeklyPlan = {
+      weekStart: "2026-03-30",
+      sessions: [
+        {
+          day: "friday",
+          label: "Full Body",
+          exercises: [
+            {
+              name: "Smith Shoulder Press",
+              targetWeight: 40,
+              targetReps: [10, 10, 10],
+            },
+          ],
+        },
+      ],
+    };
+
+    const completedLogs = [
+      makeLog("friday", [
+        {
+          name: "Smith Shoulder Press",
+          targetWeight: 40,
+          targetReps: [10, 10, 10],
+          actualWeight: 40,
+          // Import/backfill data may omit actualReps; this should still count as recorded.
+        },
+      ]),
+    ];
+
+    const llmPayload: WeeklyPlan = {
+      weekStart: "2026-04-06",
+      sessions: [
+        {
+          day: "friday",
+          label: "Full Body",
+          exercises: [
+            {
+              name: "Smith Shoulder Press",
+              targetWeight: 40,
+              targetReps: [10, 10, 10],
+              notes: "No record last week",
+            },
+          ],
+        },
+      ],
+    };
+
+    const mockCreate = vi.fn().mockResolvedValue({
+      choices: [{ message: { content: JSON.stringify(llmPayload) } }],
+    });
+    vi.mocked(getOpenAIClient).mockReturnValue({
+      chat: { completions: { create: mockCreate } },
+    } as any);
+
+    const provider = new LLMPlanProvider();
+    const result = await provider.generateNextPlan(sourcePlan, completedLogs, []);
+    const ex = result.sessions[0].exercises[0];
+
+    expect(ex.targetWeight).toBe(40);
+    expect(ex.targetReps).toEqual([10, 10, 10]);
+    expect(ex.notes).toBeUndefined();
+  });
+
+  it("enforces weighted progression and clears stale no-record notes when completion exists", async () => {
     const sourcePlan: WeeklyPlan = {
       weekStart: "2026-03-30",
       sessions: [
@@ -727,7 +788,135 @@ describe("LLMPlanProvider", () => {
     const result = await provider.generateNextPlan(sourcePlan, completedLogs, []);
     const ex = result.sessions[0].exercises[0];
 
-    expect(ex.notes).toBeUndefined();
+    expect(ex.targetWeight).toBe(70.5);
+    expect(ex.notes).toBe("Progressed from 68 kg");
+  });
+
+  it("holds weighted load and adds retry note when set targets are missed", async () => {
+    const sourcePlan: WeeklyPlan = {
+      weekStart: "2026-03-30",
+      sessions: [
+        {
+          day: "wednesday",
+          label: "Lower",
+          exercises: [
+            {
+              name: "Squat",
+              targetWeight: 80,
+              targetReps: [5, 5, 5],
+            },
+          ],
+        },
+      ],
+    };
+
+    const completedLogs = [
+      makeLog("wednesday", [
+        {
+          name: "Squat",
+          targetWeight: 80,
+          targetReps: [5, 5, 5],
+          actualWeight: 80,
+          actualReps: [5, 4, 3],
+        },
+      ]),
+    ];
+
+    const llmPayload: WeeklyPlan = {
+      weekStart: "2026-04-06",
+      sessions: [
+        {
+          day: "wednesday",
+          label: "Lower",
+          exercises: [
+            {
+              name: "Squat",
+              targetWeight: 85,
+              targetReps: [5, 5, 5],
+              notes: "No change; all reps hit.",
+            },
+          ],
+        },
+      ],
+    };
+
+    const mockCreate = vi.fn().mockResolvedValue({
+      choices: [{ message: { content: JSON.stringify(llmPayload) } }],
+    });
+    vi.mocked(getOpenAIClient).mockReturnValue({
+      chat: { completions: { create: mockCreate } },
+    } as any);
+
+    const provider = new LLMPlanProvider();
+    const result = await provider.generateNextPlan(sourcePlan, completedLogs, []);
+    const ex = result.sessions[0].exercises[0];
+
+    expect(ex.targetWeight).toBe(80);
+    expect(ex.notes).toBe("Retry — last week hit 5, 4, 3 reps");
+  });
+
+  it("keeps weighted rep targets unchanged when the LLM tries to alter them", async () => {
+    const sourcePlan: WeeklyPlan = {
+      weekStart: "2026-03-30",
+      sessions: [
+        {
+          day: "wednesday",
+          label: "Lower",
+          exercises: [
+            {
+              name: "Squat",
+              targetWeight: 80,
+              targetReps: [5, 5, 5],
+            },
+          ],
+        },
+      ],
+    };
+
+    const completedLogs = [
+      makeLog("wednesday", [
+        {
+          name: "Squat",
+          targetWeight: 80,
+          targetReps: [5, 5, 5],
+          actualWeight: 80,
+          actualReps: [5, 5, 5],
+        },
+      ]),
+    ];
+
+    const llmPayload: WeeklyPlan = {
+      weekStart: "2026-04-06",
+      sessions: [
+        {
+          day: "wednesday",
+          label: "Lower",
+          exercises: [
+            {
+              name: "Squat",
+              targetWeight: 82.5,
+              targetReps: [6, 6, 6],
+              notes: "Increase load and reps",
+            },
+          ],
+        },
+      ],
+    };
+
+    const mockCreate = vi.fn().mockResolvedValue({
+      choices: [{ message: { content: JSON.stringify(llmPayload) } }],
+    });
+    vi.mocked(getOpenAIClient).mockReturnValue({
+      chat: { completions: { create: mockCreate } },
+    } as any);
+
+    const provider = new LLMPlanProvider();
+    const result = await provider.generateNextPlan(sourcePlan, completedLogs, []);
+    const ex = result.sessions[0].exercises[0];
+
+    expect(ex.targetWeight).toBe(82.5);
+    expect(ex.targetReps).toEqual([5, 5, 5]);
+    expect(ex.notes).toBe("Progressed from 80 kg");
   });
 
   it("does not leak notes between same exercise names on different days", async () => {
