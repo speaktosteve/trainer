@@ -23,7 +23,7 @@ jobs:
     if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: voidzero-dev/setup-vp@v1
 
@@ -60,7 +60,7 @@ jobs:
       OPENAI_ENDPOINT: ${{ vars.AZURE_OPENAI_ENDPOINT }}
       RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Validate required repository variables
         run: |
           missing=()

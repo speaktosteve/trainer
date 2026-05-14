@@ -21,7 +21,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
 
             - name: Setup VP
               uses: voidzero-dev/setup-vp@v1
@@ -77,14 +77,39 @@ jobs:
                   name: playwright-html-report
                   path: playwright-report
 
+            - name: Check if GitHub Pages is enabled
+              id: pages_check
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  status=$(curl -sS -o /tmp/pages.json -w "%{http_code}" \
+                    -H "Authorization: Bearer $GITHUB_TOKEN" \
+                    -H "Accept: application/vnd.github+json" \
+                    "https://api.github.com/repos/${{ github.repository }}/pages")
+
+                  if [ "$status" = "200" ]; then
+                    echo "enabled=true" >> "$GITHUB_OUTPUT"
+                    echo "GitHub Pages is enabled."
+                  else
+                    echo "enabled=false" >> "$GITHUB_OUTPUT"
+                    echo "GitHub Pages is not enabled (HTTP $status). Skipping report deploy."
+                  fi
+
             - name: Setup GitHub Pages
+              if: steps.pages_check.outputs.enabled == 'true'
               uses: actions/configure-pages@v5
 
             - name: Upload Pages Artifact
+              if: steps.pages_check.outputs.enabled == 'true'
               uses: actions/upload-pages-artifact@v3
               with:
                   path: playwright-report
 
             - name: Deploy to GitHub Pages
+              if: steps.pages_check.outputs.enabled == 'true'
               id: deployment
               uses: actions/deploy-pages@v4
+
+            - name: Pages deployment skipped
+              if: steps.pages_check.outputs.enabled != 'true'
+              run: echo "Skipping Pages deploy because GitHub Pages is not enabled for this repository."

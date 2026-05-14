@@ -62,7 +62,7 @@ describe("mcp handlers", () => {
       limit: 25,
     });
 
-    expect(result.data).toEqual([]);
+    expect(result.data).toEqual({ logs: [] });
     expect(getExerciseHistory).toHaveBeenCalledWith({
       fromDate: "2026-03-01",
       toDate: "2026-03-31",
@@ -77,7 +77,7 @@ describe("mcp handlers", () => {
       startDate: "2026-03-01",
     });
 
-    expect(result.data).toEqual([{ date: "2026-03-27", weight: 77.5 }]);
+    expect(result.data).toEqual({ entries: [{ date: "2026-03-27", weight: 77.5 }] });
     expect(getWeightHistory).toHaveBeenCalledWith({
       fromDate: "2026-03-01",
       toDate: undefined,
@@ -163,8 +163,9 @@ describe("mcp handlers", () => {
 
     const result = await executeMcpTool("get_goals", {});
 
-    expect(result.data).toHaveLength(1);
-    expect((result.data as Array<{ id: string }>)[0]?.id).toBe("goal-1");
+    const goals = (result.data as { goals: Array<{ id: string }> }).goals;
+    expect(goals).toHaveLength(1);
+    expect(goals[0]?.id).toBe("goal-1");
   });
 
   it("executes get_goal_progress for a specific goal", async () => {
