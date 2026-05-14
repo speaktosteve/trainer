@@ -164,6 +164,46 @@
 		return null;
 	}
 
+	async function removeExerciseFromDay(day: string, exerciseName: string): Promise<string | null> {
+		if (!plan) return 'No active plan loaded';
+
+		const updatedPlan: WeeklyPlan = {
+			...plan,
+			sessions: plan.sessions.map((session) =>
+				session.day === day
+					? {
+						...session,
+						exercises: session.exercises.filter((exercise) => exercise.name !== exerciseName)
+					}
+					: session
+			)
+		};
+
+		const res = await fetch('/data/plans', {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(updatedPlan)
+		});
+
+		if (!res.ok) {
+			let message = 'Failed to remove exercise';
+			try {
+				const data = await res.json();
+				message = data.error ?? message;
+			} catch {
+				// Keep fallback message if error response is not JSON
+			}
+			return message;
+		}
+
+		plan = updatedPlan;
+		const dayKey = normalizeDayKey(day);
+		if (completedExercises[dayKey]?.[exerciseName]) {
+			delete completedExercises[dayKey][exerciseName];
+		}
+		return null;
+	}
+
 	function cancelCurrentPlanEdit() {
 		editingCurrentPlan = false;
 	}
@@ -245,6 +285,7 @@
 					onExerciseComplete={handleExerciseComplete}
 					onExerciseUndo={handleExerciseUndo}
 					onAddNew={addExerciseToDay}
+					onRemoveExercise={removeExerciseFromDay}
 				/>
 			{/each}
 		</div>

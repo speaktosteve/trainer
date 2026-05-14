@@ -5,12 +5,14 @@
 		exercise,
 		completed = false,
 		onComplete,
-		onUndo
+		onUndo,
+		onRemove
 	}: {
 		exercise: ExerciseEntry;
 		completed?: boolean;
 		onComplete?: (actual: ExerciseEntry) => void;
 		onUndo?: () => void;
+		onRemove?: () => void;
 	} = $props();
 
 	let editing = $state(false);
@@ -94,12 +96,24 @@
 				{/if}
 			</div>
 		{:else}
-			<button
-				class="btn btn-primary btn-sm"
-				onclick={() => (editing = !editing)}
-			>
-				{editing ? 'Cancel' : 'Log'}
-			</button>
+			<div class="flex items-center gap-2">
+				{#if onRemove}
+					<button
+						type="button"
+						class="btn btn-ghost btn-sm text-error"
+						onclick={onRemove}
+						aria-label={`Remove ${exercise.name} from this week's plan`}
+					>
+						Remove
+					</button>
+				{/if}
+				<button
+					class="btn btn-primary btn-sm"
+					onclick={() => (editing = !editing)}
+				>
+					{editing ? 'Cancel' : 'Log'}
+				</button>
+			</div>
 		{/if}
 	</div>
 

@@ -10,7 +10,8 @@
 		completedExercises = {},
 		onExerciseComplete,
 		onExerciseUndo,
-		onAddNew
+		onAddNew,
+		onRemoveExercise
 	}: {
 		session: PlannedSession;
 		weekStart: string;
@@ -18,6 +19,7 @@
 		onExerciseComplete?: (log: ExerciseLog) => void;
 		onExerciseUndo?: (day: string, exerciseName: string) => void;
 		onAddNew?: (day: string, exercise: ExerciseEntry) => Promise<string | null>;
+		onRemoveExercise?: (day: string, exerciseName: string) => Promise<string | null>;
 	} = $props();
 
 	let expanded = $state(false);
@@ -34,6 +36,7 @@
 	let addError = $state<string | null>(null);
 	let addSaving = $state(false);
 	let addPrefillRequestId = 0;
+	let removeError = $state<string | null>(null);
 
 	const dayLabels: Record<string, string> = {
 		monday: 'Monday',
@@ -105,8 +108,21 @@
 
 	function openAddForm() {
 		showAddForm = true;
+		removeError = null;
 		resetAddForm();
 		void loadExerciseCatalog();
+	}
+
+	async function handleRemoveExercise(exerciseName: string) {
+		if (!onRemoveExercise) return;
+		const confirmed = window.confirm(`Remove ${exerciseName} from this week's plan?`);
+		if (!confirmed) return;
+
+		removeError = null;
+		const error = await onRemoveExercise(session.day, exerciseName);
+		if (error) {
+			removeError = error;
+		}
 	}
 
 	async function prefillAddFormFromLatest(exerciseName: string) {
@@ -217,6 +233,9 @@
 
 	{#if expanded}
 		<div class="space-y-2 border-t border-base-300 p-4 pt-3">
+			{#if removeError}
+				<p class="text-xs text-error">{removeError}</p>
+			{/if}
 			{#each session.exercises as exercise (exercise.name)}
 				{@const actualData = completedExercises[exercise.name]}
 				<ExerciseCard
@@ -224,6 +243,7 @@
 					completed={exercise.name in completedExercises}
 					onComplete={(actual) => handleExerciseComplete(exercise, actual)}
 					onUndo={onExerciseUndo ? () => onExerciseUndo(session.day, exercise.name) : undefined}
+					onRemove={onRemoveExercise ? () => handleRemoveExercise(exercise.name) : undefined}
 				/>
 			{/each}
 
