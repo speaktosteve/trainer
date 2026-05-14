@@ -136,10 +136,12 @@ jobs:
           STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
           OPENAI_KEY: ${{ secrets.AZURE_OPENAI_KEY }}
         run: |
+          DEPLOYED_AT="$(date -u '+%b %-d, %Y %-I:%M %p UTC')"
           env_args=(
             "AZURE_STORAGE_CONNECTION_STRING=$STORAGE_CONNECTION_STRING"
             "HOST=0.0.0.0"
             "PORT=3000"
+            "PUBLIC_DEPLOYED_AT=$DEPLOYED_AT"
           )
 
           if [ -n "$OPENAI_ENDPOINT" ]; then
