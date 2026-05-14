@@ -75,7 +75,9 @@ describe("/data/exercises route", () => {
   it("GET returns date-filtered history when no specialized query is provided", async () => {
     vi.mocked(getExerciseHistory).mockResolvedValue([sampleLog]);
 
-    const request = new Request("http://localhost/data/exercises?from=2026-05-01&to=2026-05-12&limit=50");
+    const request = new Request(
+      "http://localhost/data/exercises?from=2026-05-01&to=2026-05-12&limit=50",
+    );
     const response = await GET({ url: new URL(request.url) } as any);
     const payload = await parseJson<ExerciseLog[]>(response);
 
