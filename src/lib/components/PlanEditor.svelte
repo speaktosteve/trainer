@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import type { WeeklyPlan, ExerciseEntry } from '$lib/types';
 	import SummaryBanner from '$lib/components/SummaryBanner.svelte';
+	import { fetchLatestSubmittedExerciseDefaults } from '$lib/services/exerciseDefaultsClient';
 
 	let {
 		plan,
@@ -52,6 +53,7 @@
 	let addNotes = $state('');
 	let addSaving = $state(false);
 	let addError = $state<string | null>(null);
+	let addPrefillRequestId = 0;
 
 	const dayLabels: Record<string, string> = {
 		monday: 'Monday',
@@ -121,6 +123,24 @@
 	function openAddExercise(sessionIdx: number) {
 		addingSessionIdx = sessionIdx;
 		resetAddExerciseForm();
+	}
+
+	async function prefillAddFormFromLatest(exerciseName: string) {
+		const requestId = ++addPrefillRequestId;
+		const defaults = await fetchLatestSubmittedExerciseDefaults(exerciseName);
+		if (requestId !== addPrefillRequestId || !defaults) {
+			return;
+		}
+
+		addSetCount = Math.max(1, defaults.targetReps.length);
+		addRepsPerSet = Math.max(1, defaults.targetReps[0] ?? 8);
+		if (defaults.targetWeight !== undefined) {
+			addWeightEnabled = true;
+			addTargetWeight = defaults.targetWeight;
+		} else {
+			addWeightEnabled = false;
+			addTargetWeight = undefined;
+		}
 	}
 
 	function cancelAddExercise() {
@@ -205,6 +225,13 @@
 
 	onMount(async () => {
 		await loadExerciseCatalog();
+	});
+
+	$effect(() => {
+		if (addingSessionIdx === null || addMode !== 'existing') return;
+		const exerciseName = selectedCatalogName.trim();
+		if (!exerciseName) return;
+		void prefillAddFormFromLatest(exerciseName);
 	});
 </script>
 

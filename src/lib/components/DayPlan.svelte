@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import type { PlannedSession, ExerciseEntry, ExerciseLog } from '$lib/types';
 	import ExerciseCard from './ExerciseCard.svelte';
+	import { fetchLatestSubmittedExerciseDefaults } from '$lib/services/exerciseDefaultsClient';
 
 	let {
 		session,
@@ -32,6 +33,7 @@
 	let addNotes = $state('');
 	let addError = $state<string | null>(null);
 	let addSaving = $state(false);
+	let addPrefillRequestId = 0;
 
 	const dayLabels: Record<string, string> = {
 		monday: 'Monday',
@@ -107,6 +109,17 @@
 		void loadExerciseCatalog();
 	}
 
+	async function prefillAddFormFromLatest(exerciseName: string) {
+		const requestId = ++addPrefillRequestId;
+		const defaults = await fetchLatestSubmittedExerciseDefaults(exerciseName);
+		if (requestId !== addPrefillRequestId || !defaults) {
+			return;
+		}
+
+		addReps = defaults.targetReps.join(',');
+		addWeight = defaults.targetWeight !== undefined ? String(defaults.targetWeight) : '';
+	}
+
 	async function submitAddExercise() {
 		if (!onAddNew) return;
 
@@ -165,6 +178,13 @@
 
 	onMount(() => {
 		resetAddForm();
+	});
+
+	$effect(() => {
+		if (!showAddForm || addMode !== 'existing') return;
+		const exerciseName = selectedCatalogName.trim();
+		if (!exerciseName) return;
+		void prefillAddFormFromLatest(exerciseName);
 	});
 </script>
 

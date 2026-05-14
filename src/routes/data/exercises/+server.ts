@@ -5,10 +5,17 @@ import {
   getExerciseHistory,
   deleteExerciseLog,
   getExerciseLogsForWeek,
+  getLatestSubmittedExerciseTargets,
 } from "$lib/services/exerciseService";
 import type { ExerciseLog } from "$lib/types";
 
 export const GET: RequestHandler = async ({ url }) => {
+  const latestFor = url.searchParams.get("latestFor") ?? undefined;
+  if (latestFor) {
+    const latest = await getLatestSubmittedExerciseTargets(latestFor);
+    return json(latest);
+  }
+
   const weekStart = url.searchParams.get("weekStart") ?? undefined;
   if (weekStart) {
     const logs = await getExerciseLogsForWeek(weekStart);

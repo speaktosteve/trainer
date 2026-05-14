@@ -12,6 +12,9 @@
     "preview": "vp preview",
     "test": "vp test --run",
     "test:watch": "vp test",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:all": "vp test --run && playwright test",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json && eslint .",
@@ -27,6 +30,7 @@
     "openai": "^6.33.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.55.0",
     "@sveltejs/adapter-node": "^5.5.4",
     "@sveltejs/kit": "^2.55.0",
     "@sveltejs/vite-plugin-svelte": "^7.0.0",

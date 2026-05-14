@@ -1,6 +1,7 @@
 import type { TableClient } from "@azure/data-tables";
 import type {
   ExerciseLog,
+  ExerciseEntry,
   ExerciseLogEntity,
   BodyweightEntry,
   BodyweightEntity,
@@ -252,6 +253,39 @@ export async function deleteExerciseLog(
 export async function getExerciseLogsForWeek(weekStart: string): Promise<ExerciseLog[]> {
   const logs = await getExerciseHistory({ limit: 500 });
   return logs.filter((log) => log.weekStart === weekStart);
+}
+
+/**
+ * Get target reps/weight from the most recently submitted log for an exercise.
+ */
+export async function getLatestSubmittedExerciseTargets(
+  exerciseName: string,
+): Promise<Pick<ExerciseEntry, "targetReps" | "targetWeight"> | null> {
+  const normalizedName = normalizeExerciseKey(exerciseName);
+  if (!normalizedName) return null;
+
+  const client = await getExerciseClient();
+  const entities = client.listEntities<ExerciseLogEntity>({
+    queryOptions: { filter: `PartitionKey eq '${DEFAULT_PK}'` },
+  });
+
+  for await (const entity of entities) {
+    const log = JSON.parse(entity.data) as ExerciseLog;
+    const match = log.exercises.find(
+      (exercise) => normalizeExerciseKey(exercise.name) === normalizedName,
+    );
+    if (!match) continue;
+
+    const repsSource = match.actualReps?.length ? match.actualReps : match.targetReps;
+    const targetWeight = match.actualWeight ?? match.targetWeight;
+
+    return {
+      targetReps: [...repsSource],
+      targetWeight,
+    };
+  }
+
+  return null;
 }
 
 // ── Bodyweight ───────────────────────────────────────────────────────

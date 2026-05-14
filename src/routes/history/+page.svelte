@@ -75,7 +75,7 @@
 	const exerciseNames = $derived(() => {
 		const seen = new Set<string>();
 		const names: string[] = [];
-		// Preserve order from most recent logs first
+		// Collect unique names from loaded history
 		for (const log of exerciseLogs) {
 			for (const ex of log.exercises) {
 				if (!seen.has(ex.name)) {
@@ -84,7 +84,7 @@
 				}
 			}
 		}
-		return names;
+		return names.sort((a, b) => a.localeCompare(b));
 	});
 
 	// Map: "exerciseName|weekStart" → CellData (best effort per exercise per week)

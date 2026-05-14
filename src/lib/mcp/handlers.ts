@@ -54,24 +54,28 @@ function parseGoalProgressArgs(args: Record<string, unknown>): GoalProgressArgs 
 
 async function getExerciseHistoryTool(
   args: ExerciseHistoryArgs,
-): Promise<McpToolCallResult<ExerciseLog[]>> {
+): Promise<McpToolCallResult<{ logs: ExerciseLog[] }>> {
   return {
-    data: await getExerciseHistory({
-      fromDate: parseIsoDate(args.startDate, "startDate"),
-      toDate: parseIsoDate(args.endDate, "endDate"),
-      limit: parseLimit(args.limit),
-    }),
+    data: {
+      logs: await getExerciseHistory({
+        fromDate: parseIsoDate(args.startDate, "startDate"),
+        toDate: parseIsoDate(args.endDate, "endDate"),
+        limit: parseLimit(args.limit),
+      }),
+    },
   };
 }
 
 async function getBodyweightHistoryTool(
   args: BodyweightHistoryArgs,
-): Promise<McpToolCallResult<BodyweightEntry[]>> {
+): Promise<McpToolCallResult<{ entries: BodyweightEntry[] }>> {
   return {
-    data: await getWeightHistory({
-      fromDate: parseIsoDate(args.startDate, "startDate"),
-      toDate: parseIsoDate(args.endDate, "endDate"),
-    }),
+    data: {
+      entries: await getWeightHistory({
+        fromDate: parseIsoDate(args.startDate, "startDate"),
+        toDate: parseIsoDate(args.endDate, "endDate"),
+      }),
+    },
   };
 }
 
@@ -103,10 +107,10 @@ async function getWeekSummaryTool(
   return { data: summary };
 }
 
-async function getGoalsTool(): Promise<McpToolCallResult<GoalWithProgress[]>> {
+async function getGoalsTool(): Promise<McpToolCallResult<{ goals: GoalWithProgress[] }>> {
   const goals = await getGoalsWithProgress();
   return {
-    data: goals.filter((goal) => goal.status === "in_progress"),
+    data: { goals: goals.filter((goal) => goal.status === "in_progress") },
   };
 }
 

@@ -11,6 +11,7 @@ import {
   getExerciseHistory,
   deleteExerciseLog,
   getExerciseLogsForWeek,
+  getLatestSubmittedExerciseTargets,
   logWeight,
   getWeightHistory,
 } from "$lib/services/exerciseService";
@@ -309,6 +310,81 @@ describe("exerciseService", () => {
 
       const result = await getExerciseLogsForWeek("2026-03-30");
       expect(result).toEqual([]);
+    });
+  });
+
+  describe("getLatestSubmittedExerciseTargets", () => {
+    it("returns actual reps/weight from the newest matching log", async () => {
+      const newestLog: ExerciseLog = {
+        ...mockLog,
+        completedDate: "2026-04-06",
+        exercises: [
+          {
+            name: "Bench Press",
+            targetWeight: 65,
+            targetReps: [6, 6, 6, 6],
+            actualWeight: 67.5,
+            actualReps: [6, 6, 6, 6],
+          },
+        ],
+      };
+      const olderLog: ExerciseLog = {
+        ...mockLog,
+        completedDate: "2026-03-30",
+        exercises: [
+          {
+            name: "Bench Press",
+            targetWeight: 62.5,
+            targetReps: [6, 6, 6, 6],
+            actualWeight: 62.5,
+            actualReps: [6, 6, 6, 5],
+          },
+        ],
+      };
+
+      const entities: ExerciseLogEntity[] = [
+        { partitionKey: "default", rowKey: "newest", data: JSON.stringify(newestLog) },
+        { partitionKey: "default", rowKey: "older", data: JSON.stringify(olderLog) },
+      ];
+      const mockClient = createMockTableClient(entities);
+      vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+
+      const result = await getLatestSubmittedExerciseTargets("Bench Press");
+
+      expect(result).toEqual({ targetReps: [6, 6, 6, 6], targetWeight: 67.5 });
+    });
+
+    it("falls back to target reps/weight when actual values are missing", async () => {
+      const logWithoutActuals: ExerciseLog = {
+        ...mockLog,
+        exercises: [
+          {
+            name: "Pull Ups",
+            targetReps: [8, 8, 8],
+          },
+        ],
+      };
+      const entities: ExerciseLogEntity[] = [
+        { partitionKey: "default", rowKey: "row1", data: JSON.stringify(logWithoutActuals) },
+      ];
+      const mockClient = createMockTableClient(entities);
+      vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+
+      const result = await getLatestSubmittedExerciseTargets("pull ups");
+
+      expect(result).toEqual({ targetReps: [8, 8, 8], targetWeight: undefined });
+    });
+
+    it("returns null when no matching exercise is found", async () => {
+      const entities: ExerciseLogEntity[] = [
+        { partitionKey: "default", rowKey: "row1", data: JSON.stringify(mockLog) },
+      ];
+      const mockClient = createMockTableClient(entities);
+      vi.mocked(getTableClient).mockResolvedValue(mockClient as any);
+
+      const result = await getLatestSubmittedExerciseTargets("Romanian Deadlift");
+
+      expect(result).toBeNull();
     });
   });
 
