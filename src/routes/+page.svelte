@@ -21,6 +21,13 @@
 		return day.trim().toLowerCase();
 	}
 
+	function moveItem<T>(items: T[], fromIdx: number, toIdx: number): T[] {
+		const reordered = [...items];
+		const [moved] = reordered.splice(fromIdx, 1);
+		reordered.splice(toIdx, 0, moved);
+		return reordered;
+	}
+
 	onMount(async () => {
 		const planRes = await fetch('/data/plans');
 
@@ -204,6 +211,44 @@
 		return null;
 	}
 
+	async function reorderExercisesInDay(
+		day: string,
+		fromIdx: number,
+		toIdx: number
+	): Promise<string | null> {
+		if (!plan) return 'No active plan loaded';
+		if (fromIdx === toIdx) return null;
+
+		const updatedPlan: WeeklyPlan = {
+			...plan,
+			sessions: plan.sessions.map((session) =>
+				session.day === day
+					? { ...session, exercises: moveItem(session.exercises, fromIdx, toIdx) }
+					: session
+			)
+		};
+
+		const res = await fetch('/data/plans', {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(updatedPlan)
+		});
+
+		if (!res.ok) {
+			let message = 'Failed to reorder exercises';
+			try {
+				const data = await res.json();
+				message = data.error ?? message;
+			} catch {
+				// Keep fallback message if error response is not JSON
+			}
+			return message;
+		}
+
+		plan = updatedPlan;
+		return null;
+	}
+
 	function cancelCurrentPlanEdit() {
 		editingCurrentPlan = false;
 	}
@@ -286,6 +331,7 @@
 					onExerciseUndo={handleExerciseUndo}
 					onAddNew={addExerciseToDay}
 					onRemoveExercise={removeExerciseFromDay}
+					onReorderExercises={reorderExercisesInDay}
 				/>
 			{/each}
 		</div>

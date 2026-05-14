@@ -54,6 +54,10 @@
 	let addSaving = $state(false);
 	let addError = $state<string | null>(null);
 	let addPrefillRequestId = 0;
+	let draggedSessionIdx = $state<number | null>(null);
+	let draggedExerciseIdx = $state<number | null>(null);
+	let dragOverSessionIdx = $state<number | null>(null);
+	let dragOverExerciseIdx = $state<number | null>(null);
 
 	const dayLabels: Record<string, string> = {
 		monday: 'Monday',
@@ -86,6 +90,55 @@
 	function removeExercise(sessionIdx: number, exIdx: number) {
 		editPlan.sessions[sessionIdx].exercises.splice(exIdx, 1);
 		editPlan = { ...editPlan };
+	}
+
+	function reorderExercises(sessionIdx: number, fromIdx: number, toIdx: number) {
+		if (fromIdx === toIdx) return;
+		const exercises = [...editPlan.sessions[sessionIdx].exercises];
+		const [moved] = exercises.splice(fromIdx, 1);
+		exercises.splice(toIdx, 0, moved);
+		editPlan.sessions[sessionIdx].exercises = exercises;
+		editPlan = { ...editPlan };
+	}
+
+	function handleExerciseDragStart(sessionIdx: number, exerciseIdx: number, event: DragEvent) {
+		draggedSessionIdx = sessionIdx;
+		draggedExerciseIdx = exerciseIdx;
+		dragOverSessionIdx = sessionIdx;
+		dragOverExerciseIdx = exerciseIdx;
+		event.dataTransfer?.setData('text/plain', `${sessionIdx}:${exerciseIdx}`);
+		event.dataTransfer?.setDragImage(event.currentTarget as Element, 12, 12);
+	}
+
+	function handleExerciseDragOver(sessionIdx: number, exerciseIdx: number, event: DragEvent) {
+		event.preventDefault();
+		dragOverSessionIdx = sessionIdx;
+		dragOverExerciseIdx = exerciseIdx;
+		if (event.dataTransfer) {
+			event.dataTransfer.dropEffect = 'move';
+		}
+	}
+
+	function handleExerciseDrop(sessionIdx: number, exerciseIdx: number, event: DragEvent) {
+		event.preventDefault();
+		if (
+			draggedSessionIdx === null ||
+			draggedExerciseIdx === null ||
+			draggedSessionIdx !== sessionIdx
+		) {
+			handleExerciseDragEnd();
+			return;
+		}
+
+		reorderExercises(sessionIdx, draggedExerciseIdx, exerciseIdx);
+		handleExerciseDragEnd();
+	}
+
+	function handleExerciseDragEnd() {
+		draggedSessionIdx = null;
+		draggedExerciseIdx = null;
+		dragOverSessionIdx = null;
+		dragOverExerciseIdx = null;
 	}
 
 	function addSet(sessionIdx: number, exIdx: number) {
@@ -260,9 +313,27 @@
 			</div>
 
 			<div class="space-y-3 p-3">
+			<div role="list" class="space-y-3">
 				{#each session.exercises as exercise, eIdx (exercise.name)}
 					{@const prev = getPreviousResult(session.day, exercise.name)}
-					<div class="rounded-lg border border-base-300 bg-base-200 p-3">
+					<div
+						class={`flex items-start gap-2 rounded-lg ${dragOverSessionIdx === sIdx && dragOverExerciseIdx === eIdx ? 'ring-2 ring-primary/40' : ''}`}
+						role="listitem"
+						ondragover={(event) => handleExerciseDragOver(sIdx, eIdx, event)}
+						ondrop={(event) => handleExerciseDrop(sIdx, eIdx, event)}
+					>
+						<button
+							type="button"
+							class="btn btn-ghost btn-xs btn-square mt-3 h-8 w-8 min-h-8 min-w-8 p-0 cursor-grab text-base-content/50 active:cursor-grabbing"
+							draggable="true"
+							aria-label={`Reorder ${exercise.name}`}
+							title={`Reorder ${exercise.name}`}
+							ondragstart={(event) => handleExerciseDragStart(sIdx, eIdx, event)}
+							ondragend={handleExerciseDragEnd}
+						>
+							<span class="text-lg leading-none">≡</span>
+						</button>
+						<div class="min-w-0 flex-1 rounded-lg border border-base-300 bg-base-200 p-3">
 						<div class="flex items-start justify-between gap-2">
 							<h4 class="text-sm font-semibold text-base-content">{exercise.name}</h4>
 							<button
@@ -337,8 +408,10 @@
 								/>
 							</div>
 						{/if}
+						</div>
 					</div>
 				{/each}
+			</div>
 
 				<div class="rounded-lg border border-dashed border-base-300 bg-base-100 p-3">
 					{#if addingSessionIdx === sIdx}

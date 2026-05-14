@@ -11,7 +11,8 @@
 		onExerciseComplete,
 		onExerciseUndo,
 		onAddNew,
-		onRemoveExercise
+		onRemoveExercise,
+		onReorderExercises
 	}: {
 		session: PlannedSession;
 		weekStart: string;
@@ -20,6 +21,7 @@
 		onExerciseUndo?: (day: string, exerciseName: string) => void;
 		onAddNew?: (day: string, exercise: ExerciseEntry) => Promise<string | null>;
 		onRemoveExercise?: (day: string, exerciseName: string) => Promise<string | null>;
+		onReorderExercises?: (day: string, fromIdx: number, toIdx: number) => Promise<string | null>;
 	} = $props();
 
 	let expanded = $state(false);
@@ -37,6 +39,8 @@
 	let addSaving = $state(false);
 	let addPrefillRequestId = 0;
 	let removeError = $state<string | null>(null);
+	let draggedExerciseIdx = $state<number | null>(null);
+	let dragOverExerciseIdx = $state<number | null>(null);
 
 	const dayLabels: Record<string, string> = {
 		monday: 'Monday',
@@ -123,6 +127,41 @@
 		if (error) {
 			removeError = error;
 		}
+	}
+
+	function handleExerciseDragStart(idx: number, event: DragEvent) {
+		draggedExerciseIdx = idx;
+		dragOverExerciseIdx = idx;
+		event.dataTransfer?.setData('text/plain', String(idx));
+		event.dataTransfer?.setDragImage(event.currentTarget as Element, 12, 12);
+	}
+
+	function handleExerciseDragOver(idx: number, event: DragEvent) {
+		event.preventDefault();
+		dragOverExerciseIdx = idx;
+		if (event.dataTransfer) {
+			event.dataTransfer.dropEffect = 'move';
+		}
+	}
+
+	async function handleExerciseDrop(idx: number, event: DragEvent) {
+		event.preventDefault();
+		if (draggedExerciseIdx === null || draggedExerciseIdx === idx || !onReorderExercises) {
+			handleExerciseDragEnd();
+			return;
+		}
+
+		removeError = null;
+		const error = await onReorderExercises(session.day, draggedExerciseIdx, idx);
+		if (error) {
+			removeError = error;
+		}
+		handleExerciseDragEnd();
+	}
+
+	function handleExerciseDragEnd() {
+		draggedExerciseIdx = null;
+		dragOverExerciseIdx = null;
 	}
 
 	async function prefillAddFormFromLatest(exerciseName: string) {
@@ -232,19 +271,39 @@
 	</button>
 
 	{#if expanded}
-		<div class="space-y-2 border-t border-base-300 p-4 pt-3">
+		<div class="space-y-2 border-t border-base-300 p-4 pt-3" role="list">
 			{#if removeError}
 				<p class="text-xs text-error">{removeError}</p>
 			{/if}
-			{#each session.exercises as exercise (exercise.name)}
+			{#each session.exercises as exercise, exerciseIdx (exercise.name)}
 				{@const actualData = completedExercises[exercise.name]}
-				<ExerciseCard
-					exercise={actualData ? { ...exercise, actualWeight: actualData.actualWeight, actualReps: actualData.actualReps } : exercise}
-					completed={exercise.name in completedExercises}
-					onComplete={(actual) => handleExerciseComplete(exercise, actual)}
-					onUndo={onExerciseUndo ? () => onExerciseUndo(session.day, exercise.name) : undefined}
-					onRemove={onRemoveExercise ? () => handleRemoveExercise(exercise.name) : undefined}
-				/>
+				<div
+					class={`flex items-start gap-2 rounded-lg ${dragOverExerciseIdx === exerciseIdx ? 'ring-2 ring-primary/40' : ''}`}
+					role="listitem"
+					ondragover={(event) => handleExerciseDragOver(exerciseIdx, event)}
+					ondrop={(event) => handleExerciseDrop(exerciseIdx, event)}
+				>
+					<button
+						type="button"
+						class="btn btn-ghost btn-xs btn-square mt-3 h-8 w-8 min-h-8 min-w-8 p-0 cursor-grab text-base-content/50 active:cursor-grabbing"
+						draggable="true"
+						aria-label={`Reorder ${exercise.name}`}
+						title={`Reorder ${exercise.name}`}
+						ondragstart={(event) => handleExerciseDragStart(exerciseIdx, event)}
+						ondragend={handleExerciseDragEnd}
+					>
+						<span class="text-lg leading-none">≡</span>
+					</button>
+					<div class="min-w-0 flex-1">
+						<ExerciseCard
+							exercise={actualData ? { ...exercise, actualWeight: actualData.actualWeight, actualReps: actualData.actualReps } : exercise}
+							completed={exercise.name in completedExercises}
+							onComplete={(actual) => handleExerciseComplete(exercise, actual)}
+							onUndo={onExerciseUndo ? () => onExerciseUndo(session.day, exercise.name) : undefined}
+							onRemove={onRemoveExercise ? () => handleRemoveExercise(exercise.name) : undefined}
+						/>
+					</div>
+				</div>
 			{/each}
 
 			{#if onAddNew}

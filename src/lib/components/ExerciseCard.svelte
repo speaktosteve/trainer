@@ -100,11 +100,12 @@
 				{#if onRemove}
 					<button
 						type="button"
-						class="btn btn-ghost btn-sm text-error"
+						class="btn btn-ghost btn-sm btn-square text-error"
 						onclick={onRemove}
 						aria-label={`Remove ${exercise.name} from this week's plan`}
+						title={`Remove ${exercise.name}`}
 					>
-						Remove
+						✕
 					</button>
 				{/if}
 				<button
