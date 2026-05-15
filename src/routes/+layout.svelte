@@ -2,12 +2,11 @@
 	import '../app.css';
 	import BottomNav from '$lib/components/BottomNav.svelte';
 	import { env } from '$env/dynamic/public';
-	import packageJson from '../../package.json';
 
-	let { children } = $props();
+	let { children, data } = $props();
 
-	const appVersion = packageJson.version;
-	const deployedAt = env.PUBLIC_DEPLOYED_AT ?? 'Local development';
+	const appVersion = $derived(data.version);
+	const deployedAt = $derived(env.PUBLIC_DEPLOYED_AT ?? 'Local development');
 </script>
 
 <div class="min-h-screen bg-base-200 pb-20">
